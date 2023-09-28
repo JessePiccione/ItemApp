@@ -13,7 +13,7 @@
 	</head>
 	<body>
 		<br/>
-		<form id="table">
+		<form>
 			<table>
 				<thead>
 				</thead>
@@ -49,9 +49,9 @@
 					<tr id="addRow"></tr>
 					<tr>
 						<td>
-							<input id ="addButton" type="submit" name="add" value="add">
-							<input id = "updateButton" type="submit" name="update" value="update">
-							<input id = "deleteButton" type="submit" name="delete" value="delete">
+							<input id ="addButton" type="button" name="add" value="add">
+							<input id = "updateButton" type="button" name="update" value="update">
+							<input id = "deleteButton" type="button" name="delete" value="delete">
 						</td>
 					</tr>
 				</tbody>

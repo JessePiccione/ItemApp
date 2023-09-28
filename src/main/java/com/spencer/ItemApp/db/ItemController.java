@@ -17,6 +17,7 @@ public class ItemController {
 		m.addAttribute("items", itemService.findAll());
 		return "item_view";
 	}
+	
 	@PostMapping("/item")
 	public String postItemPage(@RequestBody(required=true) Item i, Model M) {
 		System.out.println("But I do work here");

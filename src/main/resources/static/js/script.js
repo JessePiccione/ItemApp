@@ -2,24 +2,25 @@ document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);
 document.getElementById("deleteButton").addEventListener("click", deleteHandler);
 //handles adds to the server
+
 function addHandler(event){
 	if(hasTextFields()){
 		insertTextFields(event);	                                                                                                                                             
 	}
 	else {
-		const request = new XMLHttpRequest();
+		var request = new XMLHttpRequest();
 		request.open("POST", "/item");
 		request.setRequestHeader("Content-Type","application/json");
 		const body ={
 			'date': document.getElementById("date").value,
 			'dept': document.getElementById("dept").value,
 			'brand': document.getElementById("brand").value,
-			'itemClass': document.getElementById("itemclass").value,
+			'itemClass': document.getElementById("itemClass").value,
 			'originalPrice': document.getElementById("originalPrice").value,
-			'salePrice': document.getElemenetByid("salePrice").value,
+			'salePrice': document.getElementById("salePrice").value,
 			'activeFlag': document.getElementById ("activeFlag").value,
 			'imageFile': document.getElementById("imageFile").value,
-			'variants': document.getElementById("varian").value
+			'variants': document.getElementById("variants").value
 		};
 		request.onload = () =>{
 			location.reload();
@@ -45,7 +46,7 @@ function updateHandler(event){
 				'salePrice': document.getElemenetByid("salePrice").value,
 				'activeFlag': document.getElementById ("activeFlag").value,
 				'imageFile': document.getElementById("imageFile").value,
-				'variants': document.getElementById("variant").value
+				'variants': document.getElementById("variants").value
 			};
 		for (var x = 0; x < ids.length; x++ ){
 			request = new XMLHttpRequest();
@@ -81,7 +82,6 @@ function hasTextFields(){
 }
 
 function insertTextFields(event){
-	console.log("Big Chungus");
 	var tr = document.getElementById('addRow');
 	tr.innerHTML = "<td><input id='id' type='text' name='id' placeholder='Enter an ID...' value=''></td>"+
 				   "<td><input id='date' type='text' name='date' placeholder='Enter a date ...' value=''></td>"+
