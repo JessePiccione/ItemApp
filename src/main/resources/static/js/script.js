@@ -35,7 +35,6 @@ function updateHandler(event){
 		insertTextFields(event);
 	}
 	else {
-		alert("functioning as expected");
 		var ids = getList();
 		var request;
 		var body ={

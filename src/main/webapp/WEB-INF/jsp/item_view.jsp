@@ -19,19 +19,79 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th>Style<a href="/item?mode=style"></a></th>
-						<th>Date<a href="/item?mode=date"></a></th>
-						<th>Brand<a href="/item?mode=brand"></a></th>
-						<th>Department<a href="/item?mode=dept"</th>
-						<th>Class<a href="/item?mode=itemClass"></th>
-						<th>Original Price<a href="/item?mode=originalPrice"></a></th>
-						<th>Sale Price</th>
-						<th>Active Flag</th>
-						<th>Image File</th>
-						<th>Variants</th>
-						<th>Select</th>
+						<th>
+							Style
+						</th>
+						<th>
+							Date
+						</th>
+						<th>
+							Brand
+						</th>
+						<th>
+							Department
+						</th>
+						<th>
+							Class
+						</th>
+						<th>
+							Original Price
+						</th>
+						<th>
+							Sale Price
+						</th>
+						<th>
+							Active Flag
+							
+						</th>
+						<th>
+							Image File
+						</th>
+						<th>
+							Variants
+						</th>
+						<th>
+							Select
+						</th>
 					</tr>
-					
+					<tr>
+						<td>
+							<input name = "idSearch" type="text" placeholder="Search...">
+							<input name="" class="filterer" type="button">
+						</td>
+						<td>
+							<input name = "dateSearch" type="text" placeholder="Search...">
+							<input name="" class="filterer" type="button">
+						</td>
+						<td>
+							<input name = "brandSearch" type="text" placeholder="Search...">
+							<input name="" class="filterer" type="button">
+						</td>
+						<td>
+							<input name = "deptSearch" type="text" placeholder="Search...">
+							<input name="" class="filterer" type="button">
+						</td>
+						<td>
+							<input name = "classSearch" type="text" placeholder="Search...">
+							<input name="" class="filterer" type="button">
+						</td>
+						<td>
+						</td>
+						<td>
+						</td>
+						<td>
+							<input name = "activeFlagSearch" type="text" placeholder="Search...">
+							<input name="" class="filterer" type="button">
+						</td>
+						<td>
+							<input name = "imageFileSearch" type="text" placeholder="Search...">
+							<input name="" class="filterer" type="button">
+						</td>
+						<td>
+						</td>
+						<td>
+						</td>
+					</tr>
 					<c:forEach var="item" items="${items}">
 						<tr>
 							<td>${item.id}</td>
@@ -49,7 +109,7 @@
 					</c:forEach>
 					<tr id="addRow"></tr>
 					<tr>
-						<td>
+						<td colspan=11>
 							<input id ="addButton" type="button" name="add" value="add">
 							<input id = "updateButton" type="button" name="update" value="update">
 							<input id = "deleteButton" type="button" name="delete" value="delete">
