@@ -12,15 +12,15 @@ function addHandler(event){
 		request.open("POST", "/item");
 		request.setRequestHeader("Content-Type","application/json");
 		const body ={
-			'date': document.getElementById("date").value,
-			'dept': document.getElementById("dept").value,
-			'brand': document.getElementById("brand").value,
-			'itemClass': document.getElementById("itemClass").value,
-			'originalPrice': document.getElementById("originalPrice").value,
-			'salePrice': document.getElementById("salePrice").value,
-			'activeFlag': document.getElementById ("activeFlag").value,
-			'imageFile': document.getElementById("imageFile").value,
-			'variants': document.getElementById("variants").value
+			'date': document.getElementById("date").value.strip(),
+			'dept': document.getElementById("dept").value.strip(),
+			'brand': document.getElementById("brand").value.strip(),
+			'itemClass': document.getElementById("itemClass").value.strip(),
+			'originalPrice': document.getElementById("originalPrice").value.strip(),
+			'salePrice': document.getElementById("salePrice").value.strip(),
+			'activeFlag': document.getElementById ("activeFlag").value.strip(),
+			'imageFile': document.getElementById("imageFile").value.strip(),
+			'variants': document.getElementById("variants").value.strip()
 		};
 		request.onload = () =>{
 			location.reload();
@@ -35,39 +35,41 @@ function updateHandler(event){
 		insertTextFields(event);
 	}
 	else {
+		alert("functioning as expected");
 		var ids = getList();
 		var request;
-		const body ={
-				'date': document.getElementById("date").value,
-				'dept': document.getElementById("dept").value,
-				'brand': document.getElementById("brand").value,
-				'itemClass': document.getElementById("itemClass").value,
-				'originalPrice': document.getElementById("originalPrice").value,
-				'salePrice': document.getElemenetByid("salePrice").value,
-				'activeFlag': document.getElementById ("activeFlag").value,
-				'imageFile': document.getElementById("imageFile").value,
-				'variants': document.getElementById("variants").value
+		var body ={
+				'id': "",
+				'date': document.getElementById("date").value.strip(),
+				'dept': document.getElementById("dept").value.strip(),
+				'brand': document.getElementById("brand").value.strip(),
+				'itemClass': document.getElementById("itemClass").value.strip(),
+				'originalPrice': document.getElementById("originalPrice").value.strip(),
+				'salePrice': document.getElementById("salePrice").value.strip(),
+				'activeFlag': document.getElementById ("activeFlag").value.strip(),
+				'imageFile': document.getElementById("imageFile").value.strip(),
+				'variants': document.getElementById("variants").value.strip()
 			};
 		for (var x = 0; x < ids.length; x++ ){
 			request = new XMLHttpRequest();
-			request.open("PATCH", "/topic/"+ids[x]+"?new_id="+id+"&name="+name+"&courseInfo="+courseInfo);
-			request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			body.id = ids[x];
+			request.open("PATCH", "/item");
+			request.setRequestHeader("Content-Type","application/json");
 			request.onload = () =>{
 				location.reload()
 			}			
-			request.send();
+			request.send(JSON.stringify(body));
 			event.preventDefault();
-			
 		}
 	}	
 }
 //handles deletes to the server
 function deleteHandler(event){
-	var ids = getList()
+	var ids = getList();
 	var request;
 	for (var x = 0; x < ids.length; x++ ){
 		request = new XMLHttpRequest();
-		request.open("DELETE", "/topic/"+ids[x]);
+		request.open("DELETE", "/item/"+ids[x]);
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		request.send();
 		request.onload = () =>{
@@ -83,7 +85,7 @@ function hasTextFields(){
 
 function insertTextFields(event){
 	var tr = document.getElementById('addRow');
-	tr.innerHTML = "<td><input id='id' type='text' name='id' placeholder='Enter an ID...' value=''></td>"+
+	tr.innerHTML = "<td></td>"+
 				   "<td><input id='date' type='text' name='date' placeholder='Enter a date ...' value=''></td>"+
 				   "<td><input id='brand' type='text' name='brand' placeholder='Enter a brand...' value=''></td>"+
 				   "<td><input id='dept' type='text' name='dept' placeholder='Enter a dept...' value=''></td>"+

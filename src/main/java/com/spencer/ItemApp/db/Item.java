@@ -34,6 +34,35 @@ public class Item {
 		this.setImageFile(imageFile);
 		this.setVariants(variants);
 	}
+	public void updateNewValues(Item i) {
+		if(date.equals("")) {	
+			this.setDate(i.getDate());
+		}
+		if(brand.equals("")) {	
+			this.setBrand(i.getBrand());
+		}
+		if(dept.equals("")) {	
+			this.setDept(i.getDept());
+		}
+		if(itemClass.equals("")) {	
+			this.setItemClass(i.getItemClass());
+		}
+		if(originalPrice <= 0.0001) {	
+			this.setOriginalPrice(i.getOriginalPrice());
+		}
+		if(salePrice <= 0.0001) {	
+			this.setSalePrice(i.getSalePrice());
+		}
+		if(activeFlag.equals("")) {	
+			this.setActiveFlag(i.getActiveFlag());
+		}
+		if(imageFile.equals("")) {	
+			this.setImageFile(i.getImageFile());
+		}
+		if(variants.equals("")) {	
+			this.setVariants(i.getVariants());
+		}
+	}
 	@Override 
 	public String toString() {
 		return String.format(

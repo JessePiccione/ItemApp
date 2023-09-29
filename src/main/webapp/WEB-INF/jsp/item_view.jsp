@@ -19,18 +19,19 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th>Style</th>
-						<th>Date</th>
-						<th>Brand</th>
-						<th>Department</th>
-						<th>Class</th>
-						<th>Original Price</th>
+						<th>Style<a href="/item?mode=style"></a></th>
+						<th>Date<a href="/item?mode=date"></a></th>
+						<th>Brand<a href="/item?mode=brand"></a></th>
+						<th>Department<a href="/item?mode=dept"</th>
+						<th>Class<a href="/item?mode=itemClass"></th>
+						<th>Original Price<a href="/item?mode=originalPrice"></a></th>
 						<th>Sale Price</th>
 						<th>Active Flag</th>
 						<th>Image File</th>
 						<th>Variants</th>
 						<th>Select</th>
 					</tr>
+					
 					<c:forEach var="item" items="${items}">
 						<tr>
 							<td>${item.id}</td>
