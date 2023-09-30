@@ -3,18 +3,9 @@ document.getElementById("updateButton").addEventListener("click", updateHandler)
 document.getElementById("deleteButton").addEventListener("click", deleteHandler);
 document.getElementById("idSearchButton").addEventListener("click", function(event){
 	const data = document.getElementById("idSearch").value;
-	filterGetRequest(event,"/item/id/"+data);
+	location.assign("/item/id/"+data);
 });
-function filterGetRequest(event, url){
-	const request = new XMLHttpRequest();
-	request.open("GET",url);
-	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	request.send();
-	request.load = () =>{
-		location.reload();
-	} 
-	event.preventDefault();
-}
+
 //handles adds to the server
 function addHandler(event){
 	if(hasTextFields()){
@@ -25,15 +16,15 @@ function addHandler(event){
 		request.open("POST", "/item");
 		request.setRequestHeader("Content-Type","application/json");
 		const body ={
-			'date': document.getElementById("date").value.strip(),
-			'dept': document.getElementById("dept").value.strip(),
-			'brand': document.getElementById("brand").value.strip(),
-			'itemClass': document.getElementById("itemClass").value.strip(),
-			'originalPrice': document.getElementById("originalPrice").value.strip(),
-			'salePrice': document.getElementById("salePrice").value.strip(),
-			'activeFlag': document.getElementById ("activeFlag").value.strip(),
-			'imageFile': document.getElementById("imageFile").value.strip(),
-			'variants': document.getElementById("variants").value.strip()
+			'date': document.getElementById("date").value,
+			'dept': document.getElementById("dept").value,
+			'brand': document.getElementById("brand").value,
+			'itemClass': document.getElementById("itemClass").value,
+			'originalPrice': document.getElementById("originalPrice").value,
+			'salePrice': document.getElementById("salePrice").value,
+			'activeFlag': document.getElementById ("activeFlag").value,
+			'imageFile': document.getElementById("imageFile").value,
+			'variants': document.getElementById("variants").value
 		};
 		request.onload = () =>{
 			location.reload();
@@ -52,15 +43,15 @@ function updateHandler(event){
 		var request;
 		var body ={
 				'id': "",
-				'date': document.getElementById("date").value.strip(),
-				'dept': document.getElementById("dept").value.strip(),
-				'brand': document.getElementById("brand").value.strip(),
-				'itemClass': document.getElementById("itemClass").value.strip(),
-				'originalPrice': document.getElementById("originalPrice").value.strip(),
-				'salePrice': document.getElementById("salePrice").value.strip(),
-				'activeFlag': document.getElementById ("activeFlag").value.strip(),
-				'imageFile': document.getElementById("imageFile").value.strip(),
-				'variants': document.getElementById("variants").value.strip()
+				'date': document.getElementById("date").value,
+				'dept': document.getElementById("dept").value,
+				'brand': document.getElementById("brand").value,
+				'itemClass': document.getElementById("itemClass").value,
+				'originalPrice': document.getElementById("originalPrice").value,
+				'salePrice': document.getElementById("salePrice").value,
+				'activeFlag': document.getElementById ("activeFlag").value,
+				'imageFile': document.getElementById("imageFile").value,
+				'variants': document.getElementById("variants").value
 			};
 		for (var x = 0; x < ids.length; x++ ){
 			request = new XMLHttpRequest();

@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ItemController {
 	@Autowired 
 	private ItemService itemService;
-	@GetMapping("/item")
+	@GetMapping({"/item","/item/id/"})
 	public String getItemPage(Model m) {
 		m.addAttribute("items", itemService.findAll());
 		return "item_view";
 	}
 	@GetMapping("/item/id/{id}")
 	public String searchItemPageById(@PathVariable long id, Model m) { 
-		System.out.println("This is the story of a girl");
 		ArrayList<Item> items = new ArrayList<>();
 		items.add(itemService.findById(id));
 		m.addAttribute("items", items);

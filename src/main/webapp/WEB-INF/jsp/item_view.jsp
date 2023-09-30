@@ -9,7 +9,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Jesse's First Spring Application</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 	</head>
 	<body>
 		<br/>
@@ -118,6 +118,6 @@
 				</tbody>
 			</table>
 		</form>
-		<script src = "js/script.js"></script>
+		<script src = "/js/script.js"></script>
 	</body>
 </html>
