@@ -1,8 +1,7 @@
 /* Reset some default styles */
 /* Style for the text input fields */
 input[type="text"] {
-    width: 100%; /* Take up the full width of the table cell */
-    padding: 6px 10px;
+    width: 70%; /* Take up the full width of the table cell */
     box-sizing: border-box; /* Ensures padding doesn't add to the width */
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -45,6 +44,7 @@ thead {
 }
 
 th, td {
+
 	width:10%;
     text-align: left;
     padding: 8px 12px;

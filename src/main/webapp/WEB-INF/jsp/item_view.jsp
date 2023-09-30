@@ -56,36 +56,36 @@
 					</tr>
 					<tr>
 						<td>
-							<input name = "idSearch" type="text" placeholder="Search...">
-							<input name="" class="filterer" type="button">
+							<input id="idSearch" name ="idSearch" type="text" placeholder="Search...">
+							<input id="idSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
-							<input name = "dateSearch" type="text" placeholder="Search...">
-							<input name="" class="filterer" type="button">
+							<input id="dateSearch" name = "dateSearch" type="text" placeholder="Search...">
+							<input id="dateSearchButton"name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
-							<input name = "brandSearch" type="text" placeholder="Search...">
-							<input name="" class="filterer" type="button">
+							<input id="brandSearch" name = "brandSearch" type="text" placeholder="Search...">
+							<input id="brandSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
-							<input name = "deptSearch" type="text" placeholder="Search...">
-							<input name="" class="filterer" type="button">
+							<input id="deptSearch" name = "deptSearch" type="text" placeholder="Search...">
+							<input id="deptSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
-							<input name = "classSearch" type="text" placeholder="Search...">
-							<input name="" class="filterer" type="button">
+							<input id="classSearch" name = "classSearch" type="text" placeholder="Search...">
+							<input id="classSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 						</td>
 						<td>
 						</td>
 						<td>
-							<input name = "activeFlagSearch" type="text" placeholder="Search...">
-							<input name="" class="filterer" type="button">
+							<input id="activeFlagSearch" name ="activeFlagSearch" type="text" placeholder="Search...">
+							<input id="activeFlagSearchButton"name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
-							<input name = "imageFileSearch" type="text" placeholder="Search...">
-							<input name="" class="filterer" type="button">
+							<input id="imageFileSearch" name="imageFileSearch" type="text" placeholder="Search...">
+							<input id="imageFileSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 						</td>

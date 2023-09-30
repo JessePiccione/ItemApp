@@ -1,8 +1,21 @@
 document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);
 document.getElementById("deleteButton").addEventListener("click", deleteHandler);
+document.getElementById("idSearchButton").addEventListener("click", function(event){
+	const data = document.getElementById("idSearch").value;
+	filterGetRequest(event,"/item/id/"+data);
+});
+function filterGetRequest(event, url){
+	const request = new XMLHttpRequest();
+	request.open("GET",url);
+	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	request.send();
+	request.load = () =>{
+		location.reload();
+	} 
+	event.preventDefault();
+}
 //handles adds to the server
-
 function addHandler(event){
 	if(hasTextFields()){
 		insertTextFields(event);	                                                                                                                                             
@@ -101,7 +114,7 @@ function getList(){
 	var id = [];
 	for (var x = 0; x < inputs.length; x++){
 		if(inputs[x].checked){
-			id.push(inputs[x].getAttribute("value"));
+			id.push(inputs[x].value);
 		}		
 	}
 	return id;

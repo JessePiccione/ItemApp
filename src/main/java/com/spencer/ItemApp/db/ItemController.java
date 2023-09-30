@@ -1,5 +1,7 @@
 package com.spencer.ItemApp.db;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,10 @@ public class ItemController {
 	}
 	@GetMapping("/item/id/{id}")
 	public String searchItemPageById(@PathVariable long id, Model m) { 
-		m.addAttribute("items", itemService.findById(id));
+		System.out.println("This is the story of a girl");
+		ArrayList<Item> items = new ArrayList<>();
+		items.add(itemService.findById(id));
+		m.addAttribute("items", items);
 		return "item_view";
 	}
 	@GetMapping("/item/date/{date}")
