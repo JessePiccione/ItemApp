@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ItemController {
 	@Autowired 
 	private ItemService itemService;
-	@GetMapping({"/item","/item/id/"})
+	@GetMapping({"/item","/item/id/","/item/date/","/item/brand/",
+				 "/item/dept/","/item/itemClass/","/item/originalPrice/",
+				 "/item/salePrice/","/item/activeFlag/","/item/imageFile/",
+				 "/item/vairiants/"})
 	public String getItemPage(Model m) {
 		m.addAttribute("items", itemService.findAll());
 		return "item_view";

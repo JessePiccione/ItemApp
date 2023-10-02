@@ -1,0 +1,43 @@
+package com.spencer.ItemApp.login;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.spencer.ItemApp.Users.CustomUserDetailsService;
+import com.spencer.ItemApp.Users.User;
+import com.spencer.ItemApp.Users.UserRepository;
+
+import lombok.AllArgsConstructor;
+
+@Controller
+@AllArgsConstructor
+public class LoginController {
+	@Autowired
+	private CustomUserDetailsService userDetailsService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@GetMapping("/login")
+	public String getLoginPage() {
+		return "login";
+	}
+	@GetMapping("/login/register")
+	public String getRegisterPage() { 
+		return "register";
+	}
+	@PostMapping("/login/register")
+	public String RegisterUser(@RequestBody RegisterDto registerDto, Model m) {
+		User user  = new User(registerDto.getUsername(), passwordEncoder.encode(registerDto.getPassword()));
+		userDetailsService.save(user);
+		m.addAttribute("Success", "User Sucessfully registered");
+		return "login";
+	}
+}

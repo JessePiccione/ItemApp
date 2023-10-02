@@ -46,27 +46,28 @@
 </head>
 <body>
   <div class="container">
-    <h2>Log in</h2>
-    <form method="POST" action="login">
+    <h2>Register New User</h2>
+    <form method='post' action="/login/register" >
       <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" value="" placeholder="Enter your username" required>
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value="" placeholder="Enter your password">
+        <input type="password" id="password" name="password" value="" placeholder="Enter your password" required>
       </div>
       <div class="form-group">
-        <button id="loginButton" type="submit" value="Log in">Log in</button>
+        <button id="registerButton" type="button" value="Register">Register User</button>
       </div>
     </form>
   </div>
   <div class="container">
-  <form method='get' action="/login/register" >
+  <form method='get' action="/login" >
     <div class="form-group">
-      <button type="submit">New User</button>
+      <button type="submit">Log In Page</button>
     </div>
   </form>
+  <script src="/js/registerScript.js"></script>
   </div>
 </body>
 </html>

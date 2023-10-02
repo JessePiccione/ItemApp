@@ -93,6 +93,7 @@
 						</td>
 					</tr>
 					<c:forEach var="item" items="${items}">
+					<div id="${item.id}">
 						<tr>
 							<td>${item.id}</td>
 							<td>${item.date}</td>
@@ -106,6 +107,7 @@
 							<td>${item.variants}</td>
 							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${item.id}"></td>
 						</tr>
+					</div>
 					</c:forEach>
 					<tr id="addRow"></tr>
 					<tr>

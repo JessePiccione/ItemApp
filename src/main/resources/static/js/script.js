@@ -1,11 +1,36 @@
+//crud buttons 
 document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);
 document.getElementById("deleteButton").addEventListener("click", deleteHandler);
+//search buttons
 document.getElementById("idSearchButton").addEventListener("click", function(event){
 	const data = document.getElementById("idSearch").value;
 	location.assign("/item/id/"+data);
 });
-
+document.getElementById("dateSearchButton").addEventListener("click", function(event){
+	const data = document.getElementById("dateSearch").value;
+	location.assign("/item/date/"+data);
+});
+document.getElementById("brandSearchButton").addEventListener("click", function(event){
+	const data = document.getElementById("brandSearch").value;
+	location.assign("/item/brand/"+data);
+});
+document.getElementById("deptSearchButton").addEventListener("click", function(event){
+	const data = document.getElementById("deptSearch").value;
+	location.assign("/item/dept/"+data);
+});
+document.getElementById("classSearchButton").addEventListener("click", function(event){
+	const data = document.getElementById("classSearch").value;
+	location.assign("/item/itemClass/"+data);
+});
+document.getElementById("activeFlagSearchButton").addEventListener("click", function(event){
+	const data = document.getElementById("activeFlagSearch").value;
+	location.assign("/item/activeFlag/"+data);
+});
+document.getElementById("imageFileSearchButton").addEventListener("click", function(event){
+	const data = document.getElementById("imageFileSearch").value;
+	location.assign("/item/imageFile/"+data);
+});
 //handles adds to the server
 function addHandler(event){
 	if(hasTextFields()){
