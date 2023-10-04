@@ -22,5 +22,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public void save(User user) {
 		userRepository.save(user);
 	}
+	public boolean hasUsername(String username) {
+		return !userRepository.findByEmail(username).isEmpty();
+	}
 
 }

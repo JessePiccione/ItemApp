@@ -10,6 +10,7 @@
 		<meta charset="ISO-8859-1">
 		<title>Jesse's First Spring Application</title>
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
 		<br/>
@@ -19,36 +20,35 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th>
-							Style
+						<th onclick="changeSort('id')">
+							Style&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Date
+						<th onclick="changeSort('date')">
+							Date&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Brand
+						<th onclick="changeSort('brand')">
+							Brand&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Department
+						<th onclick="changeSort('dept')">
+							Department&nbsp;<i id="idSort" class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Class
+						<th onclick="changeSort('itemClass')">
+							Class&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Original Price
+						<th onclick="changeSort('originalPrice')">
+							Original Price&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Sale Price
+						<th onclick="changeSort('salePrice')">
+							Sale Price&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Active Flag
-							
+						<th onclick="changeSort('activeFlag')">
+							Active Flag&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Image File
+						<th onclick="changeSort('imageFile')">
+							Image File&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
-							Variants
+						<th onclick="changeSort('variants')">
+							Variants&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
 						<th>
 							Select
@@ -57,23 +57,18 @@
 					<tr>
 						<td>
 							<input id="idSearch" name ="idSearch" type="text" placeholder="Search...">
-							<input id="idSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 							<input id="dateSearch" name = "dateSearch" type="text" placeholder="Search...">
-							<input id="dateSearchButton"name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 							<input id="brandSearch" name = "brandSearch" type="text" placeholder="Search...">
-							<input id="brandSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 							<input id="deptSearch" name = "deptSearch" type="text" placeholder="Search...">
-							<input id="deptSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 							<input id="classSearch" name = "classSearch" type="text" placeholder="Search...">
-							<input id="classSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 						</td>
@@ -81,11 +76,9 @@
 						</td>
 						<td>
 							<input id="activeFlagSearch" name ="activeFlagSearch" type="text" placeholder="Search...">
-							<input id="activeFlagSearchButton"name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 							<input id="imageFileSearch" name="imageFileSearch" type="text" placeholder="Search...">
-							<input id="imageFileSearchButton" name="Go" class="filterer" type="button" value="Go">
 						</td>
 						<td>
 						</td>

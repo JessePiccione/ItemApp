@@ -47,7 +47,7 @@
 <body>
   <div class="container">
     <h2>Register New User</h2>
-    <form method='post' action="/login/register" >
+    <form>
       <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" value="" placeholder="Enter your username" required>

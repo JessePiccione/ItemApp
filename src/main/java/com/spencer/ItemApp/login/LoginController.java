@@ -36,6 +36,10 @@ public class LoginController {
 	@PostMapping("/login/register")
 	public String RegisterUser(@RequestBody RegisterDto registerDto, Model m) {
 		User user  = new User(registerDto.getUsername(), passwordEncoder.encode(registerDto.getPassword()));
+		if(userDetailsService.hasUsername(registerDto.getUsername())) {
+			m.addAttribute("Error", "User Already Exists");
+			return "login";
+		}
 		userDetailsService.save(user);
 		m.addAttribute("Success", "User Sucessfully registered");
 		return "login";

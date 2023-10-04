@@ -3,6 +3,7 @@ package com.spencer.ItemApp.db;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,8 +12,8 @@ public class ItemService {
 	private ItemRepository itemRepository;
 	
 	//regular crud operations 
-	public List<Item> findAll(){
-		return (List<Item>) itemRepository.findAll();
+	public List<Item> findAll(Sort sort){
+		return itemRepository.findAll(sort);
 	}
 	public void delete(Item i) {
 		itemRepository.delete(i);
@@ -23,31 +24,31 @@ public class ItemService {
 	public Item save(Item i) {
 		return itemRepository.save(i);
 	}
-	public List<Item> findByDate(String date){
-		return itemRepository.findByDate(date);
+	public List<Item> findByDate(String date, Sort sort){
+		return itemRepository.findByDate(date,sort);
 	}
-	public List<Item> findByBrand(String brand){
-		return itemRepository.findByBrand(brand);
+	public List<Item> findByBrand(String brand, Sort sort){
+		return itemRepository.findByBrand(brand, sort);
 	}
-	public List<Item> findByDept(String dept){
-		return itemRepository.findByDept(dept);
+	public List<Item> findByDept(String dept, Sort sort){
+		return itemRepository.findByDept(dept, sort);
 	}
-	public List<Item> findByItemClass(String itemClass){
-		return itemRepository.findByItemClass(itemClass);
+	public List<Item> findByItemClass(String itemClass, Sort sort){
+		return itemRepository.findByItemClass(itemClass, sort);
 	}
-	public List<Item> findByOriginalPrice(double originalPrice){
-		return itemRepository.findByOriginalPrice(originalPrice);
+	public List<Item> findByOriginalPrice(double originalPrice, Sort sort){
+		return itemRepository.findByOriginalPrice(originalPrice, sort);
 	}
-	public List<Item> findbySalePrice(double salePrice){
-		return itemRepository.findBySalePrice(salePrice);
+	public List<Item> findbySalePrice(double salePrice, Sort sort){
+		return itemRepository.findBySalePrice(salePrice, sort);
 	}
-	public List<Item> findByActiveFlag(String activeFlag){
-		return itemRepository.findByActiveFlag(activeFlag);
+	public List<Item> findByActiveFlag(String activeFlag, Sort sort){
+		return itemRepository.findByActiveFlag(activeFlag, sort);
 	}
-	public List<Item> findByImageFile(String imageFile){
-		return itemRepository.findByImageFile(imageFile);
+	public List<Item> findByImageFile(String imageFile, Sort sort){
+		return itemRepository.findByImageFile(imageFile, sort);
 	}
-	public List<Item> findByVariants(String variants){
-		return itemRepository.findByVariants(variants);
+	public List<Item> findByVariants(String variants, Sort sort){
+		return itemRepository.findByVariants(variants, sort);
 	}
 }
