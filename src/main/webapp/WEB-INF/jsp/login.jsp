@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.ArrayList" %> 
-<%@ page import="com.spencer.ItemApp.db.Item" %> 
+<%@ page import="com.spencer.ItemApp.models.Item" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>

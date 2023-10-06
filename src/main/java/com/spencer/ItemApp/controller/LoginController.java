@@ -1,4 +1,4 @@
-package com.spencer.ItemApp.login;
+package com.spencer.ItemApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.spencer.ItemApp.Users.CustomUserDetailsService;
-import com.spencer.ItemApp.Users.User;
-import com.spencer.ItemApp.Users.UserRepository;
+import com.spencer.ItemApp.models.RegisterDto;
+import com.spencer.ItemApp.models.User;
+import com.spencer.ItemApp.repository.UserRepository;
+import com.spencer.ItemApp.service.CustomUserDetailsService;
 
 import lombok.AllArgsConstructor;
 

@@ -1,6 +1,4 @@
-package com.spencer.ItemApp.login;
-
-import com.spencer.ItemApp.Users.CustomUserDetailsService;
+package com.spencer.ItemApp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +14,8 @@ import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+import com.spencer.ItemApp.service.CustomUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -27,12 +27,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.csrf().disable()
-		.authorizeRequests()
-		.requestMatchers(mvc.pattern("/login**"), mvc.pattern("/WEB-INF/jsp/**")).permitAll()
-		.and()
-		.authorizeRequests()
-		.requestMatchers(mvc.pattern("/item**"), mvc.pattern("/item/**")).authenticated()
-		.and()
+		.authorizeHttpRequests(auth -> auth
+				.requestMatchers(mvc.pattern("/login**"), mvc.pattern("/WEB-INF/jsp/**"), mvc.pattern("/css/**"), mvc.pattern("/js/**")).permitAll()
+				.requestMatchers(mvc.pattern("/item**"), mvc.pattern("/item/**")).authenticated()
+				)
 		.formLogin( form -> form
 				.loginPage("/login")
 				.defaultSuccessUrl("/item")

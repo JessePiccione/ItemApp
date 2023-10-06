@@ -1,7 +1,7 @@
 /* Reset some default styles */
 /* Style for the text input fields */
 input[type="text"] {
-    width: 70%; /* Take up the full width of the table cell */
+    width: 100%; /* Take up the full width of the table cell */
     box-sizing: border-box; /* Ensures padding doesn't add to the width */
     border: 1px solid #ccc;
     border-radius: 4px;

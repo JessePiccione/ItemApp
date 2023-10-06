@@ -1,4 +1,4 @@
-package com.spencer.ItemApp.Users;
+package com.spencer.ItemApp.service;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.spencer.ItemApp.models.User;
+import com.spencer.ItemApp.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -23,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		userRepository.save(user);
 	}
 	public boolean hasUsername(String username) {
-		return !userRepository.findByEmail(username).isEmpty();
+		return !userRepository.findByEmail(username).isPresent();
 	}
 
 }

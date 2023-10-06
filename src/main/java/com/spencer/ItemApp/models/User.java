@@ -1,4 +1,4 @@
-package com.spencer.ItemApp.Users;
+package com.spencer.ItemApp.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

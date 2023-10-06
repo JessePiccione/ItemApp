@@ -1,4 +1,4 @@
-package com.spencer.ItemApp.login;
+package com.spencer.ItemApp.models;
 
 import lombok.Data;
 

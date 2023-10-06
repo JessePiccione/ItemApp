@@ -1,4 +1,4 @@
-package com.spencer.ItemApp.db;
+package com.spencer.ItemApp.controller;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.spencer.ItemApp.models.Item;
+import com.spencer.ItemApp.service.ItemService;
 
 @Controller
 public class ItemController {
@@ -102,12 +105,11 @@ public class ItemController {
 	}
 	public static Sort sort(String sort) {
 		if(ItemController.sort.equals(sort)) toggleDirection();
-		if(!sort.equals("missing")) {
+		else if(!sort.equals("missing")) {
 			ItemController.sort = sort;
 			ItemController.direction = "asc";
 		}
 		return Sort.by(ItemController.direction.equals("desc")?Sort.Direction.DESC:Sort.Direction.ASC, ItemController.sort);
-		
 	}
 	public static void toggleDirection(){
 		if (ItemController.direction.equals("asc")) {

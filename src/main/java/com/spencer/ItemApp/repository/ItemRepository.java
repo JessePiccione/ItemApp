@@ -1,10 +1,12 @@
-package com.spencer.ItemApp.db;
+package com.spencer.ItemApp.repository;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
+
+import com.spencer.ItemApp.models.Item;
 
 public interface ItemRepository extends CrudRepository<Item, Long>{
 	
