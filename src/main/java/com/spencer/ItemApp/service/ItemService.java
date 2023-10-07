@@ -21,14 +21,17 @@ public class ItemService {
 	public void delete(Item i) {
 		itemRepository.delete(i);
 	}
-	public Item findById(long id) {
-		return this.itemRepository.findById(id);
+	public List<Item> findAllById(long id, Sort sort) {
+		return this.itemRepository.findAllById(id, sort);
+	}
+	public List<Item> findAllBySku(long sku, Sort sort){
+		return this.itemRepository.findAllBySku(sku, sort);
 	}
 	public Item save(Item i) {
 		return itemRepository.save(i);
 	}
 	public List<Item> findByDate(String date, Sort sort){
-		return itemRepository.findByDate(date,sort);
+		return itemRepository.findByDate(date, sort);
 	}
 	public List<Item> findByBrand(String brand, Sort sort){
 		return itemRepository.findByBrand(brand, sort);
@@ -53,5 +56,8 @@ public class ItemService {
 	}
 	public List<Item> findByVariants(String variants, Sort sort){
 		return itemRepository.findByVariants(variants, sort);
+	}
+	public Item findByUniqueId(long uniqueId) {
+		return itemRepository.findByUniqueId(uniqueId);
 	}
 }

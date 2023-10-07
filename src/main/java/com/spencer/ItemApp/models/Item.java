@@ -7,10 +7,12 @@ import jakarta.persistence.Id;
 
 @Entity 
 public class Item {
-
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long uniqueId;
 	private Long id;
+	private long sku;
 	private String date;
 	private String brand;
 	private String dept;
@@ -20,10 +22,10 @@ public class Item {
 	private String activeFlag;
 	private String imageFile;
 	private String variants;
-	
 	protected Item() {}
-	
-	public Item(String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {
+	public Item(long id,long sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {
+		this.id=id;
+		this.sku=sku;
 		this.setDate(date);
 		this.setBrand(brand);
 		this.setDept(dept);
@@ -35,6 +37,9 @@ public class Item {
 		this.setVariants(variants);
 	}
 	public void updateNewValues(Item i) {
+		if(id == 0) {
+			this.setId(i.getId());
+		}
 		if(date.equals("")) {	
 			this.setDate(i.getDate());
 		}
@@ -70,8 +75,20 @@ public class Item {
 				this.id, this.date, this.brand, this.dept, this.itemClass, this.originalPrice, this.salePrice, this.activeFlag, this.imageFile, this.variants
 				);
 	}
+	public long getUniqueId() {
+		return uniqueId;
+	}
 	public long getId() {
 		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public long getSku() {
+		return sku;
+	}
+	public void setSku(long sku) {
+		this.sku = sku;
 	}
 	public String getDate() {
 		return date;

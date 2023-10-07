@@ -21,7 +21,10 @@
 				<tbody>
 					<tr>
 						<th onclick="changeSort('id')">
-							Style&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+							Id&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+						</th>
+						<th onclick="changeSort('sku')">
+							Sku&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
 						<th onclick="changeSort('date')">
 							Date&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
@@ -55,63 +58,73 @@
 						</th>
 					</tr>
 					<tr>
+
 						<td>
-							<input id="idSearch" name ="idSearch" type="text" placeholder="Search...">
+							<input id="idSearch" name ="idSearch" type="text" placeholder="Search..." value="${ id }" >
 						</td>
 						<td>
-							<input id="dateSearch" name = "dateSearch" type="text" placeholder="Search...">
+							<input id="skuSearch" name="idSearch" type="text" placeholder="Search..." value="${ sku }">
 						</td>
 						<td>
-							<input id="brandSearch" name = "brandSearch" type="text" placeholder="Search...">
+							<input id="dateSearch" name = "dateSearch" type="text" placeholder="Search..." value="${ date }">
 						</td>
 						<td>
-							<input id="deptSearch" name = "deptSearch" type="text" placeholder="Search...">
+							<input id="brandSearch" name = "brandSearch" type="text" placeholder="Search..." value="${ brand }">
 						</td>
 						<td>
-							<input id="classSearch" name = "classSearch" type="text" placeholder="Search...">
+							<input id="deptSearch" name = "deptSearch" type="text" placeholder="Search..." value="${ dept }">
+						</td>
+						<td>
+							<input id="classSearch" name = "classSearch" type="text" placeholder="Search..." value="${ itemClass }">
 						</td>
 						<td>
 						</td>
 						<td>
 						</td>
 						<td>
-							<input id="activeFlagSearch" name ="activeFlagSearch" type="text" placeholder="Search...">
+							<input id="activeFlagSearch" name ="activeFlagSearch" type="text" placeholder="Search..." value="${ activeFlag }">
 						</td>
 						<td>
-							<input id="imageFileSearch" name="imageFileSearch" type="text" placeholder="Search...">
+							<input id="imageFileSearch" name="imageFileSearch" type="text" placeholder="Search..." value="${ imageFile }">
 						</td>
 						<td>
 						</td>
 						<td>
 						</td>
 					</tr>
-					<c:forEach var="item" items="${items}">
-					<div id="${item.id}">
+					<c:forEach var="item" items="${ items }">
+					<div id="${ item.id }">
 						<tr>
-							<td>${item.id}</td>
-							<td>${item.date}</td>
-							<td>${item.brand}</td>
-							<td>${item.dept}</td>
-							<td>${item.itemClass}</td>
-							<td>${item.originalPrice}</td>
-							<td>${item.salePrice}</td>
-							<td>${item.activeFlag}</td>
-							<td>${item.imageFile}</td>
-							<td>${item.variants}</td>
-							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${item.id}"></td>
+							<td>${ item.id }</td>
+							<td>${ item.sku }</td>
+							<td>${ item.date }</td>
+							<td>${ item.brand }</td>
+							<td>${ item.dept }</td>
+							<td>${ item.itemClass }</td>
+							<td>${ item.originalPrice }</td>
+							<td>${ item.salePrice }</td>
+							<td>${ item.activeFlag }</td>
+							<td>${ item.imageFile }</td>
+							<td>${ item.variants }</td>
+							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${ item.uniqueId }"></td>
 						</tr>
 					</div>
 					</c:forEach>
 					<tr id="addRow"></tr>
 					<tr>
-						<td colspan=11>
+						<td colspan=12>
 							<input id ="addButton" type="button" name="add" value="add">
 							<input id = "updateButton" type="button" name="update" value="update">
 							<input id = "deleteButton" type="button" name="delete" value="delete">
+		
 						</td>
 					</tr>
 				</tbody>
 			</table>
+		</form>	
+		<form method = "POST" action = "item/upload" enctype="multipart/form-data">
+			<input type = "file" name = "file">
+			<input type = "submit" name = "submit" value = "upload">
 		</form>
 		<script src = "/js/script.js"></script>
 	</body>

@@ -1,3 +1,42 @@
+document.addEventListener("DOMContentLoaded",function(){
+	var len, end;
+	if((len = document.getElementById("idSearch").value.length) > 0){
+		end = document.getElementById("idSearch");
+	}
+	else if((len = document.getElementById("skuSearch").value.length) > 0){
+		end = document.getElementById("skuSearch");
+	}
+	else if((len = document.getElementById("dateSearch").value.length) > 0){
+		end = document.getElementById("dateSearch");
+	}
+	else if((len = document.getElementById("brandSearch").value.length) > 0){
+		end = document.getElementById("brandSearch");
+	}
+	else if((len = document.getElementById("deptSearch").value.length) > 0){
+		end = document.getElementById("deptSearch");
+	}
+	else if((len = document.getElementById("classSearch").value.length) > 0){
+		end = document.getElementById("classSearch");
+	}
+	else if((len = document.getElementById("activeFlagSearch").value.length) > 0){
+		end = document.getElementById("activeFlagSearch");
+	}
+	else if((len = document.getElementById("imageFileSearch").value.length) > 0){
+		end = document.getElementById("imageFileSearch");
+	}
+	console.log(len, end);
+	if (end.setSelectionRange) {
+		end.focus();
+		end.setSelectionRange(len, len);
+    }
+    else if (end.createTextRange) {
+        var t = end.createTextRange();
+        t.collapse(true);
+        t.moveEnd('character', len);
+        t.moveStart('character', len);
+        t.select();
+    }
+});
 //crud buttons 
 document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);
@@ -5,6 +44,14 @@ document.getElementById("deleteButton").addEventListener("click", deleteHandler)
 let typingTimer;
 
 //search fields
+document.getElementById("idSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {
+    // This code will be executed when typing has ended
+ 		const data = document.getElementById("idSearch").value;
+		location.assign("/item/id/"+data);
+  	}, 1000);
+});
 document.getElementById("idSearch").addEventListener("input", function(event){
 	clearTimeout(typingTimer);
 	typingTimer = setTimeout(function () {
@@ -39,7 +86,7 @@ document.getElementById("classSearch").addEventListener("input", function(event)
 	clearTimeout(typingTimer);
 	typingTimer = setTimeout(function(){
 		const data = document.getElementById("classSearch").value;
-		location.assign("/item/itemClass/");
+		location.assign("/item/itemClass/"+data);
 	}, 1000);
 	
 });
@@ -47,14 +94,14 @@ document.getElementById("activeFlagSearch").addEventListener("input", function(e
 	clearTimeout(typingTimer);
 	typingTimer = setTimeout(function(){
 		const data = document.getElementById("activeFlagSearch").value;
-		location.assign("/item/activeFlag/");
+		location.assign("/item/activeFlag/"+data);
 	}, 1000);
 });
 document.getElementById("imageFileSearch").addEventListener("input", function(event){
 	clearTimeout(typingTimer);
 	typingTimer = setTimeout(function(){
 		const data = document.getElementById("imageFileSearch").value;
-		location.assign("/item/imageFile/");
+		location.assign("/item/imageFile/"+data);
 	}, 1000);
 });
 //sorting implentaion
@@ -73,6 +120,8 @@ function addHandler(event){
 		request.open("POST", "/item");
 		request.setRequestHeader("Content-Type","application/json");
 		const body ={
+			'id': document.getElementById("id").value,
+			'sku': document.getElementById("sku").value,
 			'date': document.getElementById("date").value,
 			'dept': document.getElementById("dept").value,
 			'brand': document.getElementById("brand").value,
@@ -99,7 +148,9 @@ function updateHandler(event){
 		var ids = getList();
 		var request;
 		var body ={
-				'id': "",
+				'uniqueId': '',
+				'id': document.getElementById("id").value,
+				'sku': document.getElementById("sku").value,
 				'date': document.getElementById("date").value,
 				'dept': document.getElementById("dept").value,
 				'brand': document.getElementById("brand").value,
@@ -112,7 +163,7 @@ function updateHandler(event){
 			};
 		for (var x = 0; x < ids.length; x++ ){
 			request = new XMLHttpRequest();
-			body.id = ids[x];
+			body.uniqueId = ids[x];
 			request.open("PATCH", "/item");
 			request.setRequestHeader("Content-Type","application/json");
 			request.onload = () =>{
@@ -145,15 +196,16 @@ function hasTextFields(){
 
 function insertTextFields(event){
 	var tr = document.getElementById('addRow');
-	tr.innerHTML = "<td></td>"+
-				   "<td><input id='date' type='text' name='date' placeholder='Enter a date ...' value=''></td>"+
+	tr.innerHTML = "<td><input id='id' type='number' name='id' placeholder='Enter an id ...' value=''></td>"+
+				   "<td><input id='sku' type='number' name='sku' placeholder='Enter a Sku ...' value=''></td>"+
+				   "<td><input id='date' type='date' name='date' placeholder='Enter a date ...' value=''></td>"+
 				   "<td><input id='brand' type='text' name='brand' placeholder='Enter a brand...' value=''></td>"+
 				   "<td><input id='dept' type='text' name='dept' placeholder='Enter a dept...' value=''></td>"+
 				   "<td><input id='itemClass' type='text' name='itemClass' placeholder='Enter a Class...' value=''></td>"+
-				   "<td><input id='originalPrice' type='text' name='originalPrice' placeholder='Enter a Price...' value=''></td>"+ 
-				   "<td><input id='salePrice' type='text' name='salePrice' placeholder='Enter a Price...' value=''></td>"+
+				   "<td><input id='originalPrice' type='number' name='originalPrice' placeholder='Enter a Price...' value=''></td>"+ 
+				   "<td><input id='salePrice' type='number' name='salePrice' placeholder='Enter a Price...' value=''></td>"+
 				   "<td><input id='activeFlag' type='text' name='activeFlag' placeholder='Enter a Flag...' value=''></td>"+
-				   "<td><input id='imageFile' type='text' name='imageFile' placeholder='Enter a image file...' value=''></td>" +
+				   "<td><input id='imageFile' type='text' name='imageFile' placeholder='Enter an image file...' value=''></td>" +
 				   "<td><input id='variants' type='text' name='variants' placeholder='Enter variants'></td>";
 	event.preventDefault();
 }
