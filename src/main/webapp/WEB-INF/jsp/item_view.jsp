@@ -106,7 +106,7 @@
 							<td>${ item.activeFlag }</td>
 							<td>${ item.imageFile }</td>
 							<td>${ item.variants }</td>
-							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${ item.uniqueId }"></td>
+							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${ item.uniqueId }" checked=checked></td>
 						</tr>
 					</div>
 					</c:forEach>

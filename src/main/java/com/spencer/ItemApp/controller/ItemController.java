@@ -130,29 +130,98 @@ public class ItemController {
 		try(InputStream inputStream = file.getInputStream();
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))){
 			String line = bufferedReader.readLine(),temp;
-			int i;
+			int i,j=0;
+			int[] counts = new int[10];
 			while(line.contains("\t")) {
 				i = line.indexOf('\t');
 				temp = line.substring(0,i);
 				switch(temp){
+					//id 
 					case "product_id":
+						counts[0] = j;
 						break;
+					//sku//date = today
 					case "sku":
+						counts[1] = j;
 						break;
-					case "brand_code":
+					//brand 
+					case "brand":
+						counts[2] = j;
 						break;
+					//dept
 					case "category_breadcrumbs":
+						counts[3] = j;
 						break;
+					//class TODO
+					case "size":
+						counts[4] = j;
+						break;
+					//original_price
+					case "price":
+						counts[5] = j;
+						break;
+					//sale_price
+					case "sale_price":
+						counts[6] = j;
+						break;
+					case "is_active":
+						counts[7] = j;
+						break;
+					case "image_url":
+						counts[8] = j;
+						break;
+					case "variants":
+						counts[9] = j;
+						break;	 
 				}
+				j++;
 				line = line.substring(i+1);
+				System.out.println(temp);
 			}
+			Item item;
+			String value;
 			while((line = bufferedReader.readLine()) != null) {
+				item = new Item(0,0,java.time.LocalDate.now().toString(),"","","",0.0,0.0,"","","");
+				j = 0;
 				while(line.contains("\t")) {
 					i = line.indexOf("\t");
-					System.out.println(line.substring(0,i));
+					//weird index because extracting word out of "word"
+					value = line.substring(1,i-1);
 					line = line.substring(i+1);
+					if(counts[0]==j) {
+						item.setId(Long.parseLong(value));
+					}
+					else if(counts[1]==j) {
+						item.setSku(Long.parseLong(value));
+					}
+					else if(counts[2]==j) {
+						item.setBrand(value);
+					}
+					else if(counts[3]==j) {
+						item.setDept(value);
+					}
+					else if(counts[4]==j) {
+						item.setItemClass(value);
+					}
+					else if(counts[5]==j) {
+						item.setOriginalPrice(Double.parseDouble(value));
+					}
+					else if(counts[6]==j) {
+						item.setSalePrice(Double.parseDouble(value));
+					}
+					else if(counts[7]==j) {
+						item.setActiveFlag(value);
+					}
+					else if(counts[8]==j) {
+						item.setImageFile(value);
+					}
+					else if(counts[9]==j) {
+						//TODO implement variants handling probably wont be done here 
+					}
+					j++;
 				}
-				break;
+				System.out.println(item);
+				itemService.save(item);
 			}
 		}
 		catch(Exception e) {

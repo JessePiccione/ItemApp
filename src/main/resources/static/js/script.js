@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	else if((len = document.getElementById("imageFileSearch").value.length) > 0){
 		end = document.getElementById("imageFileSearch");
 	}
-	console.log(len, end);
+	
 	if (end.setSelectionRange) {
 		end.focus();
 		end.setSelectionRange(len, len);

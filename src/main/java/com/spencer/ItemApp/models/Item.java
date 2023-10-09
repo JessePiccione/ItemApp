@@ -1,5 +1,6 @@
 package com.spencer.ItemApp.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,14 +14,21 @@ public class Item {
 	private long uniqueId;
 	private Long id;
 	private long sku;
+	@Column(length = 50)
 	private String date;
+	@Column(length = 50)
 	private String brand;
+	@Column(length = 2056)
 	private String dept;
+	@Column(length = 50)
 	private String itemClass;
 	private double originalPrice;
 	private double salePrice;
+	@Column(length = 50)
 	private String activeFlag;
+	@Column(length = 255)
 	private String imageFile;
+	@Column(length = 50)
 	private String variants;
 	protected Item() {}
 	public Item(long id,long sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {
