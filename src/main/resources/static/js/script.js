@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener("DOMContentLoaded",function(event){
 	var len, end;
 	if((len = document.getElementById("idSearch").value.length) > 0){
 		end = document.getElementById("idSearch");
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	else if((len = document.getElementById("imageFileSearch").value.length) > 0){
 		end = document.getElementById("imageFileSearch");
 	}
-	
+	loadInnerDOMContent(event);
 	if (end.setSelectionRange) {
 		end.focus();
 		end.setSelectionRange(len, len);
@@ -36,7 +36,21 @@ document.addEventListener("DOMContentLoaded",function(){
         t.moveStart('character', len);
         t.select();
     }
+    
 });
+function loadInnerDOMContent(event){
+	const url =	document.getElementById("url").value;
+	var request = new XMLHttpRequest();
+	request.open("GET", url);
+	request.onload = () => {
+		loadItems(request.response);
+	}
+	request.send();
+	
+}
+function loadItems(response){
+	console.log(response);
+}
 //crud buttons 
 document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);

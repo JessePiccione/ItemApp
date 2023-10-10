@@ -39,6 +39,7 @@ public class ItemController {
 				 "/item/vairiants/","/upload/item"})
 	public String getItemPage(@RequestParam(required=false, defaultValue="missing") String sort, Model m) {
 		m.addAttribute("items", itemService.findAll(page(sort)));
+		m.addAttribute("url","/item");
 		return "item_view";
 	}
 	@GetMapping("/item/id/{id}")
@@ -145,8 +146,8 @@ public class ItemController {
 			while((temp = bufferedReader.readLine())!= null) {
 				values = temp.replace("\"", "").split("\t");
 				items.add(new Item(
-							Long.parseLong(values[locations.get("product_id")]),
-							Long.parseLong(values[locations.get("sku")]),
+							values[locations.get("product_id")],
+							values[locations.get("sku")],
 							java.time.LocalDate.now().toString(),
 							values[locations.get("brand")],
 							values[locations.get("category_breadcrumbs")],
@@ -167,7 +168,6 @@ public class ItemController {
 	public static Pageable page(String sort) {
 		return PageRequest.of(0, 25, sort(sort));
 	}
-
 	public static Sort sort(String sort) {
 		if(ItemController.sort.equals(sort)) toggleDirection();
 		else if(!sort.equals("missing")) {
@@ -183,5 +183,4 @@ public class ItemController {
 		}
 		ItemController.direction = "asc";
 	}
-
 }

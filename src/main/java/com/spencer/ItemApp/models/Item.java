@@ -12,8 +12,8 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long uniqueId;
-	private Long id;
-	private long sku;
+	private String id;
+	private String sku;
 	@Column(length = 50)
 	private String date;
 	@Column(length = 50)
@@ -31,7 +31,7 @@ public class Item {
 	@Column(length = 50)
 	private String variants;
 	protected Item() {}
-	public Item(long id,long sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {
+	public Item(String id, String sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {
 		this.id=id;
 		this.sku=sku;
 		this.setDate(date);
@@ -45,8 +45,11 @@ public class Item {
 		this.setVariants(variants);
 	}
 	public void updateNewValues(Item i) {
-		if(id == 0) {
+		if(id.equals("")) {
 			this.setId(i.getId());
+		}
+		if(sku.equals("")) {
+			this.setSku(i.getSku());
 		}
 		if(date.equals("")) {	
 			this.setDate(i.getDate());
@@ -86,89 +89,70 @@ public class Item {
 	public long getUniqueId() {
 		return uniqueId;
 	}
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public long getSku() {
+	public String getSku() {
 		return sku;
 	}
-	public void setSku(long sku) {
+	public void setSku(String sku) {
 		this.sku = sku;
 	}
 	public String getDate() {
 		return date;
 	}
-
 	public void setDate(String date) {
 		this.date = date;
 	}
-
 	public String getBrand() {
 		return brand;
 	}
-
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-
 	public String getDept() {
 		return dept;
 	}
-
 	public void setDept(String dept) {
 		this.dept = dept;
 	}
-
 	public String getItemClass() {
 		return itemClass;
 	}
-
 	public void setItemClass(String itemClass) {
 		this.itemClass = itemClass;
 	}
-
 	public double getOriginalPrice() {
 		return originalPrice;
 	}
-
 	public void setOriginalPrice(double originalPrice) {
 		this.originalPrice = originalPrice;
 	}
-
 	public double getSalePrice() {
 		return salePrice;
 	}
-
 	public void setSalePrice(double salePrice) {
 		this.salePrice = salePrice;
 	}
-
 	public String getActiveFlag() {
 		return activeFlag;
 	}
-
 	public void setActiveFlag(String activeFlag) {
 		this.activeFlag = activeFlag;
 	}
-
 	public String getImageFile() {
 		return imageFile;
 	}
-
 	public void setImageFile(String imageFile) {
 		this.imageFile = imageFile;
 	}
-
 	public String getVariants() {
 		return variants;
 	}
-
 	public void setVariants(String variants) {
 		this.variants = variants;
 	}
-	
-
 }

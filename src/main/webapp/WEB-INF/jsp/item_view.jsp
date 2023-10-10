@@ -92,10 +92,12 @@
 						<td>
 						</td>
 					</tr>
+					<div id="dataTable">
+						<input  id="url" type="hidden" name="contentURL" value="${ url }">
+					</div>
 					<c:forEach var="item" items="${ items }">
-					<div id="${ item.id }">
 						<tr>
-							<td>${ item.id }</td>
+							<td>${ item.id } Older Row </td>
 							<td>${ item.sku }</td>
 							<td>${ item.date }</td>
 							<td>${ item.brand }</td>
@@ -106,9 +108,8 @@
 							<td>${ item.activeFlag }</td>
 							<td>${ item.imageFile }</td>
 							<td>${ item.variants }</td>
-							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${ item.uniqueId }" checked=checked></td>
+							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${ item.uniqueId }"></td>
 						</tr>
-					</div>
 					</c:forEach>
 					<tr id="addRow"></tr>
 					<tr>

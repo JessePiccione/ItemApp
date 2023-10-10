@@ -3,7 +3,13 @@ document.getElementById("registerButton").addEventListener("click",function(even
 	request.open("POST","/login/register");
 	request.setRequestHeader('Content-Type', 'application/json');
 	request.onload = () => {
-		console.log(request.response);
+		if(request.status >= 400){
+			alert("Error: " + JSON.parse(request.response).Error);
+		}
+		else {
+			alert("Success: " + JSON.parse(request.response).Success);
+			location.assign("/login");
+		}
 	}
 	const body = {
 		username: document.getElementById("username").value,
