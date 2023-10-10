@@ -3,7 +3,8 @@ package com.spencer.ItemApp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.spencer.ItemApp.models.Item;
@@ -15,47 +16,50 @@ public class ItemService {
 	private ItemRepository itemRepository;
 	
 	//regular crud operations 
-	public List<Item> findAll(Sort sort){
-		return itemRepository.findAll(sort);
+	public List<Item> findAll(Pageable page){
+		return itemRepository.findAll(page);
 	}
 	public void delete(Item i) {
 		itemRepository.delete(i);
 	}
-	public List<Item> findAllById(long id, Sort sort) {
-		return this.itemRepository.findAllById(id, sort);
+	public List<Item> findAllById(long id, Pageable page) {
+		return this.itemRepository.findById(id, page);
 	}
-	public List<Item> findAllBySku(long sku, Sort sort){
-		return this.itemRepository.findAllBySku(sku, sort);
+	public List<Item> findAllBySku(long sku, Pageable page){
+		return this.itemRepository.findBySku(sku, page);
 	}
 	public Item save(Item i) {
 		return itemRepository.save(i);
 	}
-	public List<Item> findByDate(String date, Sort sort){
-		return itemRepository.findByDate(date, sort);
+	public Iterable saveAll(List<Item> list) {
+		return itemRepository.saveAll(list);
 	}
-	public List<Item> findByBrand(String brand, Sort sort){
-		return itemRepository.findByBrand(brand, sort);
+	public List<Item> findByDate(String date, Pageable page){
+		return itemRepository.findByDate(date, page);
 	}
-	public List<Item> findByDept(String dept, Sort sort){
-		return itemRepository.findByDept(dept, sort);
+	public List<Item> findByBrand(String brand, Pageable page){
+		return itemRepository.findByBrand(brand, page);
 	}
-	public List<Item> findByItemClass(String itemClass, Sort sort){
-		return itemRepository.findByItemClass(itemClass, sort);
+	public List<Item> findByDept(String dept, Pageable page){
+		return itemRepository.findByDept(dept, page);
 	}
-	public List<Item> findByOriginalPrice(double originalPrice, Sort sort){
-		return itemRepository.findByOriginalPrice(originalPrice, sort);
+	public List<Item> findByItemClass(String itemClass, Pageable page){
+		return itemRepository.findByItemClass(itemClass, page);
 	}
-	public List<Item> findbySalePrice(double salePrice, Sort sort){
-		return itemRepository.findBySalePrice(salePrice, sort);
+	public List<Item> findByOriginalPrice(double originalPrice, Pageable page){
+		return itemRepository.findByOriginalPrice(originalPrice, page);
 	}
-	public List<Item> findByActiveFlag(String activeFlag, Sort sort){
-		return itemRepository.findByActiveFlag(activeFlag, sort);
+	public List<Item> findbySalePrice(double salePrice, Pageable page){
+		return itemRepository.findBySalePrice(salePrice, page);
 	}
-	public List<Item> findByImageFile(String imageFile, Sort sort){
-		return itemRepository.findByImageFile(imageFile, sort);
+	public List<Item> findByActiveFlag(String activeFlag, Pageable page){
+		return itemRepository.findByActiveFlag(activeFlag, page);
 	}
-	public List<Item> findByVariants(String variants, Sort sort){
-		return itemRepository.findByVariants(variants, sort);
+	public List<Item> findByImageFile(String imageFile, Pageable page){
+		return itemRepository.findByImageFile(imageFile, page);
+	}
+	public List<Item> findByVariants(String variants, Pageable page){
+		return itemRepository.findByVariants(variants, page);
 	}
 	public Item findByUniqueId(long uniqueId) {
 		return itemRepository.findByUniqueId(uniqueId);

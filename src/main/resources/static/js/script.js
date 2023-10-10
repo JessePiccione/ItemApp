@@ -133,7 +133,7 @@ function addHandler(event){
 			'variants': document.getElementById("variants").value
 		};
 		request.onload = () =>{
-			location.reload();
+			location.assign(location.pathname);
 		};
 		request.send(JSON.stringify(body));
 		event.preventDefault();
@@ -167,7 +167,7 @@ function updateHandler(event){
 			request.open("PATCH", "/item");
 			request.setRequestHeader("Content-Type","application/json");
 			request.onload = () =>{
-				location.reload()
+				location.assign(location.pathname);
 			}			
 			request.send(JSON.stringify(body));
 			event.preventDefault();
@@ -184,7 +184,7 @@ function deleteHandler(event){
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		request.send();
 		request.onload = () =>{
-			location.reload();
+			location.assign(location.pathname);
 		};
 		event.preventDefault();
 	}
