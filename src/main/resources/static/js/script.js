@@ -1,43 +1,59 @@
-document.addEventListener("DOMContentLoaded",function(event){
-	var len, end;
-	if((len = document.getElementById("idSearch").value.length) > 0){
-		end = document.getElementById("idSearch");
-	}
-	else if((len = document.getElementById("skuSearch").value.length) > 0){
-		end = document.getElementById("skuSearch");
-	}
-	else if((len = document.getElementById("dateSearch").value.length) > 0){
-		end = document.getElementById("dateSearch");
-	}
-	else if((len = document.getElementById("brandSearch").value.length) > 0){
-		end = document.getElementById("brandSearch");
-	}
-	else if((len = document.getElementById("deptSearch").value.length) > 0){
-		end = document.getElementById("deptSearch");
-	}
-	else if((len = document.getElementById("classSearch").value.length) > 0){
-		end = document.getElementById("classSearch");
-	}
-	else if((len = document.getElementById("activeFlagSearch").value.length) > 0){
-		end = document.getElementById("activeFlagSearch");
-	}
-	else if((len = document.getElementById("imageFileSearch").value.length) > 0){
-		end = document.getElementById("imageFileSearch");
-	}
-	loadInnerDOMContent(event);
-	if (end.setSelectionRange) {
-		end.focus();
-		end.setSelectionRange(len, len);
-    }
-    else if (end.createTextRange) {
-        var t = end.createTextRange();
-        t.collapse(true);
-        t.moveEnd('character', len);
-        t.moveStart('character', len);
-        t.select();
-    }
-    
+let typingTimer;
+let requestUrl;
+var global_items_list;
+var filtered_list;
+var direction = true;
+var oldSorter='id';
+//onDOMContentLoader
+document.addEventListener("DOMContentLoaded",DOMit);
+//crud buttons 
+document.getElementById("addButton").addEventListener("click", addHandler);
+document.getElementById("updateButton").addEventListener("click", updateHandler);
+document.getElementById("deleteButton").addEventListener("click", deleteHandler); 
+//search fields
+document.getElementById("idSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('id');}, 100);
 });
+document.getElementById("skuSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('sku');}, 100);
+});
+document.getElementById("dateSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('date');}, 100);
+});
+document.getElementById("brandSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('brand');}, 100);
+});
+document.getElementById("deptSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('dept');}, 100);
+});
+document.getElementById("itemClassSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('itemClass');}, 100);
+});
+document.getElementById("activeFlagSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('activeFlag');}, 100);
+});
+document.getElementById("imageFileSearch").addEventListener("input", function(event){
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function () {sendSearchRequest('imageFile');}, 100);
+});
+function loadSearchItems(items, type, data){
+	var filtered = items.filter(e => e[type].includes(data));
+	loadItems(JSON.stringify(filtered), true);
+}
+function sendSearchRequest(type){
+	const data = document.getElementById(type+"Search").value;
+	loadSearchItems(global_items_list, type, data);
+}
+function DOMit(event){
+	loadInnerDOMContent(event);
+}
 function loadInnerDOMContent(event){
 	const url =	document.getElementById("url").value;
 	var request = new XMLHttpRequest();
@@ -46,84 +62,61 @@ function loadInnerDOMContent(event){
 		loadItems(request.response);
 	}
 	request.send();
+}
+function loadItems(response, off){
+	document.querySelectorAll(".dynamicRowEntry").forEach(e => {e.remove()});
+	var lastRow = document.querySelector("#itemBody");
+	var items = JSON.parse(response);
+	for (var x = 0; x < items.length; x++){
+		var newRow = document.createElement("tr");
+		newRow.className = "dynamicRowEntry";
+		newRow.innerHTML = '<td>'+items[x].id+'</td>\
+							<td>'+items[x].sku+'</td>\
+							<td>'+items[x].date+'</td>\
+							<td>'+items[x].brand+'</td>\
+							<td>'+items[x].dept+'</td>\
+							<td>'+items[x].itemClass+'</td>\
+							<td>'+items[x].originalPrice+'</td>\
+							<td>'+items[x].salePrice+'</td>\
+							<td>'+items[x].activeFlag+'</td>\
+							<td>'+items[x].imageFile+'</td>\
+							<td>'+items[x].variants+'</td>\
+							<td><input class="CheckBoxInput" type="checkbox" name="id" value="'+items[x].uniqueId +'"></td>';
+		lastRow.appendChild(newRow);
+	}
+	if (!off){
+		global_items_list = items;
+	}
 	
 }
-function loadItems(response){
-	console.log(response);
-}
-//crud buttons 
-document.getElementById("addButton").addEventListener("click", addHandler);
-document.getElementById("updateButton").addEventListener("click", updateHandler);
-document.getElementById("deleteButton").addEventListener("click", deleteHandler);
-let typingTimer;
-
-//search fields
-document.getElementById("idSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function () {
-    // This code will be executed when typing has ended
- 		const data = document.getElementById("idSearch").value;
-		location.assign("/item/id/"+data);
-  	}, 1000);
-});
-document.getElementById("idSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function () {
-    // This code will be executed when typing has ended
- 		const data = document.getElementById("idSearch").value;
-		location.assign("/item/id/"+data);
-  	}, 1000);
-});
-document.getElementById("dateSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function(){
-		const data = document.getElementById("dateSearch").value;
-		location.assign("/item/date/"+data);
-	}, 1000);
-});
-document.getElementById("brandSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function(){
-		const data = document.getElementById("brandSearch").value;
-		location.assign("/item/brand/"+data);
-	}, 1000);
-});
-document.getElementById("deptSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function(){
-		const data = document.getElementById("deptSearch").value;
-		location.assign("/item/dept/"+data);
-	}, 1000);
-	
-});
-document.getElementById("classSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function(){
-		const data = document.getElementById("classSearch").value;
-		location.assign("/item/itemClass/"+data);
-	}, 1000);
-	
-});
-document.getElementById("activeFlagSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function(){
-		const data = document.getElementById("activeFlagSearch").value;
-		location.assign("/item/activeFlag/"+data);
-	}, 1000);
-});
-document.getElementById("imageFileSearch").addEventListener("input", function(event){
-	clearTimeout(typingTimer);
-	typingTimer = setTimeout(function(){
-		const data = document.getElementById("imageFileSearch").value;
-		location.assign("/item/imageFile/"+data);
-	}, 1000);
-});
 //sorting implentaion
-
 function changeSort(s){
-	location.assign(location.pathname + "?sort="+s);
+	if(oldSorter == s){
+		direction = !direction;
+	}else {
+		direction = true;
+	}
+	global_items_list.sort((a, b) =>{
+		if(direction == true){
+			if(a[s] > b[s]){
+				return 1;
+			}
+			if(a[s] < b[s]){
+				return -1;
+			}
+		} else {
+			if(a[s] < b[s]){
+				return 1;
+			}
+			if(a[s] > b[s]){
+				return -1;
+			}
+		}
+		return 0;
+	});
+	oldSorter = s;
+	loadItems(JSON.stringify(global_items_list));
 }
-
 //handles adds to the server
 function addHandler(event){
 	if(hasTextFields()){
@@ -147,7 +140,8 @@ function addHandler(event){
 			'variants': document.getElementById("variants").value
 		};
 		request.onload = () =>{
-			location.assign(location.pathname);
+			loadItems(request.response);
+			removeTextFields();
 		};
 		request.send(JSON.stringify(body));
 		event.preventDefault();
@@ -181,7 +175,8 @@ function updateHandler(event){
 			request.open("PATCH", "/item");
 			request.setRequestHeader("Content-Type","application/json");
 			request.onload = () =>{
-				location.assign(location.pathname);
+				loadItems(request.response);
+				removeTextFields();
 			}			
 			request.send(JSON.stringify(body));
 			event.preventDefault();
@@ -196,32 +191,42 @@ function deleteHandler(event){
 		request = new XMLHttpRequest();
 		request.open("DELETE", "/item/"+ids[x]);
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		request.send();
 		request.onload = () =>{
-			location.assign(location.pathname);
+			if(request.status === 405 ){
+				var anotherRequest = new XMLHttpRequest();
+				anotherRequest.open("GET", "/item");
+				anotherRequest.onload = () => {
+					loadItems(anotherRequest.response);
+				}
+				anotherRequest.send();
+				return;
+			}
+			loadItems(request.response);
 		};
-		event.preventDefault();
+		request.send();
 	}
 }
 //helper functions 
 function hasTextFields(){
 	return document.getElementById('addRow').innerHTML == "";
 }
-
 function insertTextFields(event){
 	var tr = document.getElementById('addRow');
-	tr.innerHTML = "<td><input id='id' type='number' name='id' placeholder='Enter an id ...' value=''></td>"+
-				   "<td><input id='sku' type='number' name='sku' placeholder='Enter a Sku ...' value=''></td>"+
-				   "<td><input id='date' type='date' name='date' placeholder='Enter a date ...' value=''></td>"+
-				   "<td><input id='brand' type='text' name='brand' placeholder='Enter a brand...' value=''></td>"+
-				   "<td><input id='dept' type='text' name='dept' placeholder='Enter a dept...' value=''></td>"+
-				   "<td><input id='itemClass' type='text' name='itemClass' placeholder='Enter a Class...' value=''></td>"+
-				   "<td><input id='originalPrice' type='number' name='originalPrice' placeholder='Enter a Price...' value=''></td>"+ 
-				   "<td><input id='salePrice' type='number' name='salePrice' placeholder='Enter a Price...' value=''></td>"+
-				   "<td><input id='activeFlag' type='text' name='activeFlag' placeholder='Enter a Flag...' value=''></td>"+
-				   "<td><input id='imageFile' type='text' name='imageFile' placeholder='Enter an image file...' value=''></td>" +
-				   "<td><input id='variants' type='text' name='variants' placeholder='Enter variants'></td>";
+	tr.innerHTML = "<td class='inputCell'><input id='id' type='number' name='id' placeholder='Enter an id ...' value=''></td>"+
+				   "<td class='inputCell'><input id='sku' type='number' name='sku' placeholder='Enter a Sku ...' value=''></td>"+
+				   "<td class='inputCell'><input id='date' type='date' name='date' placeholder='Enter a date ...' value=''></td>"+
+				   "<td class='inputCell'><input id='brand' type='text' name='brand' placeholder='Enter a brand...' value=''></td>"+
+				   "<td class='inputCell'><input id='dept' type='text' name='dept' placeholder='Enter a dept...' value=''></td>"+
+				   "<td class='inputCell'><input id='itemClass' type='text' name='itemClass' placeholder='Enter a Class...' value=''></td>"+
+				   "<td class='inputCell'><input id='originalPrice' type='number' name='originalPrice' placeholder='Enter a Price...' value=''></td>"+ 
+				   "<td class='inputCell'><input id='salePrice' type='number' name='salePrice' placeholder='Enter a Price...' value=''></td>"+
+				   "<td class='inputCell'><input id='activeFlag' type='text' name='activeFlag' placeholder='Enter a Flag...' value=''></td>"+
+				   "<td class='inputCell'><input id='imageFile' type='text' name='imageFile' placeholder='Enter an image file...' value=''></td>" +
+				   "<td class='inputCell'><input id='variants' type='text' name='variants' placeholder='Enter variants'></td>";
 	event.preventDefault();
+}
+function removeTextFields(event){
+	document.querySelectorAll('.inputCell').forEach(e => {e.remove();});
 }
 function getList(){
 	var inputs = document.getElementsByClassName("CheckBoxInput");

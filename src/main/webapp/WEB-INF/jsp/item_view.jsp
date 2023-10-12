@@ -18,7 +18,7 @@
 			<table>
 				<thead>
 				</thead>
-				<tbody>
+				<tbody id ="itemBody">
 					<tr>
 						<th onclick="changeSort('id')">
 							Id&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
@@ -57,8 +57,7 @@
 							Select
 						</th>
 					</tr>
-					<tr>
-
+					<tr id ="searchRow">
 						<td>
 							<input id="idSearch" name ="idSearch" type="text" placeholder="Search..." value="${ id }" >
 						</td>
@@ -75,7 +74,7 @@
 							<input id="deptSearch" name = "deptSearch" type="text" placeholder="Search..." value="${ dept }">
 						</td>
 						<td>
-							<input id="classSearch" name = "classSearch" type="text" placeholder="Search..." value="${ itemClass }">
+							<input id="itemClassSearch" name = "itemClassSearch" type="text" placeholder="Search..." value="${ itemClass }">
 						</td>
 						<td>
 						</td>
@@ -92,26 +91,12 @@
 						<td>
 						</td>
 					</tr>
-					<div id="dataTable">
-						<input  id="url" type="hidden" name="contentURL" value="${ url }">
-					</div>
-					<c:forEach var="item" items="${ items }">
-						<tr>
-							<td>${ item.id } Older Row </td>
-							<td>${ item.sku }</td>
-							<td>${ item.date }</td>
-							<td>${ item.brand }</td>
-							<td>${ item.dept }</td>
-							<td>${ item.itemClass }</td>
-							<td>${ item.originalPrice }</td>
-							<td>${ item.salePrice }</td>
-							<td>${ item.activeFlag }</td>
-							<td>${ item.imageFile }</td>
-							<td>${ item.variants }</td>
-							<td><input class="CheckBoxInput" type="checkbox" name="id" value="${ item.uniqueId }"></td>
-						</tr>
-					</c:forEach>
-					<tr id="addRow"></tr>
+
+
+					
+				</tbody>
+				<input  id="url" type="hidden" name="contentURL" value="${ url }">
+				<tr id="addRow"></tr>
 					<tr>
 						<td colspan=12>
 							<input id ="addButton" type="button" name="add" value="add">
@@ -120,7 +105,6 @@
 		
 						</td>
 					</tr>
-				</tbody>
 			</table>
 		</form>	
 		<form method = "POST" action = "item/upload" enctype="multipart/form-data">

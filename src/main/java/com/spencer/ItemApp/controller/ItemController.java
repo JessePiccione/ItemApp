@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,99 +36,93 @@ public class ItemController {
 	private static String direction = "asc";
 	@Autowired 
 	private ItemService itemService;
+	@GetMapping({"/","/home","/index"})
+	public String getHomePage(Model m){
+		m.addAttribute("url","/item");
+		return "item_view";
+	}
 	@GetMapping({"/item","/item/id/","/item/sku","/item/date/","/item/brand/",
 				 "/item/dept/","/item/itemClass/","/item/originalPrice/",
 				 "/item/salePrice/","/item/activeFlag/","/item/imageFile/",
 				 "/item/vairiants/","/upload/item"})
-	public String getItemPage(@RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findAll(page(sort)));
-		m.addAttribute("url","/item");
-		return "item_view";
+	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sort) {
+		List<Item> items = itemService.findAll(page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/id/{id}")
-	public String searchItemPageById(@PathVariable long id, @RequestParam(required=false, defaultValue="missing") String sort, Model m) { 
-		m.addAttribute("items", itemService.findAllById(id, page(sort)));
-		m.addAttribute("id", id);
-		return "item_view";
+	public ResponseEntity<String> searchItemsById(@PathVariable long id, @RequestParam(required=false, defaultValue="missing") String sort) { 
+		List<Item> items = itemService.findAllById(id, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/sku/{sku}")
-	public String searchPageBySku(@PathVariable long sku, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findAllBySku(sku, page(sort)));
-		m.addAttribute("sku", sku);
-		return "item_view";
+	public ResponseEntity<String> searchItemsBySku(@PathVariable long sku, @RequestParam(required=false, defaultValue="missing") String sort) {
+		List<Item> items = itemService.findAllBySku(sku, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/date/{date}")
-	public String searchItemPageByDate(@PathVariable String date, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findByDate(date, page(sort)));
-		m.addAttribute("date", date);
-		return "item_view";
+	public ResponseEntity<String> searchItemsByDate(@PathVariable String date, @RequestParam(required=false, defaultValue="missing") String sort) {
+		List<Item> items = itemService.findByDate(date, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/brand/{brand}")
-	public String searchItemPageByBrand(@PathVariable String brand, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findByBrand(brand, page(sort)));
-		m.addAttribute("brand", brand);
-		return "item_view";
+	public ResponseEntity<String> searchItemsByBrand(@PathVariable String brand, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
+		List<Item> items = itemService.findByBrand(brand, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/dept/{dept}")
-	public String searchItemPageByDept(@PathVariable String dept, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findByDept(dept, page(sort)));
-		m.addAttribute("dept", dept);
-		return "item_view";	
+	public ResponseEntity<String> searchItemsByDept(@PathVariable String dept, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
+		List<Item> items = itemService.findByDept(dept, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);	
 	}
 	@GetMapping("/item/itemClass/{itemClass}")
-	public String searchItemPageByItemClass(@PathVariable String itemClass, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findByItemClass(itemClass, page(sort)));
-		m.addAttribute("itemClass", itemClass);
-		return "item_view";
+	public ResponseEntity<String> searchItemsByItemClass(@PathVariable String itemClass, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
+		List<Item> items = itemService.findByItemClass(itemClass, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/originalPrice/{originalPrice}")
-	public String searchItemPageByOriginalPrice(@PathVariable double originalPrice, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findByOriginalPrice(originalPrice, page(sort)));
-		m.addAttribute("originalPrice", originalPrice);
-		return "item_view";
+	public ResponseEntity<String> searchItemByOriginalPrice(@PathVariable double originalPrice, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
+		List<Item> items = itemService.findByOriginalPrice(originalPrice, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/salePrice/{salePrice}")
-	public String searchItemPageBySalePrice(@PathVariable double salePrice, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findbySalePrice(salePrice, page(sort)));
-		m.addAttribute("salePrice", salePrice);
-		return "item_view";
+	public ResponseEntity<String> searchItemPageBySalePrice(@PathVariable double salePrice, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
+		List<Item> items = itemService.findbySalePrice(salePrice, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/activeFlag/{activeFlag}")
-	public String searchItemPageByActiveFlag(@PathVariable String activeFlag, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findByActiveFlag(activeFlag, page(sort)));
-		m.addAttribute("activeFlag", activeFlag);
-		return "item_view";
+	public ResponseEntity<String> searchItemPageByActiveFlag(@PathVariable String activeFlag, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
+		List<Item> items = itemService.findByActiveFlag(activeFlag, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/imageFile/{imageFile}")
-	public String searchItemPageByImageFile(@PathVariable String imageFile, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		m.addAttribute("items", itemService.findByImageFile(imageFile, page(sort)));
-		m.addAttribute("imageFile", imageFile);
-		return "item_view";
+	public ResponseEntity<String> searchItemPageByImageFile(@PathVariable String imageFile, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
+		List<Item> items = itemService.findByImageFile(imageFile, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/variants/{variants}")
-	public String searchItemPageByVaraints(@PathVariable String variants, @RequestParam(required=false, defaultValue="missing") String sort,  Model m) {
-		m.addAttribute("items", itemService.findByVariants(variants, page(sort)));
-		m.addAttribute("variants", variants);
-		return "item_view";
+	public ResponseEntity<String> searchItemPageByVaraints(@PathVariable String variants, @RequestParam(required=false, defaultValue="missing") String sort,  Model m) {
+		List<Item> items = itemService.findByVariants(variants, page(sort));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item")
 	public String postItemPage(@RequestBody(required=true) Item i, Model M) {
 		itemService.save(i);
-		return "item";
+		return "redirect:/item";
 	}
 	@DeleteMapping("/item/{id}")
-	public String deleteItemFromPage(@PathVariable long id) {
-		itemService.delete(itemService.findByUniqueId(id));
-		return "item";
+	public String deleteItemFromPage(@PathVariable String id) {
+		itemService.delete(itemService.findByUniqueId(Long.parseLong(id)));
+		return "redirect:/item";
 	}
 	@PatchMapping("/item")
-	public String patchItemFromPage(@RequestBody(required=true) Item i) {
+	public ResponseEntity<String> patchItemFromPage(@RequestBody(required=true) Item i) {
 		Item oldItem = itemService.findByUniqueId(i.getUniqueId());
 		if(oldItem != null) {
 			i.updateNewValues(oldItem);
 			itemService.save(i);
 		}
-		return "item";
+		List<Item> items = itemService.findAll(page("missing"));
+		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/upload")
 	public String handleIncomingFile(@RequestParam("file") MultipartFile file, Model m) {
