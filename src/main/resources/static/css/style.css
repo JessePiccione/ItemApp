@@ -1,4 +1,8 @@
 /* Reset some default styles */
+img.fixed-size{
+	width: 100px;
+	height: 100px;
+}
 /* Style for the text input fields */
 input[type="text"] {
     width: 100%; /* Take up the full width of the table cell */
@@ -17,7 +21,6 @@ input[type="text"]::placeholder {
 }
 input[type="button"].filterer {
 	box-align:center;
-
 }
 body, table {
     margin: 0;

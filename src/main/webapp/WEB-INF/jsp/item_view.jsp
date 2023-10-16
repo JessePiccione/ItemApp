@@ -98,16 +98,38 @@
 				<input  id="url" type="hidden" name="contentURL" value="${ url }">
 				<tr id="addRow"></tr>
 					<tr>
-						<td colspan=12>
-							<input id ="addButton" type="button" name="add" value="add">
-							<input id = "updateButton" type="button" name="update" value="update">
-							<input id = "deleteButton" type="button" name="delete" value="delete">
-		
+						<td colspan=9>
+							<input id="addButton" type="button" name="add" value="add">
+							<input id="updateButton" type="button" name="update" value="update">
+							<input id="deleteButton" type="button" name="delete" value="delete">
 						</td>
+						<td colspan=2>
+							<label>Showing Page&nbsp;</label>
+							<label id="currentPage"></label>
+							<label>&nbsp;of&nbsp;</label>
+							<label id="maximumPage"></label>
+							<input id="previousPage" type="button" value = "Previous Page"/>
+							<input id="nextPage" type="button" value = "Next Page"/>
+						</td>
+						<td>
+							<label>Page Size: </label>						
+							<select id="pageSize" name="pageSize">
+								<option value=48>
+									48
+								</option>
+								<option value=72>
+									72	
+								</option>
+								<option value=96>
+									96
+								</option>
+							</select>
+						</td>
+						
 					</tr>
 			</table>
 		</form>	
-		<form method = "POST" action = "item/upload" enctype="multipart/form-data">
+		<form method="POST" action = "item/upload" enctype="multipart/form-data">
 			<input type = "file" name = "file">
 			<input type = "submit" name = "submit" value = "upload">
 		</form>

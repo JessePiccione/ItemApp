@@ -16,6 +16,9 @@ public class ItemService {
 	private ItemRepository itemRepository;
 	
 	//regular crud operations 
+	public long countAllItems() {
+		return itemRepository.count();
+	}
 	public List<Item> findAll(Pageable page){
 		return itemRepository.findAll(page);
 	}

@@ -34,6 +34,7 @@ import com.spencer.ItemApp.service.ItemService;
 public class ItemController {
 	private static String sort = "id";
 	private static String direction = "asc";
+	private static final int pageSize = 48;
 	@Autowired 
 	private ItemService itemService;
 	@GetMapping({"/","/home","/index"})
@@ -41,67 +42,131 @@ public class ItemController {
 		m.addAttribute("url","/item");
 		return "item_view";
 	}
+	@GetMapping("/count")
+	public ResponseEntity<String> getCount(){
+		return new ResponseEntity(itemService.countAllItems(), HttpStatus.OK);
+	}
 	@GetMapping({"/item","/item/id/","/item/sku","/item/date/","/item/brand/",
 				 "/item/dept/","/item/itemClass/","/item/originalPrice/",
 				 "/item/salePrice/","/item/activeFlag/","/item/imageFile/",
 				 "/item/vairiants/","/upload/item"})
-	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sort) {
-		List<Item> items = itemService.findAll(page(sort));
+	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sort,
+										   @RequestParam(required=false, defaultValue="-1") int pageNumber,
+										   @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findAll(page(pageNumber!=-1?pageNumber:0,
+													itemsPerPage!=-1?itemsPerPage:pageSize,
+													sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/id/{id}")
-	public ResponseEntity<String> searchItemsById(@PathVariable long id, @RequestParam(required=false, defaultValue="missing") String sort) { 
-		List<Item> items = itemService.findAllById(id, page(sort));
+	public ResponseEntity<String> searchItemsById(@PathVariable long id,
+												  @RequestParam(required=false, defaultValue="missing") String sort,
+												  @RequestParam(required=false, defaultValue="-1") int pageNumber,
+			                                      @RequestParam(required=false, defaultValue="-1") int itemsPerPage) { 
+		List<Item> items = itemService.findAllById(id, page(pageNumber!=-1?pageNumber:0,
+															itemsPerPage!=-1?itemsPerPage:pageSize,
+															sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/sku/{sku}")
-	public ResponseEntity<String> searchItemsBySku(@PathVariable long sku, @RequestParam(required=false, defaultValue="missing") String sort) {
-		List<Item> items = itemService.findAllBySku(sku, page(sort));
+	public ResponseEntity<String> searchItemsBySku(@PathVariable long sku,
+												   @RequestParam(required=false, defaultValue="missing") String sort,
+												   @RequestParam(required=false, defaultValue="-1") int pageNumber,
+			                                       @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findAllBySku(sku, page(pageNumber!=-1?pageNumber:0,
+															  itemsPerPage!=-1?itemsPerPage:pageSize,
+															  sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/date/{date}")
-	public ResponseEntity<String> searchItemsByDate(@PathVariable String date, @RequestParam(required=false, defaultValue="missing") String sort) {
-		List<Item> items = itemService.findByDate(date, page(sort));
+	public ResponseEntity<String> searchItemsByDate(@PathVariable String date,
+													@RequestParam(required=false, defaultValue="missing") String sort,
+													@RequestParam(required=false, defaultValue="-1") int pageNumber,
+													@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findByDate(date, page(pageNumber!=-1?pageNumber:0,
+															 itemsPerPage!=-1?itemsPerPage:pageSize,
+															 sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/brand/{brand}")
-	public ResponseEntity<String> searchItemsByBrand(@PathVariable String brand, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		List<Item> items = itemService.findByBrand(brand, page(sort));
+	public ResponseEntity<String> searchItemsByBrand(@PathVariable String brand,
+													 @RequestParam(required=false, defaultValue="missing") String sort,
+													 @RequestParam(required=false, defaultValue="-1") int pageNumber,
+													 @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findByBrand(brand, page(pageNumber!=-1?pageNumber:0,
+															   itemsPerPage!=-1?itemsPerPage:pageSize,
+															   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/dept/{dept}")
-	public ResponseEntity<String> searchItemsByDept(@PathVariable String dept, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		List<Item> items = itemService.findByDept(dept, page(sort));
+	public ResponseEntity<String> searchItemsByDept(@PathVariable String dept,
+													@RequestParam(required=false, defaultValue="missing") String sort,
+													@RequestParam(required=false, defaultValue="-1") int pageNumber,
+													@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findByDept(dept, page(pageNumber!=-1?pageNumber:0,
+															 itemsPerPage!=-1?itemsPerPage:pageSize,
+															 sort));
 		return new ResponseEntity(items, HttpStatus.OK);	
 	}
 	@GetMapping("/item/itemClass/{itemClass}")
-	public ResponseEntity<String> searchItemsByItemClass(@PathVariable String itemClass, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		List<Item> items = itemService.findByItemClass(itemClass, page(sort));
+	public ResponseEntity<String> searchItemsByItemClass(@PathVariable String itemClass,
+														 @RequestParam(required=false, defaultValue="missing") String sort,
+														 @RequestParam(required=false, defaultValue="-1") int pageNumber,
+														 @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findByItemClass(itemClass, page(pageNumber!=-1?pageNumber:0,
+																	   itemsPerPage!=-1?itemsPerPage:pageSize,
+																	   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/originalPrice/{originalPrice}")
-	public ResponseEntity<String> searchItemByOriginalPrice(@PathVariable double originalPrice, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		List<Item> items = itemService.findByOriginalPrice(originalPrice, page(sort));
+	public ResponseEntity<String> searchItemByOriginalPrice(@PathVariable double originalPrice,
+															@RequestParam(required=false, defaultValue="missing") String sort,
+															@RequestParam(required=false, defaultValue="-1") int pageNumber,
+															@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findByOriginalPrice(originalPrice, page(pageNumber!=-1?pageNumber:0,
+														   					   itemsPerPage!=-1?itemsPerPage:pageSize,
+														   					   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/salePrice/{salePrice}")
-	public ResponseEntity<String> searchItemPageBySalePrice(@PathVariable double salePrice, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		List<Item> items = itemService.findbySalePrice(salePrice, page(sort));
+	public ResponseEntity<String> searchItemPageBySalePrice(@PathVariable double salePrice,
+															@RequestParam(required=false, defaultValue="missing") String sort,
+															@RequestParam(required=false, defaultValue="-1") int pageNumber,
+															@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findbySalePrice(salePrice, page(pageNumber!=-1?pageNumber:0,
+																	   itemsPerPage!=-1?itemsPerPage:pageSize,
+																	   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/activeFlag/{activeFlag}")
-	public ResponseEntity<String> searchItemPageByActiveFlag(@PathVariable String activeFlag, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		List<Item> items = itemService.findByActiveFlag(activeFlag, page(sort));
+	public ResponseEntity<String> searchItemPageByActiveFlag(@PathVariable String activeFlag,
+															 @RequestParam(required=false, defaultValue="missing") String sort, 
+															 @RequestParam(required=false, defaultValue="-1") int pageNumber,
+															 @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findByActiveFlag(activeFlag, page(pageNumber!=-1?pageNumber:0,
+																		 itemsPerPage!=-1?itemsPerPage:pageSize,
+																		 sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/imageFile/{imageFile}")
-	public ResponseEntity<String> searchItemPageByImageFile(@PathVariable String imageFile, @RequestParam(required=false, defaultValue="missing") String sort, Model m) {
-		List<Item> items = itemService.findByImageFile(imageFile, page(sort));
+	public ResponseEntity<String> searchItemPageByImageFile(@PathVariable String imageFile,
+															@RequestParam(required=false, defaultValue="missing") String sort,
+															@RequestParam(required=false, defaultValue="-1") int pageNumber,
+															@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+
+		List<Item> items = itemService.findByImageFile(imageFile, page(pageNumber!=-1?pageNumber:0,
+																	   itemsPerPage!=-1?itemsPerPage:pageSize,
+																	   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping("/item/variants/{variants}")
-	public ResponseEntity<String> searchItemPageByVaraints(@PathVariable String variants, @RequestParam(required=false, defaultValue="missing") String sort,  Model m) {
-		List<Item> items = itemService.findByVariants(variants, page(sort));
+	public ResponseEntity<String> searchItemPageByVaraints(@PathVariable String variants,
+														   @RequestParam(required=false, defaultValue="missing") String sort, 
+														   @RequestParam(required=false, defaultValue="-1") int pageNumber,
+														   @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
+		List<Item> items = itemService.findByVariants(variants, page(pageNumber!=-1?pageNumber:0,
+																	 itemsPerPage!=-1?itemsPerPage:pageSize,
+																	 sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item")
@@ -121,15 +186,14 @@ public class ItemController {
 			i.updateNewValues(oldItem);
 			itemService.save(i);
 		}
-		List<Item> items = itemService.findAll(page("missing"));
+		List<Item> items = itemService.findAll(page(0, pageSize, "missing"));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/upload")
 	public String handleIncomingFile(@RequestParam("file") MultipartFile file, Model m) {
 		if(file.isEmpty()) {
-			return "redirect:/item";
+			return "redirect:/home";
 		}
-		String fileName = file.getOriginalFilename();
 		try(InputStream inputStream = file.getInputStream();
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))){
 			String[] header = bufferedReader.readLine().split("\t");
@@ -147,7 +211,10 @@ public class ItemController {
 							values[locations.get("sku")],
 							java.time.LocalDate.now().toString(),
 							values[locations.get("brand")],
-							values[locations.get("category_breadcrumbs")],
+							values[locations.get("category_breadcrumbs")].substring(0,
+								values[locations.get("category_breadcrumbs")].indexOf("|")!=-1?
+									values[locations.get("category_breadcrumbs")].indexOf("|"):
+									values[locations.get("category_breadcrumbs")].length()),												
 							values[locations.get("size")],
 							Double.parseDouble(values[locations.get("price")]),
 							Double.parseDouble(values[locations.get("sale_price")]),
@@ -160,10 +227,10 @@ public class ItemController {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/item";
+		return "redirect:/home";
 	}
-	public static Pageable page(String sort) {
-		return PageRequest.of(0, 25, sort(sort));
+	public static Pageable page(int pageNumber, int itemsPerPage, String sort) {
+		return PageRequest.of(pageNumber, itemsPerPage, sort(sort));
 	}
 	public static Sort sort(String sort) {
 		if(ItemController.sort.equals(sort)) toggleDirection();
