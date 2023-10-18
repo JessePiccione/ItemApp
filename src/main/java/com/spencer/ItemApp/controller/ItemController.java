@@ -34,7 +34,7 @@ import com.spencer.ItemApp.service.ItemService;
 public class ItemController {
 	private static String sort = "id";
 	private static String direction = "asc";
-	private static final int pageSize = 48;
+	private static final int pageSize = 12;
 	@Autowired 
 	private ItemService itemService;
 	@GetMapping({"/","/home","/index"})

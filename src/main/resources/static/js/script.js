@@ -3,7 +3,8 @@ var global_items_list;
 var direction = true;
 var oldSorter='id';
 var pageNumber=0;
-var itemsPerPage=48;
+var itemsPerPage=document.getElementById("pageSize").value;
+
 //onDOMContentLoader
 document.addEventListener("DOMContentLoaded",DOMit);
 //crud buttons 
@@ -95,7 +96,7 @@ function updateHandler(event){
 	else {
 		var ids = getList();
 		var request;
-		var body = getItemFieldValues;
+		var body = getItemFieldValues();
 		for (var x = 0; x < ids.length; x++ ){
 			request = new XMLHttpRequest();
 			body.uniqueId = ids[x];
@@ -163,15 +164,16 @@ function loadInnerDOMContent(event){
 	request.send();
 }
 function loadItems(response, off){
+	var items = JSON.parse(response);
 	document.querySelectorAll(".dynamicRowEntry").forEach(e => {e.remove()});
 	var lastRow = document.querySelector("#itemBody");
-	var items = JSON.parse(response);
+	document.getElementById("hidder").className = items.length>0?"":"hide";
 	for (var x = 0; x < items.length; x++){
 		var newRow = document.createElement("tr");
 		newRow.className = "dynamicRowEntry";
 		newRow.innerHTML = '<td>'+items[x].id+'</td>\
 							<td>'+items[x].sku+'</td>\
-							<td>'+items[x].date+'</td>\
+							<td class="dateField">'+items[x].date+'</td>\
 							<td>'+items[x].brand+'</td>\
 							<td>'+items[x].dept+'</td>\
 							<td>'+items[x].itemClass+'</td>\
