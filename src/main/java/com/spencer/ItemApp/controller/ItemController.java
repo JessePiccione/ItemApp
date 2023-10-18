@@ -212,13 +212,13 @@ public class ItemController {
 							java.time.LocalDate.now().toString(),
 							values[locations.get("brand")],
 							values[locations.get("category_breadcrumbs")].substring(0,
-								values[locations.get("category_breadcrumbs")].indexOf("|")!=-1?
-									values[locations.get("category_breadcrumbs")].indexOf("|"):
+								values[locations.get("category_breadcrumbs")].indexOf(">")!=-1?
+									values[locations.get("category_breadcrumbs")].indexOf(">"):
 									values[locations.get("category_breadcrumbs")].length()),												
 							values[locations.get("size")],
 							Double.parseDouble(values[locations.get("price")]),
 							Double.parseDouble(values[locations.get("sale_price")]),
-							values[locations.get("is_active")],
+							values[locations.get("is_active")].contains("1")?"Y":"N",
 							values[locations.get("image_url")],
 							""));
 			}

@@ -180,7 +180,7 @@ function loadItems(response, off){
 							<td>'+items[x].originalPrice+'</td>\
 							<td>'+items[x].salePrice+'</td>\
 							<td>'+items[x].activeFlag+'</td>\
-							<td><img src="'+items[x].imageFile+'" class="fixed-size" alt="Description of image"></td>\
+							<td class="img"><img src="'+items[x].imageFile+'" class="fixed-size" alt="Description of image"></td>\
 							<td>'+items[x].variants+'</td>\
 							<td><input class="CheckBoxInput" type="checkbox" name="id" value="'+items[x].uniqueId +'"></td>';
 		lastRow.appendChild(newRow);

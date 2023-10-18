@@ -13,10 +13,16 @@
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
+			<div>
+				<img class="offset imgHeader" src="/img/spencer.jpg"></img>
+				<img class="imgHeader" src="/img/spirit.jpg"></img>
+			</div>
+			<br/>
 			<form method="POST" action = "item/upload" enctype="multipart/form-data">
 				<input id="uploadButton"  type = "file" name = "file">
 				<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
 			</form>
+			<br/>
 		<div id="hidder" class="hide">
 			<table>
 				<tbody id ="itemBody">
@@ -43,13 +49,13 @@
 							Price&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
 						<th onclick="changeSort('salePrice')">
-							<header>Sale Price&nbsp;<i class="fa fa-sort" aria-hidden="true"></i></header>
+							Sale Price&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
 						<th onclick="changeSort('activeFlag')">
-							Active Flag&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+							Active&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
 						<th onclick="changeSort('imageFile')">
-							Image File&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+							Image&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
 						<th onclick="changeSort('variants')">
 							Variants&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
