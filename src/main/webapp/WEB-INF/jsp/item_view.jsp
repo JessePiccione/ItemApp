@@ -16,7 +16,9 @@
 			<div>
 				<img class="offset imgHeader" src="/img/spencer.jpg"></img>
 				<img class="imgHeader" src="/img/spirit.jpg"></img>
+				<a class="logout" href="/logout">Log out</a>
 			</div>
+			
 			<br/>
 			<form method="POST" action = "item/upload" enctype="multipart/form-data">
 				<input id="uploadButton"  type = "file" name = "file">
@@ -111,7 +113,8 @@
 					</tr>
 					<tr>
 						<th colspan=12>
-							<label>Showing Page&nbsp;</label>
+							<div class="paginationStuff">
+							<label>Showing page&nbsp;</label>
 							<label id="currentPage"></label>
 							<label>&nbsp;of&nbsp;</label>
 							<label id="maximumPage"></label>
@@ -138,6 +141,7 @@
 									96
 								</option>
 							</select>
+							</div>
 						</th>
 					</tr>
 				</tfoot>	

@@ -28,7 +28,12 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.csrf().disable()
 		.authorizeHttpRequests(auth -> auth
-				.requestMatchers(mvc.pattern("/login/**"), mvc.pattern("/login**"), mvc.pattern("/WEB-INF/jsp/**"), mvc.pattern("/css/**"), mvc.pattern("/js/**")).permitAll()
+				.requestMatchers(mvc.pattern("/login/**"),
+								 mvc.pattern("/login**"),
+								 mvc.pattern("/WEB-INF/jsp/**"),
+								 mvc.pattern("/css/**"),
+								 mvc.pattern("/js/**"),
+								 mvc.pattern("/img/**")).permitAll()
 				.anyRequest().authenticated()
 				)
 		.formLogin( form -> form

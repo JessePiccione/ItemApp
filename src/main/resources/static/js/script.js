@@ -125,6 +125,7 @@ function deleteHandler(event){
 				anotherRequest.open("GET", "/item");
 				anotherRequest.onload = () => {
 					updatePageCount();
+					document.getElementById("hidder").className = JSON.parse(anotherRequest.response).length>0?"":"hide";
 					loadItems(anotherRequest.response);
 				}
 				anotherRequest.send();
@@ -159,6 +160,7 @@ function loadInnerDOMContent(event){
 	request.open("GET", url);
 	request.onload = () => {
 		updatePageCount();
+		document.getElementById("hidder").className = JSON.parse(request.response).length>0?"":"hide";
 		loadItems(request.response);
 	}
 	request.send();
@@ -167,7 +169,6 @@ function loadItems(response, off){
 	var items = JSON.parse(response);
 	document.querySelectorAll(".dynamicRowEntry").forEach(e => {e.remove()});
 	var lastRow = document.querySelector("#itemBody");
-	document.getElementById("hidder").className = items.length>0?"":"hide";
 	for (var x = 0; x < items.length; x++){
 		var newRow = document.createElement("tr");
 		newRow.className = "dynamicRowEntry";
@@ -269,7 +270,7 @@ function updatePageCount(){
 	request.open("GET", "/count");
 	request.onload = () =>{
 		document.getElementById("currentPage").innerHTML = pageNumber+1;
-		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/itemsPerPage)+1; 
+		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/itemsPerPage); 
 	} 
 	request.send();
 }

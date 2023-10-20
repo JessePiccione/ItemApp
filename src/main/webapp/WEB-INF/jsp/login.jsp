@@ -7,53 +7,14 @@
 <html>
 <head>
   <title>Login Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      width: 300px;
-      margin: 0 auto;
-      margin-top: 100px;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f5f5f5;
-    }
-    h2 {
-      text-align: center;
-    }
-    .form-group {
-      margin-bottom: 10px;
-    }
-    .form-group label {
-      display: block;
-      font-weight: bold;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 5px;
-      border-radius: 3px;
-      border: 1px solid #ccc;
-    }
-    .form-group button {
-      width: 100%;
-      padding: 8px;
-      border-radius: 3px;
-      border: none;
-      background-color: #4CAF50;
-      color: #fff;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="/css/loginstyle.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-  <c:if test="${Error != null}">
-  	<h1>${Error}</h1>
-  </c:if>
-  <c:if test="${Success != null}">
-  	<h1>${Success}</h1>
-  </c:if>
+  <div class="logo">
+  	<img src="/img/spencer.jpg"></img>
+	<img src="/img/spirit.jpg"></img>
+  </div>
   <div class="container">
     <h2>Log in</h2>
     <form method="POST" action="login">
@@ -70,7 +31,7 @@
       </div>
     </form>
   </div>
-  <div class="container">
+  <div class="container2">
   <form method='get' action="/login/register" >
     <div class="form-group">
       <button type="submit">New User</button>

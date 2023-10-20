@@ -12,13 +12,15 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long uniqueId;
+	@Column(length=50)
 	private String id;
+	@Column(length=50)
 	private String sku;
 	@Column(length = 50)
 	private String date;
 	@Column(length = 50)
 	private String brand;
-	@Column(length = 2056)
+	@Column(length = 50)
 	private String dept;
 	@Column(length = 50)
 	private String itemClass;

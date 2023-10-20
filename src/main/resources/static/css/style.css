@@ -1,3 +1,6 @@
+.logout{
+	text-align: left;
+}
 .fa-sort{
 	color:white;
 }
@@ -20,7 +23,30 @@ img.fixed-size{
 	width: 50px;
 	height: 50px;
 }
-
+input[type="number"] {
+    width: 100%; /* Take up the full width of the table cell */
+    box-sizing: border-box; /* Ensures padding doesn't add to the width */
+    margin-left: 4px;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+input[type="number"]:focus{
+	outline:none;
+}
+input[type="date"] {
+    width: 100%; /* Take up the full width of the table cell */
+    box-sizing: border-box; /* Ensures padding doesn't add to the width */
+    margin-left: 4px;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    color: grey;
+}
+input[type="date"]:focus{
+	outline:none;}
 /* Style for the text input fields */
 input[type="text"] {
     width: 100%; /* Take up the full width of the table cell */
@@ -69,6 +95,10 @@ td.dateField{
 	white-space: nowrap;
 	overflow:hidden;
 }
+td.tablefooter{
+	color:white;
+	background-color: black;
+}
 .buttonCell {
 	width:100%;
 }
@@ -104,13 +134,14 @@ button{
     transition: background-color 0.3s;
 }
 
-#addButton, #updateButton, #deleteButton, #sendUploadButton {
+#addButton, #updateButton, #deleteButton, #sendUploadButton, #nextPage, #previousPage, #pageSize {
 	align-self:center;
     padding: 5px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right:5px;
     transition: background-color 0.3s;
 }
 #addButton {
