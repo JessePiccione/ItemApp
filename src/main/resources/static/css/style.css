@@ -1,3 +1,36 @@
+label{
+	color:white;
+} 
+hr{
+	width:95%;
+	border:1px solid white;
+}
+h1{
+	color:white;
+	margin-top:0px;
+	margin-left:15px;
+	margin-bottom:0px;
+}
+.formContainer{
+	margin-top:10px;
+	margin-left:7.5%;
+	width:35%;
+	background-color: black;
+	padding-top:15px;
+	padding-bottom:15px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	vertical-align: top;
+}
+textarea.bigbox{
+	width: 65%; /* Take up the full width of the table cell */
+    box-sizing: border-box; /* Ensures padding doesn't add to the width */
+    border: 0px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    margin:10px;
+}
 .logout{
 	text-align: left;
 }
@@ -16,12 +49,16 @@ i {
 	margin-left:auto;
 }
 form{
-	margin-left:7.5%;
+	margin-right:15px;
+	margin-left:15px;
 	width:85%;
 }
 img.fixed-size{
 	width: 50px;
 	height: 50px;
+}
+input[type="file"]{
+	color:white;
 }
 input[type="number"] {
     width: 100%; /* Take up the full width of the table cell */
@@ -39,11 +76,15 @@ input[type="date"] {
     width: 100%; /* Take up the full width of the table cell */
     box-sizing: border-box; /* Ensures padding doesn't add to the width */
     margin-left: 4px;
+    padding:2px 15px;
     border: 0px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
     transition: border-color 0.3s;
     color: grey;
+}
+input[type="date"]#fileDate{
+	width:auto;
 }
 input[type="date"]:focus{
 	outline:none;}
@@ -87,7 +128,7 @@ table {
 thead {
     background-color: #e9e9e9;
 }
-th, td {
+tr, td {
     text-align: left;
     border-bottom: 1px solid #e9e9e9;
 }
@@ -105,21 +146,23 @@ td.tablefooter{
 td {
 	border-right: 1px solid #e9e9e9;
 	padding: 8px 8px;
-
+}
+th{
+	padding:8px 8px;
 }
 td.img{
 	text-align:center;
 	padding:0px 0px;
 }
-th {
+th{
 	white-space: nowrap;
 	overflow:hidden;
-    background-color: #000000;
     color:#FFFFFF;
     font-weight: bold;
-    padding: 8px 8px;
-}
+    padding: 15px 15px;
+    background-color:black;
 
+}
 .CheckBoxInput {
     margin-right: 5px;
 }
@@ -133,9 +176,17 @@ button{
     margin-left: 10px;
     transition: background-color 0.3s;
 }
-
-#addButton, #updateButton, #deleteButton, #sendUploadButton, #nextPage, #previousPage, #pageSize {
+::-webkit-file-upload-button,#supersearch, #addButton, #updateButton, #deleteButton, #sendUploadButton, #nextPage, #previousPage, #pageSize {
 	align-self:center;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right:5px;
+    transition: background-color 0.3s;
+}
+#searchType{
     padding: 5px 15px;
     border: none;
     border-radius: 5px;

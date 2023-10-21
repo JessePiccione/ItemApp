@@ -18,17 +18,72 @@
 				<img class="imgHeader" src="/img/spirit.jpg"></img>
 				<a class="logout" href="/logout">Log out</a>
 			</div>
-			
-			<br/>
-			<form method="POST" action = "item/upload" enctype="multipart/form-data">
-				<input id="uploadButton"  type = "file" name = "file">
-				<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
-			</form>
-			<br/>
+			<div class="formContainer">
+				<h1>Upload New File</h1>
+				<hr />
+				<form method="POST" action = "item/upload" enctype="multipart/form-data">
+					<input id='fileDate' type="date" name="date" required>
+					<input id="uploadButton"  type = "file" name = "file" required>
+					<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
+				</form>
+			</div>
+
 		<div id="hidder" class="hide">
+			<div class="formContainer">
+				<h1>Search By</h1>
+				<hr />
+				<form>
+					<label>Select The Search Type:</label>
+					<select id="searchType">
+						<option>
+							Id
+						</option>
+						<option>
+							Sku
+						</option>
+						<option>
+							Date
+						</option>
+						<option>
+							Brand
+						</option>
+						<option>
+							Department
+						</option>
+						<option>
+							Class
+						</option>
+						<option>
+							Price
+						</option>
+						<option>
+							Sale Price
+						</option>
+						<option>
+							Active
+						</option>
+						<option>
+							Image
+						</option>
+						<option>
+							Variants
+						</option>
+					</select>
+					<br />
+					<br />
+						<label>
+							Enter the search values separated by comma; white space is ignored.
+						</label>
+					<br />
+					<textarea class="bigbox"  name="values" palceholder="Seperate each value by comma, white space is negligable"></textarea>
+					<br />
+					<input id="supersearch" type="submit" value="Search" name="Search">
+				</form>
+			</div>
+			<br/>
 			<table>
 				<tbody id ="itemBody">
-					<tr>
+					<tr class="toprow">
 						<th onclick="changeSort('id')">
 							Id&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
@@ -112,7 +167,7 @@
 						</td>						
 					</tr>
 					<tr>
-						<th colspan=12>
+						<th class="bottomrow" colspan=12>
 							<div class="paginationStuff">
 							<label>Showing page&nbsp;</label>
 							<label id="currentPage"></label>

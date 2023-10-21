@@ -30,7 +30,7 @@ public class Item {
 	private String activeFlag;
 	@Column(length = 255)
 	private String imageFile;
-	@Column(length = 50)
+	@Column(length = 2550)
 	private String variants;
 	protected Item() {}
 	public Item(String id, String sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {

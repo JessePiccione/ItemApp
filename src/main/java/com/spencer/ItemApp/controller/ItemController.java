@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -190,7 +188,7 @@ public class ItemController {
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/upload")
-	public String handleIncomingFile(@RequestParam("file") MultipartFile file, Model m) {
+	public String handleIncomingFile(@RequestParam("file") MultipartFile file,@RequestParam("date") String date, Model m) {
 		if(file.isEmpty()) {
 			return "redirect:/home";
 		}
@@ -198,6 +196,7 @@ public class ItemController {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))){
 			String[] header = bufferedReader.readLine().split("\t");
 			Map<String, Integer> locations = new HashMap<>();
+			Map<String, ArrayList<String>> variants = new HashMap<>();
 			for(int i = 0; i < header.length; i++) {
 				locations.put(header[i],i);
 			}
@@ -206,10 +205,14 @@ public class ItemController {
 			ArrayList<Item> items = new ArrayList<>();
 			while((temp = bufferedReader.readLine())!= null) {
 				values = temp.replace("\"", "").split("\t");
+				if(!variants.containsKey(values[locations.get("product_id")])) {
+					variants.put(values[locations.get("product_id")],new ArrayList<>());
+				}
+				variants.get(values[locations.get("product_id")]).add(values[locations.get("sku")]);
 				items.add(new Item(
 							values[locations.get("product_id")],
 							values[locations.get("sku")],
-							java.time.LocalDate.now().toString(),
+							date,
 							values[locations.get("brand")],
 							values[locations.get("category_breadcrumbs")].substring(0,
 								values[locations.get("category_breadcrumbs")].indexOf(">")!=-1?
@@ -221,6 +224,10 @@ public class ItemController {
 							values[locations.get("is_active")].contains("1")?"Y":"N",
 							values[locations.get("image_url")],
 							""));
+			}
+			for(Item i: items) {
+				String variant = variants.get(i.getId()).toString().replace("\"","");
+				i.setVariants(variant.substring(1,variant.length()-1));
 			}
 			itemService.saveAll(items);
 		}
