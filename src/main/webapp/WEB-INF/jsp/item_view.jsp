@@ -32,40 +32,42 @@
 			<div class="formContainer">
 				<h1>Search By</h1>
 				<hr />
-				<form>
+				<form id="superSearch">
 					<label>Select The Search Type:</label>
 					<select id="searchType">
-						<option>
+						<option value="">
+						</option>
+						<option value="id">
 							Id
 						</option>
-						<option>
+						<option value="sku">
 							Sku
 						</option>
-						<option>
+						<option value="date">
 							Date
 						</option>
-						<option>
+						<option value="brand">
 							Brand
 						</option>
-						<option>
+						<option value="dept">
 							Department
 						</option>
-						<option>
+						<option value="itemClass">
 							Class
 						</option>
-						<option>
+						<option value="originalPrice">
 							Price
 						</option>
-						<option>
+						<option value="salePrice">
 							Sale Price
 						</option>
-						<option>
+						<option value="itemClass">
 							Active
 						</option>
-						<option>
+						<option value="imageFile">
 							Image
 						</option>
-						<option>
+						<option value="variants">
 							Variants
 						</option>
 					</select>
@@ -75,7 +77,7 @@
 							Enter the search values separated by comma; white space is ignored.
 						</label>
 					<br />
-					<textarea class="bigbox"  name="values" palceholder="Seperate each value by comma, white space is negligable"></textarea>
+					<textarea id="bigBox" class="bigbox"  name="values" palceholder="Seperate each value by semi colon, white space is negligable"></textarea>
 					<br />
 					<input id="supersearch" type="submit" value="Search" name="Search">
 				</form>

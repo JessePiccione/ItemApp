@@ -24,8 +24,10 @@ public class Item {
 	private String dept;
 	@Column(length = 50)
 	private String itemClass;
-	private double originalPrice;
-	private double salePrice;
+	@Column(length = 50)
+	private String originalPrice;
+	@Column(length = 50)
+	private String salePrice;
 	@Column(length = 50)
 	private String activeFlag;
 	@Column(length = 255)
@@ -33,7 +35,7 @@ public class Item {
 	@Column(length = 2550)
 	private String variants;
 	protected Item() {}
-	public Item(String id, String sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {
+	public Item(String id, String sku, String date, String brand, String dept, String itemClass, String originalPrice, String salePrice, String activeFlag, String imageFile, String variants) {
 		this.id=id;
 		this.sku=sku;
 		this.setDate(date);
@@ -65,10 +67,10 @@ public class Item {
 		if(itemClass.equals("")) {	
 			this.setItemClass(i.getItemClass());
 		}
-		if(originalPrice <= 0.0001) {	
+		if(originalPrice.equals("")) {	
 			this.setOriginalPrice(i.getOriginalPrice());
 		}
-		if(salePrice <= 0.0001) {	
+		if(salePrice.equals("")) {	
 			this.setSalePrice(i.getSalePrice());
 		}
 		if(activeFlag.equals("")) {	
@@ -84,7 +86,7 @@ public class Item {
 	@Override 
 	public String toString() {
 		return String.format(
-				"Item[id='%d', date='%s', brand='%s', dept='%s', itemClass='%s', originalPrice='%f.2', salePrice='%f.2', actveFlag='%s', imageFile='%s', variants='%s']",
+				"Item[id='%d', date='%s', brand='%s', dept='%s', itemClass='%s', originalPrice='%s', salePrice='%s', actveFlag='%s', imageFile='%s', variants='%s']",
 				this.id, this.date, this.brand, this.dept, this.itemClass, this.originalPrice, this.salePrice, this.activeFlag, this.imageFile, this.variants
 				);
 	}
@@ -127,16 +129,16 @@ public class Item {
 	public void setItemClass(String itemClass) {
 		this.itemClass = itemClass;
 	}
-	public double getOriginalPrice() {
+	public String getOriginalPrice() {
 		return originalPrice;
 	}
-	public void setOriginalPrice(double originalPrice) {
+	public void setOriginalPrice(String originalPrice) {
 		this.originalPrice = originalPrice;
 	}
-	public double getSalePrice() {
+	public String getSalePrice() {
 		return salePrice;
 	}
-	public void setSalePrice(double salePrice) {
+	public void setSalePrice(String salePrice) {
 		this.salePrice = salePrice;
 	}
 	public String getActiveFlag() {

@@ -25,11 +25,11 @@ public class ItemService {
 	public void delete(Item i) {
 		itemRepository.delete(i);
 	}
-	public List<Item> findAllById(long id, Pageable page) {
-		return this.itemRepository.findById(id, page);
+	public List<Item> findAllById(List<String> id, Pageable page) {
+		return this.itemRepository.findByIdIn(id, page);
 	}
-	public List<Item> findAllBySku(long sku, Pageable page){
-		return this.itemRepository.findBySku(sku, page);
+	public List<Item> findAllBySku(List<String> sku, Pageable page){
+		return this.itemRepository.findBySkuIn(sku, page);
 	}
 	public Item save(Item i) {
 		return itemRepository.save(i);
@@ -37,32 +37,32 @@ public class ItemService {
 	public Iterable saveAll(List<Item> list) {
 		return itemRepository.saveAll(list);
 	}
-	public List<Item> findByDate(String date, Pageable page){
-		return itemRepository.findByDate(date, page);
+	public List<Item> findByDate(List<String> date, Pageable page){
+		return itemRepository.findByDateIn(date, page);
 	}
-	public List<Item> findByBrand(String brand, Pageable page){
-		return itemRepository.findByBrand(brand, page);
+	public List<Item> findByBrand(List<String> brand, Pageable page){
+		return itemRepository.findByBrandIn(brand, page);
 	}
-	public List<Item> findByDept(String dept, Pageable page){
-		return itemRepository.findByDept(dept, page);
+	public List<Item> findByDept(List<String> dept, Pageable page){
+		return itemRepository.findByDeptIn(dept, page);
 	}
-	public List<Item> findByItemClass(String itemClass, Pageable page){
-		return itemRepository.findByItemClass(itemClass, page);
+	public List<Item> findByItemClass(List<String> itemClass, Pageable page){
+		return itemRepository.findByItemClassIn(itemClass, page);
 	}
-	public List<Item> findByOriginalPrice(double originalPrice, Pageable page){
-		return itemRepository.findByOriginalPrice(originalPrice, page);
+	public List<Item> findByOriginalPrice(List<String> originalPrice, Pageable page){
+		return itemRepository.findByOriginalPriceIn(originalPrice, page);
 	}
-	public List<Item> findbySalePrice(double salePrice, Pageable page){
-		return itemRepository.findBySalePrice(salePrice, page);
+	public List<Item> findbySalePrice(List<String> salePrice, Pageable page){
+		return itemRepository.findBySalePriceIn(salePrice, page);
 	}
-	public List<Item> findByActiveFlag(String activeFlag, Pageable page){
-		return itemRepository.findByActiveFlag(activeFlag, page);
+	public List<Item> findByActiveFlag(List<String> activeFlag, Pageable page){
+		return itemRepository.findByActiveFlagIn(activeFlag, page);
 	}
-	public List<Item> findByImageFile(String imageFile, Pageable page){
-		return itemRepository.findByImageFile(imageFile, page);
+	public List<Item> findByImageFile(List<String> imageFile, Pageable page){
+		return itemRepository.findByImageFileIn(imageFile, page);
 	}
-	public List<Item> findByVariants(String variants, Pageable page){
-		return itemRepository.findByVariants(variants, page);
+	public List<Item> findByVariants(List<String> variants, Pageable page){
+		return itemRepository.findByVariantsIn(variants, page);
 	}
 	public Item findByUniqueId(long uniqueId) {
 		return itemRepository.findByUniqueId(uniqueId);

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spencer.ItemApp.models.Item;
+import com.spencer.ItemApp.models.MyData;
 import com.spencer.ItemApp.service.ItemService;
 
 @Controller
@@ -44,10 +45,7 @@ public class ItemController {
 	public ResponseEntity<String> getCount(){
 		return new ResponseEntity(itemService.countAllItems(), HttpStatus.OK);
 	}
-	@GetMapping({"/item","/item/id/","/item/sku","/item/date/","/item/brand/",
-				 "/item/dept/","/item/itemClass/","/item/originalPrice/",
-				 "/item/salePrice/","/item/activeFlag/","/item/imageFile/",
-				 "/item/vairiants/","/upload/item"})
+	@GetMapping({"/item"})
 	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sort,
 										   @RequestParam(required=false, defaultValue="-1") int pageNumber,
 										   @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
@@ -56,113 +54,113 @@ public class ItemController {
 													sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/id/{id}")
-	public ResponseEntity<String> searchItemsById(@PathVariable long id,
+	@PostMapping("/item/id")
+	public ResponseEntity<String> searchItemsById(@RequestBody MyData id,
 												  @RequestParam(required=false, defaultValue="missing") String sort,
 												  @RequestParam(required=false, defaultValue="-1") int pageNumber,
 			                                      @RequestParam(required=false, defaultValue="-1") int itemsPerPage) { 
-		List<Item> items = itemService.findAllById(id, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findAllById(id.getValues(), page(pageNumber!=-1?pageNumber:0,
 															itemsPerPage!=-1?itemsPerPage:pageSize,
 															sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/sku/{sku}")
-	public ResponseEntity<String> searchItemsBySku(@PathVariable long sku,
+	@PostMapping("/item/sku")
+	public ResponseEntity<String> searchItemsBySku(@RequestBody MyData sku,
 												   @RequestParam(required=false, defaultValue="missing") String sort,
 												   @RequestParam(required=false, defaultValue="-1") int pageNumber,
 			                                       @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findAllBySku(sku, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findAllBySku(sku.getValues(), page(pageNumber!=-1?pageNumber:0,
 															  itemsPerPage!=-1?itemsPerPage:pageSize,
 															  sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/date/{date}")
-	public ResponseEntity<String> searchItemsByDate(@PathVariable String date,
+	@PostMapping("/item/date")
+	public ResponseEntity<String> searchItemsByDate(@RequestBody MyData date,
 													@RequestParam(required=false, defaultValue="missing") String sort,
 													@RequestParam(required=false, defaultValue="-1") int pageNumber,
 													@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByDate(date, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByDate(date.getValues(), page(pageNumber!=-1?pageNumber:0,
 															 itemsPerPage!=-1?itemsPerPage:pageSize,
 															 sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/brand/{brand}")
-	public ResponseEntity<String> searchItemsByBrand(@PathVariable String brand,
+	@PostMapping("/item/brand")
+	public ResponseEntity<String> searchItemsByBrand(@RequestBody MyData brand,
 													 @RequestParam(required=false, defaultValue="missing") String sort,
 													 @RequestParam(required=false, defaultValue="-1") int pageNumber,
 													 @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByBrand(brand, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByBrand(brand.getValues(), page(pageNumber!=-1?pageNumber:0,
 															   itemsPerPage!=-1?itemsPerPage:pageSize,
 															   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/dept/{dept}")
-	public ResponseEntity<String> searchItemsByDept(@PathVariable String dept,
+	@PostMapping("/item/dept")
+	public ResponseEntity<String> searchItemsByDept(@RequestBody MyData dept,
 													@RequestParam(required=false, defaultValue="missing") String sort,
 													@RequestParam(required=false, defaultValue="-1") int pageNumber,
 													@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByDept(dept, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByDept(dept.getValues(), page(pageNumber!=-1?pageNumber:0,
 															 itemsPerPage!=-1?itemsPerPage:pageSize,
 															 sort));
 		return new ResponseEntity(items, HttpStatus.OK);	
 	}
-	@GetMapping("/item/itemClass/{itemClass}")
-	public ResponseEntity<String> searchItemsByItemClass(@PathVariable String itemClass,
+	@PostMapping("/item/itemClass")
+	public ResponseEntity<String> searchItemsByItemClass(@RequestBody MyData itemClass,
 														 @RequestParam(required=false, defaultValue="missing") String sort,
 														 @RequestParam(required=false, defaultValue="-1") int pageNumber,
 														 @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByItemClass(itemClass, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByItemClass(itemClass.getValues(), page(pageNumber!=-1?pageNumber:0,
 																	   itemsPerPage!=-1?itemsPerPage:pageSize,
 																	   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/originalPrice/{originalPrice}")
-	public ResponseEntity<String> searchItemByOriginalPrice(@PathVariable double originalPrice,
+	@PostMapping("/item/originalPrice")
+	public ResponseEntity<String> searchItemByOriginalPrice(@RequestBody MyData originalPrice,
 															@RequestParam(required=false, defaultValue="missing") String sort,
 															@RequestParam(required=false, defaultValue="-1") int pageNumber,
 															@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByOriginalPrice(originalPrice, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByOriginalPrice(originalPrice.getValues(), page(pageNumber!=-1?pageNumber:0,
 														   					   itemsPerPage!=-1?itemsPerPage:pageSize,
 														   					   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/salePrice/{salePrice}")
-	public ResponseEntity<String> searchItemPageBySalePrice(@PathVariable double salePrice,
+	@PostMapping("/item/salePrice")
+	public ResponseEntity<String> searchItemPageBySalePrice(@RequestBody MyData salePrice,
 															@RequestParam(required=false, defaultValue="missing") String sort,
 															@RequestParam(required=false, defaultValue="-1") int pageNumber,
 															@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findbySalePrice(salePrice, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findbySalePrice(salePrice.getValues(), page(pageNumber!=-1?pageNumber:0,
 																	   itemsPerPage!=-1?itemsPerPage:pageSize,
 																	   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/activeFlag/{activeFlag}")
-	public ResponseEntity<String> searchItemPageByActiveFlag(@PathVariable String activeFlag,
+	@PostMapping("/item/activeFlag")
+	public ResponseEntity<String> searchItemPageByActiveFlag(@RequestBody MyData activeFlag,
 															 @RequestParam(required=false, defaultValue="missing") String sort, 
 															 @RequestParam(required=false, defaultValue="-1") int pageNumber,
 															 @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByActiveFlag(activeFlag, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByActiveFlag(activeFlag.getValues(), page(pageNumber!=-1?pageNumber:0,
 																		 itemsPerPage!=-1?itemsPerPage:pageSize,
 																		 sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/imageFile/{imageFile}")
-	public ResponseEntity<String> searchItemPageByImageFile(@PathVariable String imageFile,
+	@PostMapping("/item/imageFile")
+	public ResponseEntity<String> searchItemPageByImageFile(@RequestBody MyData imageFile,
 															@RequestParam(required=false, defaultValue="missing") String sort,
 															@RequestParam(required=false, defaultValue="-1") int pageNumber,
 															@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
 
-		List<Item> items = itemService.findByImageFile(imageFile, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByImageFile(imageFile.getValues(), page(pageNumber!=-1?pageNumber:0,
 																	   itemsPerPage!=-1?itemsPerPage:pageSize,
 																	   sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
-	@GetMapping("/item/variants/{variants}")
-	public ResponseEntity<String> searchItemPageByVaraints(@PathVariable String variants,
+	@PostMapping("/item/variants")
+	public ResponseEntity<String> searchItemPageByVaraints(@RequestBody MyData variants,
 														   @RequestParam(required=false, defaultValue="missing") String sort, 
 														   @RequestParam(required=false, defaultValue="-1") int pageNumber,
 														   @RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByVariants(variants, page(pageNumber!=-1?pageNumber:0,
+		List<Item> items = itemService.findByVariants(variants.getValues(), page(pageNumber!=-1?pageNumber:0,
 																	 itemsPerPage!=-1?itemsPerPage:pageSize,
 																	 sort));
 		return new ResponseEntity(items, HttpStatus.OK);
@@ -219,8 +217,8 @@ public class ItemController {
 									values[locations.get("category_breadcrumbs")].indexOf(">"):
 									values[locations.get("category_breadcrumbs")].length()),												
 							values[locations.get("size")],
-							Double.parseDouble(values[locations.get("price")]),
-							Double.parseDouble(values[locations.get("sale_price")]),
+							values[locations.get("price")],
+							values[locations.get("sale_price")],
 							values[locations.get("is_active")].contains("1")?"Y":"N",
 							values[locations.get("image_url")],
 							""));

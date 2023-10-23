@@ -11,6 +11,30 @@ document.addEventListener("DOMContentLoaded",DOMit);
 document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);
 document.getElementById("deleteButton").addEventListener("click", deleteHandler); 
+//superSearch
+document.getElementById("superSearch").addEventListener("submit", function(event){
+	event.preventDefault();
+	var type = document.getElementById("searchType").value;
+	const textArea = document.getElementById("bigBox").value;
+	if(type=="" || textArea==""){
+		pageNumber = 0;
+		loadPage();
+		return;
+	}
+	var payload = textArea.split(",");
+	for (var x = 0;x < payload.length; x++){
+		payload[x] = payload[x].trim();
+	} 
+	var body = {};
+	body["values"] = payload;
+	const request = new XMLHttpRequest();
+	request.open("POST","/item/"+type);
+	request.setRequestHeader("Content-Type","application/json");
+	request.onload = () =>{
+		loadItems(request.response);
+	};
+	request.send(JSON.stringify(body));
+});
 //search fields
 document.getElementById("idSearch").addEventListener("input", function(event){
 	clearTimeout(typingTimer);
@@ -55,6 +79,9 @@ document.getElementById("previousPage").addEventListener("click", function(event
 	loadPage();
 });
 document.getElementById("nextPage").addEventListener("click", function(event){
+	if(pageNumber > document.getElementById("maximumPage")){
+		alert("Sorry, this is the last page cannot go to next page.");
+	}
 	pageNumber++;
 	updatePageCount();
 	loadPage();
