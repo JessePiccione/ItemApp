@@ -7,7 +7,8 @@ var globals = {
 	"pageNumber":0,
 	"direction": true,
 	"oldSorter":"id",
-	"body":{}
+	"body":{},
+	"type":"id"
 };
 //onDOMContentLoader
 document.addEventListener("DOMContentLoaded",DOMit);
@@ -23,11 +24,12 @@ function setRequestValues(body, url, method){
 }
 document.getElementById("superSearch").addEventListener("submit", function(event){
 	event.preventDefault();
-	var type = document.getElementById("searchType").value;
+	globals.type = document.getElementById("searchType").value;
 	const textArea = document.getElementById("bigBox").value;
 	pageNumber = 0;
-	if(type=="" || textArea==""){
+	if(globals.type=="" || textArea==""){
 		setRequestValues({}, "/item","GET");
+		updatePageCount();
 		loadPage()
 		return;
 	}
@@ -36,8 +38,9 @@ document.getElementById("superSearch").addEventListener("submit", function(event
 		payload[x] = payload[x].trim();
 	} 
 	const body = {"values":payload};
-	setRequestValues(body,"/item/"+type, "POST")
-	loadPage()
+	setRequestValues(body,"/item/"+globals.type, "POST");
+	updatePageCountSpecialCase();
+	loadPage();
 });
 //search fields
 document.getElementById("idSearch").addEventListener("input", function(event){
@@ -79,7 +82,7 @@ document.getElementById("previousPage").addEventListener("click", function(event
 		return;
 	}
 	globals.pageNumber--;
-	updatePageCount();
+	globals.method == "POST"?updatePageCountSpecialCase():updatePageCount();
 	loadPage();
 });
 document.getElementById("nextPage").addEventListener("click", function(event){
@@ -88,13 +91,13 @@ document.getElementById("nextPage").addEventListener("click", function(event){
 		return;
 	}
 	globals.pageNumber++;
-	updatePageCount();
+	globals.method == "POST"?updatePageCountSpecialCase():updatePageCount();
 	loadPage();
 });
 document.getElementById("pageSize").addEventListener("change", function(event){
 	globals.pageSize = document.getElementById("pageSize").value;
 	globals.pageNumber=0;
-	updatePageCount();
+	globals.method == "POST"?updatePageCountSpecialCase():updatePageCount();
 	loadPage();
 });
 //handler functions 
@@ -191,7 +194,7 @@ function sendSearchRequest(type){
 	loadSearchItems(globals.itemsList, type, data);
 }
 function loadInnerDOMContent(event){
-	const url =	document.getElementById("url").value;
+	const url = document.getElementById("url").value;
 	var request = new XMLHttpRequest();
 	request.open("GET", url);
 	request.onload = () => {
@@ -228,13 +231,13 @@ function loadItems(response, off){
 }
 //sorting implentaion
 function changeSort(s){
-	if(oldSorter == s){
-		direction = !direction;
+	if(globals.oldSorter == s){
+		globals.direction = !globals.direction;
 	}else {
 		direction = true;
 	}
 	globals.itemsList.sort((a, b) =>{
-		if(direction == true){
+		if(globals.direction == true){
 			if(a[s] > b[s]){
 				return 1;
 			}
@@ -251,7 +254,7 @@ function changeSort(s){
 		}
 		return 0;
 	});
-	oldSorter = s;
+	globals.oldSorter = s;
 	loadItems(JSON.stringify(globals.itemsList));
 }
 //helper functions 
@@ -297,7 +300,7 @@ function getList(){
 	for (var x = 0; x < inputs.length; x++){
 		if(inputs[x].checked){
 			id.push(inputs[x].value);
-		}		
+		}
 	}
 	return id;
 }
@@ -309,4 +312,14 @@ function updatePageCount(){
 		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize); 
 	} 
 	request.send();
+}
+function updatePageCountSpecialCase(){
+	const request = new XMLHttpRequest();
+	request.open(globals.method, "/count?type="+globals.type);
+	request.setRequestHeader("Content-Type","application/json");
+	request.onload = () => {
+		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
+		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize);
+	}
+	request.send(JSON.stringify(globals.body));
 }

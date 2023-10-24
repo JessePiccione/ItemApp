@@ -16,6 +16,45 @@ public class ItemService {
 	private ItemRepository itemRepository;
 	
 	//regular crud operations 
+	public long count(String type, List<String> values) {
+		long count = 0;
+		switch(type){
+			case "id":
+				count=itemRepository.countId(values);
+				break;
+			case "sku":
+				count=itemRepository.countSku(values);
+				break;
+			case "date":
+				count=itemRepository.countDate(values);
+				break;
+			case "brand":
+				count=itemRepository.countBrand(values);
+				break;
+			case "dept":
+				count=itemRepository.countDept(values);
+				break;
+			case "itemClass":
+				count=itemRepository.countClass(values);
+				break;
+			case "originalPrice":
+				count=itemRepository.countOriginalPrice(values);
+				break;
+			case "salePrice":
+				count=itemRepository.countSalePrice(values);
+				break;
+			case "activeFlag":
+				count=itemRepository.countActiveFlag(values);
+				break;
+			case "imageFile":
+				count=itemRepository.countImageFile(values);
+				break;
+			case "variants":
+				count=itemRepository.countVariants(values);
+				break;
+		}
+		return count;
+	}
 	public long countAllItems() {
 		return itemRepository.count();
 	}

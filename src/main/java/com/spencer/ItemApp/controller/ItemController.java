@@ -45,6 +45,11 @@ public class ItemController {
 	public ResponseEntity<String> getCount(){
 		return new ResponseEntity(itemService.countAllItems(), HttpStatus.OK);
 	}
+	@PostMapping({"/count"})
+	public ResponseEntity<String> getSpecialCount(@RequestBody MyData body, @RequestParam String type){
+		System.out.print(false);
+		return new ResponseEntity(itemService.count(type, body.getValues()),HttpStatus.OK);
+	}
 	@GetMapping({"/item"})
 	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sort,
 										   @RequestParam(required=false, defaultValue="-1") int pageNumber,
