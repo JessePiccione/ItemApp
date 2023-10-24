@@ -1,5 +1,9 @@
 package com.spencer.ItemApp.models;
 
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +20,8 @@ public class Item {
 	private String id;
 	@Column(length=50)
 	private String sku;
-	@Column(length = 50)
-	private String date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate date;
 	@Column(length = 50)
 	private String brand;
 	@Column(length = 50)
@@ -55,8 +59,8 @@ public class Item {
 		if(sku.equals("")) {
 			this.setSku(i.getSku());
 		}
-		if(date.equals("")) {	
-			this.setDate(i.getDate());
+		if(date.equals(i.getDate())){
+			this.setDate(i.getDate().toString());
 		}
 		if(brand.equals("")) {	
 			this.setBrand(i.getBrand());
@@ -87,7 +91,7 @@ public class Item {
 	public String toString() {
 		return String.format(
 				"Item[id='%d', date='%s', brand='%s', dept='%s', itemClass='%s', originalPrice='%s', salePrice='%s', actveFlag='%s', imageFile='%s', variants='%s']",
-				this.id, this.date, this.brand, this.dept, this.itemClass, this.originalPrice, this.salePrice, this.activeFlag, this.imageFile, this.variants
+				this.id, this.date.toString(), this.brand, this.dept, this.itemClass, this.originalPrice, this.salePrice, this.activeFlag, this.imageFile, this.variants
 				);
 	}
 	public long getUniqueId() {
@@ -105,11 +109,11 @@ public class Item {
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	public void setDate(String date) {
-		this.date = date;
+		this.date = LocalDate.parse(date);
 	}
 	public String getBrand() {
 		return brand;

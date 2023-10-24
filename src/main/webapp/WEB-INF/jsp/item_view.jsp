@@ -120,6 +120,8 @@
 							Variants&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
 						<th>
+							Rating&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+						<th>
 							Select
 						</th>
 					</tr>
@@ -151,6 +153,8 @@
 						</td>
 						<td>
 							<input id="imageFileSearch" name="imageFileSearch" type="text" placeholder="Search..." value="${ imageFile }">
+						</td>
+						<td>
 						</td>
 						<td>
 						</td>
