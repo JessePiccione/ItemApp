@@ -1,10 +1,14 @@
 let typingTimer;
-var global_items_list;
-var direction = true;
-var oldSorter='id';
-var pageNumber=0;
-var itemsPerPage=document.getElementById("pageSize").value;
-
+var globals = {
+	"itemsList":[],
+	"url": document.getElementById("url").value,
+	"method":"GET",
+	"pageSize": document.getElementById("pageSize").value,
+	"pageNumber":0,
+	"direction": true,
+	"oldSorter":"id",
+	"body":{}
+};
 //onDOMContentLoader
 document.addEventListener("DOMContentLoaded",DOMit);
 //crud buttons 
@@ -12,28 +16,28 @@ document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);
 document.getElementById("deleteButton").addEventListener("click", deleteHandler); 
 //superSearch
+function setRequestValues(body, url, method){
+	globals.body= body;
+	globals.url = url;
+	globals.method = method; 
+}
 document.getElementById("superSearch").addEventListener("submit", function(event){
 	event.preventDefault();
 	var type = document.getElementById("searchType").value;
 	const textArea = document.getElementById("bigBox").value;
+	pageNumber = 0;
 	if(type=="" || textArea==""){
-		pageNumber = 0;
-		loadPage();
+		setRequestValues({}, "/item","GET");
+		loadPage()
 		return;
 	}
 	var payload = textArea.split(",");
 	for (var x = 0;x < payload.length; x++){
 		payload[x] = payload[x].trim();
 	} 
-	var body = {};
-	body["values"] = payload;
-	const request = new XMLHttpRequest();
-	request.open("POST","/item/"+type);
-	request.setRequestHeader("Content-Type","application/json");
-	request.onload = () =>{
-		loadItems(request.response);
-	};
-	request.send(JSON.stringify(body));
+	const body = {"values":payload};
+	setRequestValues(body,"/item/"+type, "POST")
+	loadPage()
 });
 //search fields
 document.getElementById("idSearch").addEventListener("input", function(event){
@@ -70,25 +74,26 @@ document.getElementById("imageFileSearch").addEventListener("input", function(ev
 });
 //pagination stuff 
 document.getElementById("previousPage").addEventListener("click", function(event){
-	if(pageNumber <= 0){
+	if(globals.pageNumber <= 0){
 		alert("Cannot go back Because this is the Start Page");
 		return;
 	}
-	pageNumber--;
+	globals.pageNumber--;
 	updatePageCount();
 	loadPage();
 });
 document.getElementById("nextPage").addEventListener("click", function(event){
-	if(pageNumber > document.getElementById("maximumPage")){
+	if(globals.pageNumber > Number(document.getElementById("maximumPage").innerHTML)-1){
 		alert("Sorry, this is the last page cannot go to next page.");
+		return;
 	}
-	pageNumber++;
+	globals.pageNumber++;
 	updatePageCount();
 	loadPage();
 });
 document.getElementById("pageSize").addEventListener("change", function(event){
-	itemsPerPage = document.getElementById("pageSize").value;
-	pageNumber=0;
+	globals.pageSize = document.getElementById("pageSize").value;
+	globals.pageNumber=0;
 	updatePageCount();
 	loadPage();
 });
@@ -165,13 +170,17 @@ function deleteHandler(event){
 	}
 }
 //helper functions 
-function loadPage(event){
+function loadPage(){
 	var request = new XMLHttpRequest();
-	request.open("GET", document.getElementById("url").value+"?pageNumber="+pageNumber+"&itemsPerPage="+itemsPerPage);
+	request.open(globals.method, globals.url+"?pageNumber="+globals.pageNumber+"&itemsPerPage="+globals.pageSize);
+	if(globals.method == "POST"){
+		request.setRequestHeader("Content-Type","application/json");
+	}
 	request.onload = () => {
 		loadItems(request.response);
 	}
-	request.send();
+	console.log(globals.body);
+	globals.method=="POST"?request.send(JSON.stringify(globals.body)):request.send();
 }
 function loadSearchItems(items, type, data){
 	var filtered = items.filter(e => e[type].includes(data));
@@ -179,7 +188,7 @@ function loadSearchItems(items, type, data){
 }
 function sendSearchRequest(type){
 	const data = document.getElementById(type+"Search").value;
-	loadSearchItems(global_items_list, type, data);
+	loadSearchItems(globals.itemsList, type, data);
 }
 function loadInnerDOMContent(event){
 	const url =	document.getElementById("url").value;
@@ -214,7 +223,7 @@ function loadItems(response, off){
 		lastRow.appendChild(newRow);
 	}
 	if (!off){
-		global_items_list = items;
+		globals.itemsList = items;
 	}
 }
 //sorting implentaion
@@ -224,7 +233,7 @@ function changeSort(s){
 	}else {
 		direction = true;
 	}
-	global_items_list.sort((a, b) =>{
+	globals.itemsList.sort((a, b) =>{
 		if(direction == true){
 			if(a[s] > b[s]){
 				return 1;
@@ -243,7 +252,7 @@ function changeSort(s){
 		return 0;
 	});
 	oldSorter = s;
-	loadItems(JSON.stringify(global_items_list));
+	loadItems(JSON.stringify(globals.itemsList));
 }
 //helper functions 
 function getItemFieldValues(){
@@ -296,8 +305,8 @@ function updatePageCount(){
 	const request = new XMLHttpRequest();
 	request.open("GET", "/count");
 	request.onload = () =>{
-		document.getElementById("currentPage").innerHTML = pageNumber+1;
-		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/itemsPerPage); 
+		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
+		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize); 
 	} 
 	request.send();
 }
