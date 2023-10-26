@@ -9,6 +9,15 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Jesse's First Spring Application</title>
+		<!-- Include Chart.js -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		
+		<!-- Include date-fns (non-minified version) -->
+		<script src="https://cdn.jsdelivr.net/npm/date-fns@2.16.1"></script>
+		
+		<!-- Include chartjs-adapter-date-fns -->
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0"></script>
+
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
 	</head>
@@ -27,7 +36,10 @@
 					<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
 				</form>
 			</div>
-
+			<div id="graphPopup" class="popup">
+				<span class="close" onclick="closeGraphPopup()">&times;</span>
+				<canvas id="myChart"></canvas>
+			</div>
 		<div id="hidder" class="hide">
 			<div class="formContainer">
 				<h1>Search By</h1>
@@ -119,7 +131,7 @@
 						<th onclick="changeSort('variants')">
 							Variants&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						</th>
-						<th>
+						<th onclick="changeSort('rating')">
 							Rating&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 						<th>
 							Select
@@ -166,14 +178,14 @@
 				<input  id="url" type="hidden" name="contentURL" value="${ url }">
 				<tr id="addRow"></tr>
 					<tr>
-						<td colspan=12>
+						<td colspan=13>
 							<input id="addButton" type="button" name="add" value="add">
 							<input id="updateButton" type="button" name="update" value="update">
 							<input id="deleteButton" type="button" name="delete" value="delete">
 						</td>						
 					</tr>
 					<tr>
-						<th class="bottomrow" colspan=12>
+						<th class="bottomrow" colspan=13>
 							<div class="paginationStuff">
 							<label>Showing page&nbsp;</label>
 							<label id="currentPage"></label>
@@ -208,6 +220,7 @@
 				</tfoot>	
 			</table>
 		</div>
+		
 		<script src = "/js/script.js"></script>
 	</body>
 </html>

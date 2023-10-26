@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 
 @Entity 
 public class Item {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long uniqueId;
@@ -28,18 +27,17 @@ public class Item {
 	private String dept;
 	@Column(length = 50)
 	private String itemClass;
-	@Column(length = 50)
-	private String originalPrice;
-	@Column(length = 50)
-	private String salePrice;
+	private double originalPrice;
+	private double salePrice;
 	@Column(length = 50)
 	private String activeFlag;
 	@Column(length = 255)
 	private String imageFile;
 	@Column(length = 2550)
 	private String variants;
+	private int rating;
 	protected Item() {}
-	public Item(String id, String sku, String date, String brand, String dept, String itemClass, String originalPrice, String salePrice, String activeFlag, String imageFile, String variants) {
+	public Item(String id, String sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants, int rating) {
 		this.id=id;
 		this.sku=sku;
 		this.setDate(date);
@@ -51,6 +49,7 @@ public class Item {
 		this.setActiveFlag(activeFlag);
 		this.setImageFile(imageFile);
 		this.setVariants(variants);
+		this.setRating(rating);
 	}
 	public void updateNewValues(Item i) {
 		if(id.equals("")) {
@@ -71,10 +70,10 @@ public class Item {
 		if(itemClass.equals("")) {	
 			this.setItemClass(i.getItemClass());
 		}
-		if(originalPrice.equals("")) {	
+		if(originalPrice==0.0) {	
 			this.setOriginalPrice(i.getOriginalPrice());
 		}
-		if(salePrice.equals("")) {	
+		if(salePrice==0.0) {	
 			this.setSalePrice(i.getSalePrice());
 		}
 		if(activeFlag.equals("")) {	
@@ -90,7 +89,7 @@ public class Item {
 	@Override 
 	public String toString() {
 		return String.format(
-				"Item[id='%d', date='%s', brand='%s', dept='%s', itemClass='%s', originalPrice='%s', salePrice='%s', actveFlag='%s', imageFile='%s', variants='%s']",
+				"Item[id='%s', date='%s', brand='%s', dept='%s', itemClass='%s', originalPrice='%s', salePrice='%s', actveFlag='%s', imageFile='%s', variants='%s']",
 				this.id, this.date.toString(), this.brand, this.dept, this.itemClass, this.originalPrice, this.salePrice, this.activeFlag, this.imageFile, this.variants
 				);
 	}
@@ -133,16 +132,16 @@ public class Item {
 	public void setItemClass(String itemClass) {
 		this.itemClass = itemClass;
 	}
-	public String getOriginalPrice() {
+	public double getOriginalPrice() {
 		return originalPrice;
 	}
-	public void setOriginalPrice(String originalPrice) {
+	public void setOriginalPrice(double originalPrice) {
 		this.originalPrice = originalPrice;
 	}
-	public String getSalePrice() {
+	public double getSalePrice() {
 		return salePrice;
 	}
-	public void setSalePrice(String salePrice) {
+	public void setSalePrice(double salePrice) {
 		this.salePrice = salePrice;
 	}
 	public String getActiveFlag() {
@@ -162,5 +161,11 @@ public class Item {
 	}
 	public void setVariants(String variants) {
 		this.variants = variants;
+	}
+	public int getRating() {
+		return this.rating;
+	}
+	public void setRating(int rating) {
+		this.rating=rating;
 	}
 }

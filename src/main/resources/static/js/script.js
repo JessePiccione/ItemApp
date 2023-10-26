@@ -222,7 +222,7 @@ function loadItems(response, off){
 							<td>'+items[x].activeFlag+'</td>\
 							<td class="img"><img src="'+items[x].imageFile+'" class="fixed-size" alt="Description of image"></td>\
 							<td>'+items[x].variants+'</td>\
-							<td>N/A</td>\
+							<td><div onclick=showGraphPopup("'+items[x].sku+'","'+items[x].date+'")>'+items[x].rating+'/20</div></td>\
 							<td><input class="CheckBoxInput" type="checkbox" name="id" value="'+items[x].uniqueId +'"></td>';
 		lastRow.appendChild(newRow);
 	}
@@ -271,7 +271,8 @@ function getItemFieldValues(){
 				'salePrice': document.getElementById("salePrice").value,
 				'activeFlag': document.getElementById ("activeFlag").value,
 				'imageFile': document.getElementById("imageFile").value,
-				'variants': document.getElementById("variants").value
+				'variants': document.getElementById("variants").value,
+				'rating': document.getElementById("rating").value
 			};
 }
 function hasTextFields(){
@@ -289,7 +290,8 @@ function insertTextFields(event){
 				   "<td class='inputCell'><input id='salePrice' type='number' name='salePrice' placeholder='Enter a Price...' value=''></td>"+
 				   "<td class='inputCell'><input id='activeFlag' type='text' name='activeFlag' placeholder='Enter a Flag...' value=''></td>"+
 				   "<td class='inputCell'><input id='imageFile' type='text' name='imageFile' placeholder='Enter an image file...' value=''></td>" +
-				   "<td class='inputCell'><input id='variants' type='text' name='variants' placeholder='Enter variants'></td>";
+				   "<td class='inputCell'><input id='variants' type='text' name='variants' placeholder='Enter variants'></td>"+
+				   "<td class='inputCell'><input id='rating' type='number' name='rating' placeholder='Enter Rating...'></td>";
 	event.preventDefault();
 }
 function removeTextFields(event){
@@ -323,4 +325,50 @@ function updatePageCountSpecialCase(){
 		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize);
 	}
 	request.send(JSON.stringify(globals.body));
+}
+function showGraphPopup(sku, date){
+	const request = new XMLHttpRequest();
+	request.open("GET","/item/graphData?date="+date+"&sku="+sku);
+	request.onload = () => {
+		console.log(request.response);
+		document.getElementById('graphPopup').style.display = 'block';
+		drawGraph(request.response);
+	}
+	request.send();
+}
+function closeGraphPopup(){
+	document.getElementById("graphPopup").style.display = 'none';
+}
+function drawGraph(response) {
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2023-10-01', '2023-10-02', '2023-10-03', '2023-10-04'],
+      datasets: [{
+        label: 'Rating',
+        data: [15, 18, 12, 20],
+        borderColor: 'blue',
+        fill: false,
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          type: 'category',
+          title: {
+            display: true,
+            text: 'Date (as String)'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Rating'
+          }
+        }
+      }
+    }
+  });
 }

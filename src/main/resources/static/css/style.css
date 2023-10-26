@@ -1,6 +1,25 @@
 label{
 	color:white;
-} 
+}
+.popup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #ddd;
+  background-color: white;
+  z-index: 1000;
+}
+.close {
+  font-size: 20px;
+  cursor: pointer;
+}
+canvas {
+  width: 400px;
+  height: 400px;
+}
 hr{
 	width:95%;
 	border:1px solid white;

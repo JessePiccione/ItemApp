@@ -3,6 +3,7 @@ package com.spencer.ItemApp.controller;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +60,11 @@ public class ItemController {
 													sort));
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
+	@GetMapping({"/item/graphData"})
+	public ResponseEntity<String> getGraphData(@RequestParam String date, @RequestParam String sku){
+		List<Item> items = itemService.last20DaysWithSku(LocalDate.parse(date), sku);
+		return new ResponseEntity(items, HttpStatus.OK);
+	}
 	@PostMapping("/item/id")
 	public ResponseEntity<String> searchItemsById(@RequestBody MyData id,
 												  @RequestParam(required=false, defaultValue="missing") String sort,
@@ -84,7 +90,11 @@ public class ItemController {
 													@RequestParam(required=false, defaultValue="missing") String sort,
 													@RequestParam(required=false, defaultValue="-1") int pageNumber,
 													@RequestParam(required=false, defaultValue="-1") int itemsPerPage) {
-		List<Item> items = itemService.findByDate(date.getValues(), page(pageNumber!=-1?pageNumber:0,
+		ArrayList<LocalDate> dates = new ArrayList<>();
+		for (String s: date.getValues()) {
+			dates.add(LocalDate.parse(s));
+		}
+		List<Item> items = itemService.findByDate(dates, page(pageNumber!=-1?pageNumber:0,
 															 itemsPerPage!=-1?itemsPerPage:pageSize,
 															 sort));
 		return new ResponseEntity(items, HttpStatus.OK);
@@ -222,16 +232,18 @@ public class ItemController {
 									values[locations.get("category_breadcrumbs")].indexOf(">"):
 									values[locations.get("category_breadcrumbs")].length()),												
 							values[locations.get("size")],
-							values[locations.get("price")],
-							values[locations.get("sale_price")],
+							Double.parseDouble(values[locations.get("price")]),
+							Double.parseDouble(values[locations.get("sale_price")]),
 							values[locations.get("is_active")].contains("1")?"Y":"N",
 							values[locations.get("image_url")],
-							""));
+							"",0));
 			}
 			for(Item i: items) {
 				String variant = variants.get(i.getId()).toString().replace("\"","");
 				i.setVariants(variant.substring(1,variant.length()-1));
 			}
+			List<Item> last20 = itemService.last20Days(LocalDate.parse(date));
+			rateEntries(items, last20);
 			itemService.saveAll(items);
 		}
 		catch(Exception e) {
@@ -242,19 +254,39 @@ public class ItemController {
 	public static Pageable page(int pageNumber, int itemsPerPage, String sort) {
 		return PageRequest.of(pageNumber, itemsPerPage, sort(sort));
 	}
-	public static Sort sort(String sort) {
-		if(ItemController.sort.equals(sort)) toggleDirection();
-		else if(!sort.equals("missing")) {
-			ItemController.sort = sort;
-			ItemController.direction = "asc";
+	public static void mapRatings(HashMap<String, Integer> ratings, List<Item> items) {
+		int count;
+		for (Item i: items) {
+			if(i.getActiveFlag().equals("Y")) {
+				if(!ratings.containsKey(i.getSku())) {
+					ratings.put(i.getSku(), 1);
+				}
+				else {
+					count = ratings.get(i.getSku());
+					count++;
+					ratings.put(i.getSku(), count);
+				}
+			}
 		}
-		return Sort.by(ItemController.direction.equals("desc")?Sort.Direction.DESC:Sort.Direction.ASC, ItemController.sort);
 	}
-	public static void toggleDirection(){
-		if (ItemController.direction.equals("asc")) {
-			ItemController.direction = "desc";
-			return;
+	public static void setRatings(List<Item> items, HashMap<String, Integer> ratings) {
+		for(Item i: items) {
+			if(ratings.containsKey(i.getSku())) {
+				i.setRating(ratings.get(i.getSku()));
+			}
+			//item is no longer active essentially if it gets to this else.
+			else {
+				i.setRating(0);
+			}
 		}
-		ItemController.direction = "asc";
+	}
+	public static void rateEntries(List<Item> items, List<Item> last20) {
+		HashMap<String, Integer> ratings = new HashMap<>();
+		mapRatings(ratings, last20);
+		mapRatings(ratings, items);
+		setRatings(items, ratings);
+	}
+	public static Sort sort(String sort) {
+		return Sort.by(Sort.Order.desc("date"), Sort.Order.asc("id"));
 	}
 }

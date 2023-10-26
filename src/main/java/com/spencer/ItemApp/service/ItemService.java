@@ -1,6 +1,8 @@
 package com.spencer.ItemApp.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,10 +16,16 @@ import com.spencer.ItemApp.repository.ItemRepository;
 public class ItemService {
 	@Autowired
 	private ItemRepository itemRepository;
-	
+	public static void convertToDoubles(List<Double> doubleArr, List<String> stringArr) {
+		for (String s : stringArr) {
+			doubleArr.add(Double.parseDouble(s));
+		}
+	}
 	//regular crud operations 
 	public long count(String type, List<String> values) {
 		long count = 0;
+		ArrayList<Double> doubleValues;
+		ArrayList<LocalDate> dateValues; 
 		switch(type){
 			case "id":
 				count=itemRepository.countId(values);
@@ -26,7 +34,8 @@ public class ItemService {
 				count=itemRepository.countSku(values);
 				break;
 			case "date":
-				count=itemRepository.countDate(values);
+				dateValues = new ArrayList<>();
+				count=itemRepository.countDate(dateValues);
 				break;
 			case "brand":
 				count=itemRepository.countBrand(values);
@@ -38,10 +47,14 @@ public class ItemService {
 				count=itemRepository.countClass(values);
 				break;
 			case "originalPrice":
-				count=itemRepository.countOriginalPrice(values);
+				doubleValues = new ArrayList<>();
+				convertToDoubles(doubleValues, values);
+;				count=itemRepository.countOriginalPrice(doubleValues);
 				break;
 			case "salePrice":
-				count=itemRepository.countSalePrice(values);
+				doubleValues = new ArrayList<>();
+				convertToDoubles(doubleValues, values);
+				count=itemRepository.countSalePrice(doubleValues);
 				break;
 			case "activeFlag":
 				count=itemRepository.countActiveFlag(values);
@@ -76,7 +89,13 @@ public class ItemService {
 	public Iterable saveAll(List<Item> list) {
 		return itemRepository.saveAll(list);
 	}
-	public List<Item> findByDate(List<String> date, Pageable page){
+	public List<Item> last20DaysWithSku(LocalDate date, String sku){
+		return itemRepository.findItemFromDaysAgo(date.minusDays(20), sku);
+	}
+	public List<Item> last20Days(LocalDate date){
+		return itemRepository.findItemFromDaysAgo(date.minusDays(20));
+	}
+	public List<Item> findByDate(List<LocalDate> date, Pageable page){
 		return itemRepository.findByDateIn(date, page);
 	}
 	public List<Item> findByBrand(List<String> brand, Pageable page){
@@ -89,10 +108,14 @@ public class ItemService {
 		return itemRepository.findByItemClassIn(itemClass, page);
 	}
 	public List<Item> findByOriginalPrice(List<String> originalPrice, Pageable page){
-		return itemRepository.findByOriginalPriceIn(originalPrice, page);
+		ArrayList<Double> doubleValues = new ArrayList<Double>();
+		convertToDoubles(doubleValues, originalPrice);
+		return itemRepository.findByOriginalPriceIn(doubleValues, page);
 	}
 	public List<Item> findbySalePrice(List<String> salePrice, Pageable page){
-		return itemRepository.findBySalePriceIn(salePrice, page);
+		ArrayList<Double> doubleValues = new ArrayList<Double>();
+		convertToDoubles(doubleValues, salePrice);
+		return itemRepository.findBySalePriceIn(doubleValues, page);
 	}
 	public List<Item> findByActiveFlag(List<String> activeFlag, Pageable page){
 		return itemRepository.findByActiveFlagIn(activeFlag, page);
