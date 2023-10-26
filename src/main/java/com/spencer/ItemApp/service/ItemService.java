@@ -35,6 +35,9 @@ public class ItemService {
 				break;
 			case "date":
 				dateValues = new ArrayList<>();
+				for(String s: values) {
+					dateValues.add(LocalDate.parse(s));
+				}
 				count=itemRepository.countDate(dateValues);
 				break;
 			case "brand":
