@@ -8,7 +8,8 @@ var globals = {
 	"direction": true,
 	"oldSorter":"id",
 	"body":{},
-	"type":"id"
+	"type":"id",
+	"chart":null,
 };
 //onDOMContentLoader
 document.addEventListener("DOMContentLoaded",DOMit);
@@ -327,6 +328,7 @@ function updatePageCountSpecialCase(){
 	request.send(JSON.stringify(globals.body));
 }
 function showGraphPopup(sku, date){
+	closeGraphPopup();
 	const request = new XMLHttpRequest();
 	request.open("GET","/item/graphData?date="+date+"&sku="+sku);
 	request.onload = () => {
@@ -337,17 +339,28 @@ function showGraphPopup(sku, date){
 	request.send();
 }
 function closeGraphPopup(){
+	if(globals.chart){
+		globals.chart.destroy();
+		globals.chart = null;
+	}
 	document.getElementById("graphPopup").style.display = 'none';
 }
 function drawGraph(response) {
   const ctx = document.getElementById('myChart').getContext('2d');
-  const chart = new Chart(ctx, {
+  const data = JSON.parse(response);
+  var dates = [];
+  var ratings = [];
+  for( var x = 0; x < data.length; x++ ){
+	  dates.push(data[x].date);
+	  ratings.push(data[x].rating);
+  }
+  globals.chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['2023-10-01', '2023-10-02', '2023-10-03', '2023-10-04'],
+      labels: dates,
       datasets: [{
         label: 'Rating',
-        data: [15, 18, 12, 20],
+        data: ratings,
         borderColor: 'blue',
         fill: false,
       }]
@@ -358,7 +371,7 @@ function drawGraph(response) {
           type: 'category',
           title: {
             display: true,
-            text: 'Date (as String)'
+            text: 'Date'
           }
         },
         y: {

@@ -20,9 +20,9 @@ public interface ItemRepository extends CrudRepository<Item, Long>{
 	List<Item> findBySkuIn(List<String> sku, Pageable page);
 	List<Item> findAll(Pageable page);
 	List<Item> findByDateIn(List<LocalDate> date, Pageable page);
-	@Query("SELECT i FROM Item i WHERE i.date >= :date")
+	@Query("SELECT i FROM Item i WHERE i.date > :date")
 	List<Item> findItemFromDaysAgo(LocalDate date);
-	@Query("SELECT i FROM Item i WHERE i.date >= :date AND i.sku=:sku")
+	@Query("SELECT i FROM Item i WHERE i.date > :date AND i.sku=:sku")
 	List<Item> findItemFromDaysAgo(LocalDate date, String sku);
 	List<Item> findByBrandIn(List<String> brand, Pageable page);
 	List<Item> findByDeptIn(List<String> dept, Pageable page);

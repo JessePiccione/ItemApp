@@ -31,7 +31,10 @@
 				<h1>Upload New File</h1>
 				<hr />
 				<form method="POST" action = "item/upload" enctype="multipart/form-data">
+					<label>Select Date</label>
 					<input id='fileDate' type="date" name="date" required>
+					<br />
+					<br />
 					<input id="uploadButton"  type = "file" name = "file" required>
 					<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
 				</form>
