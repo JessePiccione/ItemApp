@@ -15,7 +15,14 @@ var globals = {
 document.addEventListener("DOMContentLoaded",DOMit);
 document.getElementById("uploadFormHider").addEventListener("click", function(event){
 	var hiddenForm = document.getElementById("uploadFormHidden");
+	var uploadHeader = document.getElementById("uploadFormHeader");
 	var uploadCaret = document.getElementById("uploadCaret");
+	if(uploadHeader.classList.contains("collapsedHeader")){
+		uploadHeader.classList.remove("collapsedHeader");
+	}
+	else {
+		uploadHeader.classList.add("collapsedHeader");
+	}
 	if(uploadCaret.classList.contains("fa-caret-down")){
 		uploadCaret.classList.remove("fa-caret-down");
 		uploadCaret.classList.add("fa-caret-up");
@@ -27,7 +34,14 @@ document.getElementById("uploadFormHider").addEventListener("click", function(ev
 });
 document.getElementById("searchFormHider").addEventListener("click", function(event){
 	var hiddenForm = document.getElementById("searchFormHidden");
+	var uploadHeader = document.getElementById("searchFormHeader");
 	var uploadCaret = document.getElementById("searchCaret");
+	if(uploadHeader.classList.contains("collapsedHeader")){
+		uploadHeader.classList.remove("collapsedHeader");
+	}
+	else {
+		uploadHeader.classList.add("collapsedHeader");
+	}
 	if(uploadCaret.classList.contains("fa-caret-down")){
 		uploadCaret.classList.remove("fa-caret-down");
 		uploadCaret.classList.add("fa-caret-up");

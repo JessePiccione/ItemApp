@@ -33,21 +33,24 @@
 				<div class="colored-wrapper top-form">
 					<div class="formContainer">
 						<div id="uploadFormHider">
-							<h1>
+							<h1 id="uploadFormHeader"class="formHeader collapsedHeader">
 								Upload New File <i id="uploadCaret" class="fa fa-caret-down" aria-hidden="true"></i>
 							</h1>
-							
-							<hr />
 						</div>
 						<div id="uploadFormHidden" class="hide">
+							<hr />
 							<form method="POST" action = "item/upload" enctype="multipart/form-data">
-								<label>Select Date</label>
+								<label class="formLabel">Select Date</label>
 								<input id='fileDate' type="date" name="date" required>
-								<br />
-								<br />
 								<input id="uploadButton"  type = "file" name = "file" required>
 								<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
 							</form>
+							<div class="skill">
+								<div class="outer">
+									<div class="inner">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -56,12 +59,12 @@
 				<div class="colored-wrapper top-form second-form">
 					<div class="formContainer">
 						<div id="searchFormHider">
-							<h1>Search By <i id="searchCaret" class="fa fa-caret-down" aria-hidden="true"></i></h1>
-							<hr />
+							<h1 id="searchFormHeader"class="formHeader collapsedHeader">Search By <i id="searchCaret" class="fa fa-caret-down" aria-hidden="true"></i></h1>
 						</div>
 						<div id="searchFormHidden" class="hide">
+							<hr />
 							<form id="superSearch">
-								<label>Select The Search Type:</label>
+								<label class="formLabel">Select The Search Type:</label>
 								<select id="searchType">
 									<option value="">
 									</option>
@@ -101,7 +104,7 @@
 								</select>
 								<br />
 								<br />
-									<label>
+									<label class="formLabel">
 										Enter the search values separated by comma; white space is ignored.
 									</label>
 								<br />
