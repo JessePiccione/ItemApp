@@ -13,6 +13,30 @@ var globals = {
 };
 //onDOMContentLoader
 document.addEventListener("DOMContentLoaded",DOMit);
+document.getElementById("uploadFormHider").addEventListener("click", function(event){
+	var hiddenForm = document.getElementById("uploadFormHidden");
+	var uploadCaret = document.getElementById("uploadCaret");
+	if(uploadCaret.classList.contains("fa-caret-down")){
+		uploadCaret.classList.remove("fa-caret-down");
+		uploadCaret.classList.add("fa-caret-up");
+	}else {
+		uploadCaret.classList.remove("fa-caret-up");
+		uploadCaret.classList.add("fa-caret-down")
+	}
+	hiddenForm.className = hiddenForm.className == "hide"?"":"hide";
+});
+document.getElementById("searchFormHider").addEventListener("click", function(event){
+	var hiddenForm = document.getElementById("searchFormHidden");
+	var uploadCaret = document.getElementById("searchCaret");
+	if(uploadCaret.classList.contains("fa-caret-down")){
+		uploadCaret.classList.remove("fa-caret-down");
+		uploadCaret.classList.add("fa-caret-up");
+	}else {
+		uploadCaret.classList.remove("fa-caret-up");
+		uploadCaret.classList.add("fa-caret-down")
+	}
+	hiddenForm.className = hiddenForm.className == "hide"?"":"hide";
+});
 //crud buttons 
 document.getElementById("addButton").addEventListener("click", addHandler);
 document.getElementById("updateButton").addEventListener("click", updateHandler);
@@ -115,6 +139,10 @@ function addHandler(event){
 		request.open("POST", "/item");
 		request.setRequestHeader("Content-Type","application/json");
 		const body = getItemFieldValues();
+		if(verify(body)){
+			alert("Error: Missing required fields");
+			return;
+		}
 		request.onload = () =>{
 			updatePageCount();
 			loadItems(request.response);
@@ -133,6 +161,11 @@ function updateHandler(event){
 		var ids = getList();
 		var request;
 		var body = getItemFieldValues();
+		console.log(body);
+		if(verify(body)){
+			alert("Error: Missing required fields");
+			return;
+		}
 		for (var x = 0; x < ids.length; x++ ){
 			request = new XMLHttpRequest();
 			body.uniqueId = ids[x];
@@ -173,6 +206,22 @@ function deleteHandler(event){
 		request.send();
 	}
 }
+function verify(body){
+	return body.id == "" ||
+		   body.sku == "" ||
+		   body.date == "" ||
+		   body.brand == "" ||
+		   body.dept == "" || 
+		   body.itemClass == ""||
+		   body.activeFlag == "" ||
+		   body.originalPrice == "" ||
+		   body.salePrice == "" ||
+		   body.activeFlag == "" || 
+		   body.imageFile == "" ||
+		   body.variants == "" || 
+		   body.rating == "";
+}
+
 //helper functions 
 function loadPage(){
 	var request = new XMLHttpRequest();
@@ -281,18 +330,19 @@ function hasTextFields(){
 }
 function insertTextFields(event){
 	var tr = document.getElementById('addRow');
-	tr.innerHTML = "<td class='inputCell'><input id='id' type='text' name='id' placeholder='Enter an id ...' value=''></td>"+
-				   "<td class='inputCell'><input id='sku' type='text' name='sku' placeholder='Enter a Sku ...' value=''></td>"+
-				   "<td class='inputCell'><input id='date' type='date' name='date' placeholder='Enter a date ...' value=''></td>"+
-				   "<td class='inputCell'><input id='brand' type='text' name='brand' placeholder='Enter a brand...' value=''></td>"+
-				   "<td class='inputCell'><input id='dept' type='text' name='dept' placeholder='Enter a dept...' value=''></td>"+
-				   "<td class='inputCell'><input id='itemClass' type='text' name='itemClass' placeholder='Enter a Class...' value=''></td>"+
-				   "<td class='inputCell'><input id='originalPrice' type='number' name='originalPrice' placeholder='Enter a Price...' value=''></td>"+ 
-				   "<td class='inputCell'><input id='salePrice' type='number' name='salePrice' placeholder='Enter a Price...' value=''></td>"+
-				   "<td class='inputCell'><input id='activeFlag' type='text' name='activeFlag' placeholder='Enter a Flag...' value=''></td>"+
-				   "<td class='inputCell'><input id='imageFile' type='text' name='imageFile' placeholder='Enter an image file...' value=''></td>" +
-				   "<td class='inputCell'><input id='variants' type='text' name='variants' placeholder='Enter variants'></td>"+
-				   "<td class='inputCell'><input id='rating' type='number' name='rating' placeholder='Enter Rating...'></td>";
+	tr.innerHTML = "<td class='inputCell'><input id='id' type='text' name='id' placeholder='Enter an id ...' value='' required></td>"+
+				   "<td class='inputCell'><input id='sku' type='text' name='sku' placeholder='Enter a Sku ...' value='' required></td>"+
+				   "<td class='inputCell'><input id='date' type='date' name='date' placeholder='Enter a date ...' value='' required></td>"+
+				   "<td class='inputCell'><input id='brand' type='text' name='brand' placeholder='Enter a brand...' value='' required></td>"+
+				   "<td class='inputCell'><input id='dept' type='text' name='dept' placeholder='Enter a dept...' value='' required></td>"+
+				   "<td class='inputCell'><input id='itemClass' type='text' name='itemClass' placeholder='Enter a Class...' value='' required></td>"+
+				   "<td class='inputCell'><input id='originalPrice' type='number' name='originalPrice' placeholder='Enter a Price...' value='' required></td>"+ 
+				   "<td class='inputCell'><input id='salePrice' type='number' name='salePrice' placeholder='Enter a Price...' value='' required></td>"+
+				   "<td class='inputCell'><input id='activeFlag' type='text' name='activeFlag' placeholder='Enter a Flag...' value='' required></td>"+
+				   "<td class='inputCell'><input id='imageFile' type='text' name='imageFile' placeholder='Enter an image file...' value='' required></td>" +
+				   "<td class='inputCell'><input id='variants' type='text' name='variants' placeholder='Enter variants' required></td>"+
+				   "<td class='inputCell'><input id='rating' type='number' name='rating' placeholder='Enter Rating...' required></td>" +
+				   "<td></td>";
 	event.preventDefault();
 }
 function removeTextFields(event){
