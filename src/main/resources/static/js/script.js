@@ -13,6 +13,10 @@ var globals = {
 };
 //onDOMContentLoader
 document.addEventListener("DOMContentLoaded",DOMit);
+document.getElementById("sendUploadForm").addEventListener("submit",function(event){
+	var loader = document.getElementById("loader");
+	loader.classList.contains("hide")?loader.classList.remove("hide"):loader.classList.add("hide");
+});
 document.getElementById("uploadFormHider").addEventListener("click", function(event){
 	var hiddenForm = document.getElementById("uploadFormHidden");
 	var uploadHeader = document.getElementById("uploadFormHeader");

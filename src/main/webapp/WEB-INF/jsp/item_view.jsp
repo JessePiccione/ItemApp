@@ -39,18 +39,27 @@
 						</div>
 						<div id="uploadFormHidden" class="hide">
 							<hr />
-							<form method="POST" action = "item/upload" enctype="multipart/form-data">
+							<form id="sendUploadForm" method="POST" action = "item/upload" enctype="multipart/form-data">
 								<label class="formLabel">Select Date</label>
 								<input id='fileDate' type="date" name="date" required>
 								<input id="uploadButton"  type = "file" name = "file" required>
 								<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
-							</form>
-							<div class="skill">
-								<div class="outer">
-									<div class="inner">
+								<div id = "loader" class="skill hide">
+									<div class="outer">
+										<div class="inner">
+										</div>
 									</div>
+									<svg xlmns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
+										<defs>
+											<linearGradient id="GradientColor">
+												<stop offset="0%" stop-color="#DA22FF" />
+												<stop offset="100%" stop-color="#9733EE" />
+											</linearGradient>
+										</defs>
+										<circle cx="20" cy="20" r="10" stroke-linecap="round" />
+									</svg>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -200,14 +209,6 @@
 					</tbody>
 					<tfoot>
 					<input  id="url" type="hidden" name="contentURL" value="${ url }">
-					<tr id="addRow"></tr>
-						<tr>
-							<td colspan=13>
-								<input id="addButton" type="button" name="add" value="add">
-								<input id="updateButton" type="button" name="update" value="update">
-								<input id="deleteButton" type="button" name="delete" value="delete">
-							</td>						
-						</tr>
 						<tr>
 							<th class="bottomrow" colspan=13>
 								<div class="paginationStuff">

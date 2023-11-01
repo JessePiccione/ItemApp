@@ -1,3 +1,21 @@
+circle{
+	fill:none;
+	stroke: url(#GradientColor);
+	stroke-width:4px;
+	stroke-dasharray:62;
+	stroke-dashoffset:1300000;
+	animation: anim 10000s linear forwards;
+}
+@keyframes anim{
+	100%{
+		stroke-dashoffset:0;
+	}
+}
+svg{
+	position:absolute;
+	top:0;
+	left:0;
+}
 .skill{
 	width:40px;
 	height:40px;
@@ -5,21 +23,27 @@
 	display: flex; 
 	align-items:center;
 	justify-content:center;
-	padding:0;
-	margin:0;
+	padding:0px;
+	margin-top: -35px;
+	margin-left:90%;
+
+	overflow-x:visible;
 }
 .outer{
 	height:20px;
 	width:20px;
 	box-shadow: 3px 3px 5px -0.5px rgba(0,0,0,0.15),-3px -3px 5px -0.5px rgba(255,255,255,0.7);
 	border-radius: 50%;
-	padding-top:2px;
-	padding-left:2px;
+	padding-top:3.5px;
+	padding-left:3.5px;
 }
 .inner{
 	height: 16px; 
 	width: 16px;
 	border-radius:50%;
+	display:flex;
+	align-items: center;
+	justify-content:center;
 	box-shadow: inset 2px 2px 3px -0.5px rgba(0,0,0,0.2),
 	inset -2px -2px 3px -0.5px rgba(255,255,255,0.7),
 	-0.25px -0.25px 0px rgba(255,255,255,1),
@@ -66,6 +90,7 @@
 }
 label.formLabel{
 	color:black;
+	margin:0px;
 }
 label{
 	color:white;
@@ -153,9 +178,13 @@ i {
 	margin-left:auto;
 }
 form{
+	align-items: center;
+	justify-content:center;
+	width:100%;
 	margin-right:15px;
 	margin-left:15px;
 	padding-bottom:10px;
+
 }
 img.fixed-size{
 	width: 50px;
@@ -165,12 +194,14 @@ input[type="button"]{
 	background-color:#e9e9e9;
 }
 input[type="file"]{
-	color: black;
+	color: black;	
+	margin-left: 15px;
+	width:37.5%;
 }
 input[type="number"] {
     width: 100%; /* Take up the full width of the table cell */
     box-sizing: border-box; /* Ensures padding doesn't add to the width */
-    margin-left: 4px;
+    margin-left: 0px;
     border: 0px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -180,10 +211,10 @@ input[type="number"]:focus{
 	outline:none;
 }
 input[type="date"] {
-    width: 100%; /* Take up the full width of the table cell */
+    /* Take up the full width of the table cell */
     box-sizing: border-box; /* Ensures padding doesn't add to the width */
     margin-left: 4px;
-    padding:2px 15px;
+    padding:4px 0px;
     border: 0px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -192,6 +223,7 @@ input[type="date"] {
 }
 input[type="date"]#fileDate{
 	width:auto;
+	margin-left:15px;
 }
 input[type="date"]:focus{
 	outline:none;}
@@ -294,6 +326,10 @@ button{
     margin-right:5px;
     transition: background-color 0.3s;
     background-color:#e9e9e9;
+}
+#sendUploadButton {
+	margin-left:0px;
+	margin-right:0px;
 }
 #supersearch{
 	margin-left:0px;
