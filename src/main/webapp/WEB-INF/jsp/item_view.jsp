@@ -73,8 +73,17 @@
 						<div id="searchFormHidden" class="hide">
 							<hr />
 							<form id="superSearch">
-								<label class="formLabel">Select The Search Type:</label>
-								<select id="searchType">
+								<label class="formLabel">
+									Start Date 
+								</label>
+								<input type="date" id="fileDate">
+								<label class="formLabel">
+									End Date
+								</label>
+								<input type="date" id="fileDate">
+								<br />
+								<label class="formLabel">Search Type:</label>
+								<select id="searchType" class="searchFormSelect">
 									<option value="">
 									</option>
 									<option value="id">
@@ -111,11 +120,22 @@
 										Variants
 									</option>
 								</select>
+								<label class="formLabel">Status</label>
+								<select id="activeStatus" class="searchFormSelect">
+									<option value="B" selected>
+										Both
+									</option>
+									<option value="N">
+										Inactive
+									</option>
+									<option value="Y">
+										Active
+									</option>
+								</select>
 								<br />
-								<br />
-									<label class="formLabel">
-										Enter the search values separated by comma; white space is ignored.
-									</label>
+								<label class="formLabel">
+									Enter the search values separated by comma; white space is ignored.
+								</label>
 								<br />
 								<textarea id="bigBox" class="bigbox"  name="values" palceholder="Seperate each value by semi colon, white space is negligable"></textarea>
 								<br />

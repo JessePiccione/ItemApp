@@ -18,47 +18,11 @@ document.getElementById("sendUploadForm").addEventListener("submit",function(eve
 	loader.classList.contains("hide")?loader.classList.remove("hide"):loader.classList.add("hide");
 });
 document.getElementById("uploadFormHider").addEventListener("click", function(event){
-	var hiddenForm = document.getElementById("uploadFormHidden");
-	var uploadHeader = document.getElementById("uploadFormHeader");
-	var uploadCaret = document.getElementById("uploadCaret");
-	if(uploadHeader.classList.contains("collapsedHeader")){
-		uploadHeader.classList.remove("collapsedHeader");
-	}
-	else {
-		uploadHeader.classList.add("collapsedHeader");
-	}
-	if(uploadCaret.classList.contains("fa-caret-down")){
-		uploadCaret.classList.remove("fa-caret-down");
-		uploadCaret.classList.add("fa-caret-up");
-	}else {
-		uploadCaret.classList.remove("fa-caret-up");
-		uploadCaret.classList.add("fa-caret-down")
-	}
-	hiddenForm.className = hiddenForm.className == "hide"?"":"hide";
+	changeCaret("upload");
 });
 document.getElementById("searchFormHider").addEventListener("click", function(event){
-	var hiddenForm = document.getElementById("searchFormHidden");
-	var uploadHeader = document.getElementById("searchFormHeader");
-	var uploadCaret = document.getElementById("searchCaret");
-	if(uploadHeader.classList.contains("collapsedHeader")){
-		uploadHeader.classList.remove("collapsedHeader");
-	}
-	else {
-		uploadHeader.classList.add("collapsedHeader");
-	}
-	if(uploadCaret.classList.contains("fa-caret-down")){
-		uploadCaret.classList.remove("fa-caret-down");
-		uploadCaret.classList.add("fa-caret-up");
-	}else {
-		uploadCaret.classList.remove("fa-caret-up");
-		uploadCaret.classList.add("fa-caret-down")
-	}
-	hiddenForm.className = hiddenForm.className == "hide"?"":"hide";
+	changeCaret("search");
 });
-//crud buttons 
-document.getElementById("addButton").addEventListener("click", addHandler);
-document.getElementById("updateButton").addEventListener("click", updateHandler);
-document.getElementById("deleteButton").addEventListener("click", deleteHandler); 
 //superSearch
 function setRequestValues(body, url, method){
 	globals.body= body;
@@ -147,99 +111,6 @@ document.getElementById("pageSize").addEventListener("change", function(event){
 function DOMit(event){
 	loadInnerDOMContent(event);
 } 
-//handles adds to the server.
-function addHandler(event){
-	if(hasTextFields()){
-		insertTextFields(event);	                                                                                                                                             
-	}
-	else {
-		var request = new XMLHttpRequest();
-		request.open("POST", "/item");
-		request.setRequestHeader("Content-Type","application/json");
-		const body = getItemFieldValues();
-		if(verify(body)){
-			alert("Error: Missing required fields");
-			return;
-		}
-		request.onload = () =>{
-			updatePageCount();
-			loadItems(request.response);
-			removeTextFields();
-		};
-		request.send(JSON.stringify(body));
-		event.preventDefault();
-	}
-}
-//handles updates to the server
-function updateHandler(event){
-	if(hasTextFields()){
-		insertTextFields(event);
-	}
-	else {
-		var ids = getList();
-		var request;
-		var body = getItemFieldValues();
-		console.log(body);
-		if(verify(body)){
-			alert("Error: Missing required fields");
-			return;
-		}
-		for (var x = 0; x < ids.length; x++ ){
-			request = new XMLHttpRequest();
-			body.uniqueId = ids[x];
-			request.open("PATCH", "/item");
-			request.setRequestHeader("Content-Type","application/json");
-			request.onload = () =>{
-				loadItems(request.response);
-				removeTextFields();
-			}			
-			request.send(JSON.stringify(body));
-			event.preventDefault();
-		}
-	}	
-}
-//handles deletes to the server
-function deleteHandler(event){
-	var ids = getList();
-	var request;
-	for (var x = 0; x < ids.length; x++ ){
-		request = new XMLHttpRequest();
-		request.open("DELETE", "/item/"+ids[x]);
-		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		request.onload = () =>{
-			if(request.status === 405 ){
-				var anotherRequest = new XMLHttpRequest();
-				anotherRequest.open("GET", "/item");
-				anotherRequest.onload = () => {
-					updatePageCount();
-					document.getElementById("hidder").className = JSON.parse(anotherRequest.response).length>0?"":"hide";
-					loadItems(anotherRequest.response);
-				}
-				anotherRequest.send();
-				return;
-			}
-			loadItems(request.response);
-			updatePageCount()
-		};
-		request.send();
-	}
-}
-function verify(body){
-	return body.id == "" ||
-		   body.sku == "" ||
-		   body.date == "" ||
-		   body.brand == "" ||
-		   body.dept == "" || 
-		   body.itemClass == ""||
-		   body.activeFlag == "" ||
-		   body.originalPrice == "" ||
-		   body.salePrice == "" ||
-		   body.activeFlag == "" || 
-		   body.imageFile == "" ||
-		   body.variants == "" || 
-		   body.rating == "";
-}
-
 //helper functions 
 function loadPage(){
 	var request = new XMLHttpRequest();
@@ -326,56 +197,6 @@ function changeSort(s){
 	globals.oldSorter = s;
 	loadItems(JSON.stringify(globals.itemsList));
 }
-//helper functions 
-function getItemFieldValues(){
-	return {
-				'id': document.getElementById("id").value,
-				'sku': document.getElementById("sku").value,
-				'date': document.getElementById("date").value,
-				'dept': document.getElementById("dept").value,
-				'brand': document.getElementById("brand").value,
-				'itemClass': document.getElementById("itemClass").value,
-				'originalPrice': document.getElementById("originalPrice").value,
-				'salePrice': document.getElementById("salePrice").value,
-				'activeFlag': document.getElementById ("activeFlag").value,
-				'imageFile': document.getElementById("imageFile").value,
-				'variants': document.getElementById("variants").value,
-				'rating': document.getElementById("rating").value
-			};
-}
-function hasTextFields(){
-	return document.getElementById('addRow').innerHTML == "";
-}
-function insertTextFields(event){
-	var tr = document.getElementById('addRow');
-	tr.innerHTML = "<td class='inputCell'><input id='id' type='text' name='id' placeholder='Enter an id ...' value='' required></td>"+
-				   "<td class='inputCell'><input id='sku' type='text' name='sku' placeholder='Enter a Sku ...' value='' required></td>"+
-				   "<td class='inputCell'><input id='date' type='date' name='date' placeholder='Enter a date ...' value='' required></td>"+
-				   "<td class='inputCell'><input id='brand' type='text' name='brand' placeholder='Enter a brand...' value='' required></td>"+
-				   "<td class='inputCell'><input id='dept' type='text' name='dept' placeholder='Enter a dept...' value='' required></td>"+
-				   "<td class='inputCell'><input id='itemClass' type='text' name='itemClass' placeholder='Enter a Class...' value='' required></td>"+
-				   "<td class='inputCell'><input id='originalPrice' type='number' name='originalPrice' placeholder='Enter a Price...' value='' required></td>"+ 
-				   "<td class='inputCell'><input id='salePrice' type='number' name='salePrice' placeholder='Enter a Price...' value='' required></td>"+
-				   "<td class='inputCell'><input id='activeFlag' type='text' name='activeFlag' placeholder='Enter a Flag...' value='' required></td>"+
-				   "<td class='inputCell'><input id='imageFile' type='text' name='imageFile' placeholder='Enter an image file...' value='' required></td>" +
-				   "<td class='inputCell'><input id='variants' type='text' name='variants' placeholder='Enter variants' required></td>"+
-				   "<td class='inputCell'><input id='rating' type='number' name='rating' placeholder='Enter Rating...' required></td>" +
-				   "<td></td>";
-	event.preventDefault();
-}
-function removeTextFields(event){
-	document.querySelectorAll('.inputCell').forEach(e => {e.remove();});
-}
-function getList(){
-	var inputs = document.getElementsByClassName("CheckBoxInput");
-	var id = [];
-	for (var x = 0; x < inputs.length; x++){
-		if(inputs[x].checked){
-			id.push(inputs[x].value);
-		}
-	}
-	return id;
-}
 function updatePageCount(){
 	const request = new XMLHttpRequest();
 	request.open("GET", "/count");
@@ -452,4 +273,23 @@ function drawGraph(response) {
       }
     }
   });
+}
+function changeCaret(name){
+	var hiddenForm = document.getElementById(name+"FormHidden");
+	var uploadHeader = document.getElementById(name+"FormHeader");
+	var uploadCaret = document.getElementById(name+"Caret");
+	if(uploadHeader.classList.contains("collapsedHeader")){
+		uploadHeader.classList.remove("collapsedHeader");
+	}
+	else {
+		uploadHeader.classList.add("collapsedHeader");
+	}
+	if(uploadCaret.classList.contains("fa-caret-down")){
+		uploadCaret.classList.remove("fa-caret-down");
+		uploadCaret.classList.add("fa-caret-up");
+	}else {
+		uploadCaret.classList.remove("fa-caret-up");
+		uploadCaret.classList.add("fa-caret-down")
+	}
+	hiddenForm.className = hiddenForm.className == "hide"?"":"hide";
 }

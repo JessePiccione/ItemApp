@@ -178,8 +178,6 @@ i {
 	margin-left:auto;
 }
 form{
-	align-items: center;
-	justify-content:center;
 	width:100%;
 	margin-right:15px;
 	margin-left:15px;
@@ -195,8 +193,9 @@ input[type="button"]{
 }
 input[type="file"]{
 	color: black;	
-	margin-left: 15px;
-	width:37.5%;
+	margin-left: 0px;
+	margin-right:0px;
+	width:35%;
 }
 input[type="number"] {
     width: 100%; /* Take up the full width of the table cell */
@@ -214,16 +213,17 @@ input[type="date"] {
     /* Take up the full width of the table cell */
     box-sizing: border-box; /* Ensures padding doesn't add to the width */
     margin-left: 4px;
-    padding:4px 0px;
+    padding:4px 10px;
     border: 0px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
     transition: border-color 0.3s;
     color: grey;
+    background-color:#e9e9e9;
 }
 input[type="date"]#fileDate{
-	width:auto;
 	margin-left:15px;
+	margin-right:10px;
 }
 input[type="date"]:focus{
 	outline:none;}
@@ -316,7 +316,7 @@ button{
     margin-left: 10px;
     transition: background-color 0.3s;
 }
-::-webkit-file-upload-button,#supersearch, #addButton, #updateButton, #deleteButton, #sendUploadButton, #nextPage, #previousPage, #pageSize {
+::-webkit-file-upload-button,#supersearch, #sendUploadButton, #nextPage, #previousPage, #pageSize {
 	align-self:center;
     padding: 5px 15px;
     border: none;
@@ -329,40 +329,21 @@ button{
 }
 #sendUploadButton {
 	margin-left:0px;
-	margin-right:0px;
+	margin-right:15px;
 }
 #supersearch{
 	margin-left:0px;
 	margin-right:0px;
 }
-#searchType{
+.searchFormSelect{
     padding: 5px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 5px;
     margin-right:5px;
+    margin-bottom:10px;
+    margin-top:10px;
     transition: background-color 0.3s;
     background-color:#e9e9e9;
-}
-#addButton {
-    background-color: #4CAF50;
-    color: white;
-}
-#addButton:hover {
-    background-color: #45a049;
-}
-#updateButton {
-    background-color: #FFC107;
-    color: white;
-}
-#updateButton:hover {
-    background-color: #FFA000;
-}
-#deleteButton {
-    background-color: #F44336;
-    color: white;
-}
-#deleteButton:hover {
-    background-color: #D32F2F;
 }
