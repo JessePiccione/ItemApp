@@ -1,6 +1,5 @@
 let typingTimer;
-var globals = {
-	"itemsList":[],
+let globals = {
 	"url": document.getElementById("url").value,
 	"method":"GET",
 	"pageSize": document.getElementById("pageSize").value,
@@ -10,9 +9,15 @@ var globals = {
 	"body":{},
 	"type":"id",
 	"chart":null,
+	"startDate":'',
+	"endDate": new Date(),
 };
+globals.startDate = new Date(globals.endDate.getTime() - 6 * 24 * 60 * 60 * 1000);
 //onDOMContentLoader
-document.addEventListener("DOMContentLoaded",DOMit);
+document.addEventListener("DOMContentLoaded",()=>{
+	console.log("Test",globals.itemsList);
+});
+document.addEventListener("DOMContentLoaded",loadInnerDOMContent);
 document.getElementById("sendUploadForm").addEventListener("submit",function(event){
 	var loader = document.getElementById("loader");
 	loader.classList.contains("hide")?loader.classList.remove("hide"):loader.classList.add("hide");
@@ -31,6 +36,10 @@ function setRequestValues(body, url, method){
 }
 document.getElementById("superSearch").addEventListener("submit", function(event){
 	event.preventDefault();
+	var startDate = document.getElementById("startDate").value;
+	var endDate = document.getElementById("endDate").value;
+	globals.startDate = startDate != "" ? new Date(startDate) : globals.startDate;
+	globals.endDate = endDate != "" ? new Date(endDate) : globals.endDate;
 	globals.type = document.getElementById("searchType").value;
 	const textArea = document.getElementById("bigBox").value;
 	pageNumber = 0;
@@ -108,21 +117,23 @@ document.getElementById("pageSize").addEventListener("change", function(event){
 	loadPage();
 });
 //handler functions 
-function DOMit(event){
-	loadInnerDOMContent(event);
-} 
+
 //helper functions 
-function loadPage(){
-	var request = new XMLHttpRequest();
-	request.open(globals.method, globals.url+"?pageNumber="+globals.pageNumber+"&itemsPerPage="+globals.pageSize);
-	if(globals.method == "POST"){
-		request.setRequestHeader("Content-Type","application/json");
-	}
-	request.onload = () => {
-		loadItems(request.response);
-	}
-	console.log(globals.body);
-	globals.method=="POST"?request.send(JSON.stringify(globals.body)):request.send();
+async function loadPage(){
+	return new Promise((resolve)=>{
+		var request = new XMLHttpRequest();
+		request.open(globals.method, globals.url+"?pageNumber="+globals.pageNumber+"&itemsPerPage="+globals.pageSize+"&startDate="+formatDate(globals.startDate)+"&endDate="+formatDate(globals.endDate));
+		if(globals.method == "POST"){
+			request.setRequestHeader("Content-Type","application/json");
+		}
+		console.log(globals)
+		request.onload = () => {
+			globals.itemsList = JSON.parse(request.response);
+			loadItems(request.response, true);
+			resolve();
+		}
+		globals.method=="POST"?request.send(JSON.stringify(globals.body)): request.send();
+	})
 }
 function loadSearchItems(items, type, data){
 	var filtered = items.filter(e => e[type].includes(data));
@@ -133,15 +144,11 @@ function sendSearchRequest(type){
 	loadSearchItems(globals.itemsList, type, data);
 }
 function loadInnerDOMContent(event){
-	const url = document.getElementById("url").value;
-	var request = new XMLHttpRequest();
-	request.open("GET", url);
-	request.onload = () => {
-		updatePageCount();
-		document.getElementById("hidder").className = JSON.parse(request.response).length>0?"":"hide";
-		loadItems(request.response);
-	}
-	request.send();
+	updatePageCount();
+	loadPage().then(()=>{
+		var hidder = document.getElementById("hidder");
+		globals["itemsList"].length > 0 ? hidder.classList.remove("hide") : hidder.classList.add("hide");
+	});
 }
 function loadItems(response, off){
 	var items = JSON.parse(response);
@@ -161,12 +168,8 @@ function loadItems(response, off){
 							<td>'+items[x].activeFlag+'</td>\
 							<td class="img"><img src="'+items[x].imageFile+'" class="fixed-size" alt="Description of image"></td>\
 							<td>'+items[x].variants+'</td>\
-							<td><div onclick=showGraphPopup("'+items[x].sku+'","'+items[x].date+'")>'+items[x].rating+'/20</div></td>\
-							<td><input class="CheckBoxInput" type="checkbox" name="id" value="'+items[x].uniqueId +'"></td>';
-		lastRow.appendChild(newRow);
-	}
-	if (!off){
-		globals.itemsList = items;
+							<td><div onclick=showGraphPopup("'+items[x].sku+'","'+items[x].date+'")>'+items[x].rating+'/'+(((globals.endDate - globals.startDate)/(1000 * 60 * 60 * 24)) + 1)+'</div></td>';
+							lastRow.appendChild(newRow);
 	}
 }
 //sorting implentaion
@@ -199,7 +202,7 @@ function changeSort(s){
 }
 function updatePageCount(){
 	const request = new XMLHttpRequest();
-	request.open("GET", "/count");
+	request.open("GET", "/count?startDate="+formatDate(globals.startDate)+"&endDate="+formatDate(globals.endDate));
 	request.onload = () =>{
 		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
 		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize); 
@@ -208,7 +211,7 @@ function updatePageCount(){
 }
 function updatePageCountSpecialCase(){
 	const request = new XMLHttpRequest();
-	request.open(globals.method, "/count?type="+globals.type);
+	request.open(globals.method, "/count?type="+globals.type+"&startDate="+globals.startDate+"&endDate="+globals.endDate);
 	request.setRequestHeader("Content-Type","application/json");
 	request.onload = () => {
 		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
@@ -219,7 +222,7 @@ function updatePageCountSpecialCase(){
 function showGraphPopup(sku, date){
 	closeGraphPopup();
 	const request = new XMLHttpRequest();
-	request.open("GET","/item/graphData?date="+date+"&sku="+sku);
+	request.open("GET","/item/graphData?startDate="+globals.startDate+"&sku="+sku);
 	request.onload = () => {
 		console.log(request.response);
 		document.getElementById('graphPopup').style.display = 'block';
@@ -292,4 +295,10 @@ function changeCaret(name){
 		uploadCaret.classList.add("fa-caret-down")
 	}
 	hiddenForm.className = hiddenForm.className == "hide"?"":"hide";
+}
+function formatDate(date){
+	let year = date.getFullYear();
+	let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, add 1
+	let day = date.getDate().toString().padStart(2, '0');
+	return `${year}-${month}-${day}`;
 }

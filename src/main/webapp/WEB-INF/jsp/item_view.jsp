@@ -41,7 +41,7 @@
 							<hr />
 							<form id="sendUploadForm" method="POST" action = "item/upload" enctype="multipart/form-data">
 								<label class="formLabel">Select Date</label>
-								<input id='fileDate' type="date" name="date" required>
+								<input id="fileDate" class="formDate" type="date" name="date" required>
 								<input id="uploadButton"  type = "file" name = "file" required>
 								<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
 								<div id = "loader" class="skill hide">
@@ -76,13 +76,13 @@
 								<label class="formLabel">
 									Start Date 
 								</label>
-								<input type="date" id="fileDate">
+								<input type="date" id="startDate" class="formDate">
 								<label class="formLabel">
 									End Date
 								</label>
-								<input type="date" id="fileDate">
+								<input type="date" id="endDate" class="formDate">
 								<br />
-								<label class="formLabel">Search Type:</label>
+								<label class="formLabel">Search Type</label>
 								<select id="searchType" class="searchFormSelect">
 									<option value="">
 									</option>
@@ -186,8 +186,6 @@
 							</th>
 							<th onclick="changeSort('rating')">
 								Rating&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-							<th>
-								Select
 							</th>
 						</tr>
 						<tr id ="searchRow">
@@ -223,14 +221,12 @@
 							</td>
 							<td>
 							</td>
-							<td>
-							</td>
 						</tr>
 					</tbody>
 					<tfoot>
 					<input  id="url" type="hidden" name="contentURL" value="${ url }">
 						<tr>
-							<th class="bottomrow" colspan=13>
+							<th class="bottomrow" colspan=12>
 								<div class="paginationStuff">
 								<label>Showing page&nbsp;</label>
 								<label id="currentPage"></label>

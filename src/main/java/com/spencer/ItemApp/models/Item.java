@@ -35,11 +35,10 @@ public class Item {
 	private String imageFile;
 	@Column(length = 2550)
 	private String variants;
-	private int rating;
 	protected Item() {}
-	public Item(String id, String sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants, int rating) {
-		this.id=id;
-		this.sku=sku;
+	public Item(String id, String sku, String date, String brand, String dept, String itemClass, double originalPrice, double salePrice, String activeFlag, String imageFile, String variants) {
+		this.setId(id);
+		this.setSku(sku);
 		this.setDate(date);
 		this.setBrand(brand);
 		this.setDept(dept);
@@ -49,7 +48,6 @@ public class Item {
 		this.setActiveFlag(activeFlag);
 		this.setImageFile(imageFile);
 		this.setVariants(variants);
-		this.setRating(rating);
 	}
 	public void updateNewValues(Item i) {
 		if(id.equals("")) {
@@ -161,11 +159,5 @@ public class Item {
 	}
 	public void setVariants(String variants) {
 		this.variants = variants;
-	}
-	public int getRating() {
-		return this.rating;
-	}
-	public void setRating(int rating) {
-		this.rating=rating;
 	}
 }

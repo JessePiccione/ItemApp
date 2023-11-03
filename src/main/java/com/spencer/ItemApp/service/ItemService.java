@@ -1,6 +1,7 @@
 package com.spencer.ItemApp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.spencer.ItemApp.models.Item;
+import com.spencer.ItemApp.models.RatedItem;
 import com.spencer.ItemApp.repository.ItemRepository;
 
 @Service
@@ -22,69 +24,69 @@ public class ItemService {
 		}
 	}
 	//regular crud operations 
-	public long count(String type, List<String> values) {
+	public long count(String type, List<String> values, String startDate, String endDate) {
 		long count = 0;
 		ArrayList<Double> doubleValues;
 		ArrayList<LocalDate> dateValues; 
 		switch(type){
 			case "id":
-				count=itemRepository.countId(values);
+				count=itemRepository.countId(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "sku":
-				count=itemRepository.countSku(values);
+				count=itemRepository.countSku(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "date":
 				dateValues = new ArrayList<>();
 				for(String s: values) {
 					dateValues.add(LocalDate.parse(s));
 				}
-				count=itemRepository.countDate(dateValues);
+				count=itemRepository.countDate(dateValues, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "brand":
-				count=itemRepository.countBrand(values);
+				count=itemRepository.countBrand(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "dept":
-				count=itemRepository.countDept(values);
+				count=itemRepository.countDept(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "itemClass":
-				count=itemRepository.countClass(values);
+				count=itemRepository.countClass(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "originalPrice":
 				doubleValues = new ArrayList<>();
 				convertToDoubles(doubleValues, values);
-;				count=itemRepository.countOriginalPrice(doubleValues);
+;				count=itemRepository.countOriginalPrice(doubleValues, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "salePrice":
 				doubleValues = new ArrayList<>();
 				convertToDoubles(doubleValues, values);
-				count=itemRepository.countSalePrice(doubleValues);
+				count=itemRepository.countSalePrice(doubleValues, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "activeFlag":
-				count=itemRepository.countActiveFlag(values);
+				count=itemRepository.countActiveFlag(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "imageFile":
-				count=itemRepository.countImageFile(values);
+				count=itemRepository.countImageFile(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 			case "variants":
-				count=itemRepository.countVariants(values);
+				count=itemRepository.countVariants(values, LocalDate.parse(startDate), LocalDate.parse(endDate));
 				break;
 		}
 		return count;
 	}
-	public long countAllItems() {
-		return itemRepository.count();
+	public long countAllItems(String startDate, String endDate) {
+		return itemRepository.count(LocalDate.parse(startDate), LocalDate.parse(endDate));
 	}
-	public List<Item> findAll(Pageable page){
-		return itemRepository.findAll(page);
+	public List<RatedItem> findAll(Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findAll(page), startDate, endDate);
 	}
 	public void delete(Item i) {
 		itemRepository.delete(i);
 	}
-	public List<Item> findAllById(List<String> id, Pageable page) {
-		return this.itemRepository.findByIdIn(id, page);
+	public List<RatedItem> findAllById(List<String> id, Pageable page, String startDate, String endDate) {
+		return rateItemsOverPeriod(itemRepository.findByIdIn(id, page),startDate, endDate);
 	}
-	public List<Item> findAllBySku(List<String> sku, Pageable page){
-		return this.itemRepository.findBySkuIn(sku, page);
+	public List<RatedItem> findAllBySku(List<String> sku, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findBySkuIn(sku, page), startDate, endDate);
 	}
 	public Item save(Item i) {
 		return itemRepository.save(i);
@@ -92,44 +94,60 @@ public class ItemService {
 	public Iterable saveAll(List<Item> list) {
 		return itemRepository.saveAll(list);
 	}
+	///TODO fix implementation
 	public List<Item> last20DaysWithSku(LocalDate date, String sku){
 		return itemRepository.findItemFromDaysAgo(date.minusDays(20), sku);
 	}
 	public List<Item> last20Days(LocalDate date){
 		return itemRepository.findItemFromDaysAgo(date.minusDays(20));
 	}
-	public List<Item> findByDate(List<LocalDate> date, Pageable page){
-		return itemRepository.findByDateIn(date, page);
+	public List<RatedItem> findByDate(List<LocalDate> date, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findByDateIn(date, page), startDate, endDate);
 	}
-	public List<Item> findByBrand(List<String> brand, Pageable page){
-		return itemRepository.findByBrandIn(brand, page);
+	public List<RatedItem> findByBrand(List<String> brand, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findByBrandIn(brand, page), startDate, endDate);
 	}
-	public List<Item> findByDept(List<String> dept, Pageable page){
-		return itemRepository.findByDeptIn(dept, page);
+	public List<RatedItem> findByDept(List<String> dept, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findByDeptIn(dept, page), startDate, endDate);
 	}
-	public List<Item> findByItemClass(List<String> itemClass, Pageable page){
-		return itemRepository.findByItemClassIn(itemClass, page);
+	public List<RatedItem> findByItemClass(List<String> itemClass, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findByItemClassIn(itemClass, page), startDate, endDate);
 	}
-	public List<Item> findByOriginalPrice(List<String> originalPrice, Pageable page){
+	public List<RatedItem> findByOriginalPrice(List<String> originalPrice, Pageable page, String startDate, String endDate){
 		ArrayList<Double> doubleValues = new ArrayList<Double>();
 		convertToDoubles(doubleValues, originalPrice);
-		return itemRepository.findByOriginalPriceIn(doubleValues, page);
+		return rateItemsOverPeriod(itemRepository.findByOriginalPriceIn(doubleValues, page), startDate, endDate);
 	}
-	public List<Item> findbySalePrice(List<String> salePrice, Pageable page){
+	public List<RatedItem> findbySalePrice(List<String> salePrice, Pageable page, String startDate, String endDate){
 		ArrayList<Double> doubleValues = new ArrayList<Double>();
 		convertToDoubles(doubleValues, salePrice);
-		return itemRepository.findBySalePriceIn(doubleValues, page);
+		return rateItemsOverPeriod(itemRepository.findBySalePriceIn(doubleValues, page), startDate, endDate);
 	}
-	public List<Item> findByActiveFlag(List<String> activeFlag, Pageable page){
-		return itemRepository.findByActiveFlagIn(activeFlag, page);
+	public List<RatedItem> findByActiveFlag(List<String> activeFlag, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findByActiveFlagIn(activeFlag, page), startDate, endDate);
 	}
-	public List<Item> findByImageFile(List<String> imageFile, Pageable page){
-		return itemRepository.findByImageFileIn(imageFile, page);
+	public List<RatedItem> findByImageFile(List<String> imageFile, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findByImageFileIn(imageFile, page), startDate, endDate);
 	}
-	public List<Item> findByVariants(List<String> variants, Pageable page){
-		return itemRepository.findByVariantsIn(variants, page);
+	public List<RatedItem> findByVariants(List<String> variants, Pageable page, String startDate, String endDate){
+		return rateItemsOverPeriod(itemRepository.findByVariantsIn(variants, page), startDate, endDate);
 	}
 	public Item findByUniqueId(long uniqueId) {
 		return itemRepository.findByUniqueId(uniqueId);
+	}
+	public List<RatedItem> rateItemsOverPeriod(List<Item> items, String startDate, String endDate){
+		ArrayList<RatedItem> ratedItems = new ArrayList<RatedItem>();
+		HashMap<String, Integer> indexOf = new HashMap<String, Integer>();
+		//map skus
+		for(int i = 0; i < items.size(); i++) {
+			indexOf.put(items.get(i).getSku(), i);
+			ratedItems.add(new RatedItem(items.get(i)));
+		}
+		ArrayList<String> skus = new ArrayList<String>(indexOf.keySet());
+		List<Item> itemRatingData = itemRepository.getRatingDataOverPeriod(skus, LocalDate.parse(startDate), LocalDate.parse(endDate));
+		for(Item i: itemRatingData) {
+			if(i.getActiveFlag().equals("Y")) ratedItems.get(indexOf.get(i.getSku())).incrementRate();
+		}
+		return ratedItems;
 	}
 }
