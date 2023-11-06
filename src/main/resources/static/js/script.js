@@ -287,8 +287,7 @@ async function showTablePopup(id,sku){
 	});
 }
 function buildTable(item, variants){
-	console.log(item);
-	console.log(variants);	
+	console.log(item, variants);	
 }
 function closeTablePopup(){
 	document.getElementById("tablePopup").style.display="none"
