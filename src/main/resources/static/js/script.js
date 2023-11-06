@@ -11,12 +11,10 @@ let globals = {
 	"chart":null,
 	"startDate":'',
 	"endDate": new Date(),
+	"status": document.getElementById("activeStatus").value,
 };
 globals.startDate = new Date(globals.endDate.getTime() - 6 * 24 * 60 * 60 * 1000);
 //onDOMContentLoader
-document.addEventListener("DOMContentLoaded",()=>{
-	console.log("Test",globals.itemsList);
-});
 document.addEventListener("DOMContentLoaded",loadInnerDOMContent);
 document.getElementById("sendUploadForm").addEventListener("submit",function(event){
 	var loader = document.getElementById("loader");
@@ -38,15 +36,16 @@ document.getElementById("superSearch").addEventListener("submit", function(event
 	event.preventDefault();
 	var startDate = document.getElementById("startDate").value;
 	var endDate = document.getElementById("endDate").value;
-	globals.startDate = startDate != "" ? new Date(startDate) : globals.startDate;
-	globals.endDate = endDate != "" ? new Date(endDate) : globals.endDate;
+	globals.status  = document.getElementById("activeStatus").value;
+	globals.startDate = startDate !== "" ? moment.tz(startDate, "America/New_York").toDate() : globals.startDate;
+	globals.endDate = endDate !== "" ? moment.tz(endDate, "America/New_York").toDate() : globals.endDate;
 	globals.type = document.getElementById("searchType").value;
+	console.log(globals.status);
 	const textArea = document.getElementById("bigBox").value;
 	pageNumber = 0;
 	if(globals.type=="" || textArea==""){
 		setRequestValues({}, "/item","GET");
-		updatePageCount();
-		loadPage()
+		loadInnerDOMContent();
 		return;
 	}
 	var payload = textArea.split(",");
@@ -55,8 +54,8 @@ document.getElementById("superSearch").addEventListener("submit", function(event
 	} 
 	const body = {"values":payload};
 	setRequestValues(body,"/item/"+globals.type, "POST");
+	loadInnerDOMContent();
 	updatePageCountSpecialCase();
-	loadPage();
 });
 //search fields
 document.getElementById("idSearch").addEventListener("input", function(event){
@@ -119,14 +118,24 @@ document.getElementById("pageSize").addEventListener("change", function(event){
 //handler functions 
 
 //helper functions 
-async function loadPage(){
+function loadPage(){
 	return new Promise((resolve)=>{
 		var request = new XMLHttpRequest();
-		request.open(globals.method, globals.url+"?pageNumber="+globals.pageNumber+"&itemsPerPage="+globals.pageSize+"&startDate="+formatDate(globals.startDate)+"&endDate="+formatDate(globals.endDate));
+		request.open(globals.method, globals.url+
+									"?pageNumber="+
+									globals.pageNumber+
+									"&itemsPerPage="+
+									globals.pageSize+
+									"&startDate="+
+									formatDate(globals.startDate)+
+									"&endDate="+
+									formatDate(globals.endDate)+
+									"&flag="+
+									globals.status);
+		
 		if(globals.method == "POST"){
 			request.setRequestHeader("Content-Type","application/json");
 		}
-		console.log(globals)
 		request.onload = () => {
 			globals.itemsList = JSON.parse(request.response);
 			loadItems(request.response, true);
@@ -144,11 +153,11 @@ function sendSearchRequest(type){
 	loadSearchItems(globals.itemsList, type, data);
 }
 function loadInnerDOMContent(event){
-	updatePageCount();
 	loadPage().then(()=>{
 		var hidder = document.getElementById("hidder");
 		globals["itemsList"].length > 0 ? hidder.classList.remove("hide") : hidder.classList.add("hide");
 	});
+	updatePageCount();
 }
 function loadItems(response, off){
 	var items = JSON.parse(response);
@@ -165,10 +174,15 @@ function loadItems(response, off){
 							<td>'+items[x].itemClass+'</td>\
 							<td>'+items[x].originalPrice+'</td>\
 							<td>'+items[x].salePrice+'</td>\
-							<td>'+items[x].activeFlag+'</td>\
+							<td><div onclick="showTablePopup(\''+items[x].id+'\',\''+items[x].sku+'\')">'+items[x].activeFlag+'</div></td>\
 							<td class="img"><img src="'+items[x].imageFile+'" class="fixed-size" alt="Description of image"></td>\
 							<td>'+items[x].variants+'</td>\
-							<td><div onclick=showGraphPopup("'+items[x].sku+'","'+items[x].date+'")>'+items[x].rating+'/'+(((globals.endDate - globals.startDate)/(1000 * 60 * 60 * 24)) + 1)+'</div></td>';
+							<td><div onclick=showGraphPopup("'+
+															items[x].sku+'","'+
+															items[x].date+'")>'+
+															items[x].rating+'/'+
+															Math.floor((((globals.endDate - globals.startDate)/(1000 * 60 * 60 * 24)) + 1))+
+							'</div></td>';
 							lastRow.appendChild(newRow);
 	}
 }
@@ -202,7 +216,12 @@ function changeSort(s){
 }
 function updatePageCount(){
 	const request = new XMLHttpRequest();
-	request.open("GET", "/count?startDate="+formatDate(globals.startDate)+"&endDate="+formatDate(globals.endDate));
+	request.open("GET", "/count?startDate="+
+						formatDate(globals.startDate)+
+						"&endDate="+
+						formatDate(globals.endDate)+
+						"&flag="+
+						globals.status);
 	request.onload = () =>{
 		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
 		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize); 
@@ -211,7 +230,14 @@ function updatePageCount(){
 }
 function updatePageCountSpecialCase(){
 	const request = new XMLHttpRequest();
-	request.open(globals.method, "/count?type="+globals.type+"&startDate="+globals.startDate+"&endDate="+globals.endDate);
+	request.open(globals.method, "/count?type="+
+								 globals.type+
+								 "&startDate="+
+								 formatDate(globals.startDate)+
+								 "&endDate="+
+								 formatDate(globals.endDate)+
+								 "&flag="+
+								 globals.status);
 	request.setRequestHeader("Content-Type","application/json");
 	request.onload = () => {
 		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
@@ -219,12 +245,60 @@ function updatePageCountSpecialCase(){
 	}
 	request.send(JSON.stringify(globals.body));
 }
+async function showTablePopup(id,sku){
+	closeTablePopup();
+	closeGraphPopup();
+	let itemResponse;
+	let variantsResponse;
+	let p1 = new Promise((resolve)=>{
+		var itemRequest= new XMLHttpRequest();
+		itemRequest.open("GET", "/item/table/top?sku="+
+								sku+
+								"&startDate="+
+								startDate+
+								"&endDate="+
+								endDate);
+		itemRequest.onload = () => {
+			itemResponse = itemRequest.response;
+			resolve();
+		};
+		itemRequest.send();
+	}).then(()=>{
+		let p2 = new Promise((resolve)=>{
+			var variantsRequest = new XMLHttpRequest();
+			vairantsRequest.open("GET", "/item/table/bottom?id="+
+									id+
+									"&sku="+
+									sku+
+									"&startDate="+
+									startDate+
+									"&endDate="+
+									endDate);
+			variantsRequest.onload = () =>{
+				variantsResponse = variantsRequest.response
+			}
+			variantsRequest.send();
+			
+		}).then(()=>{
+			buildTable(itemResponse, variantsResponse);
+			document.getElementById("tablePopup").style.display="block";
+		});
+	
+	});
+}
+function buildTable(item, variants){
+	console.log(item);
+	console.log(variants);	
+}
+function closeTablePopup(){
+	document.getElementById("tablePopup").style.display="none"
+}
 function showGraphPopup(sku, date){
 	closeGraphPopup();
+	closeTablePopup();
 	const request = new XMLHttpRequest();
 	request.open("GET","/item/graphData?startDate="+globals.startDate+"&sku="+sku);
 	request.onload = () => {
-		console.log(request.response);
 		document.getElementById('graphPopup').style.display = 'block';
 		drawGraph(request.response);
 	}

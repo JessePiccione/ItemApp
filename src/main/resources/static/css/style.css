@@ -95,6 +95,10 @@ label.formLabel{
 label{
 	color:white;
 }
+#myTable{
+	width:400px;
+	overflow-x:scoll;
+}
 .popup {
   display: none;
   position: fixed;

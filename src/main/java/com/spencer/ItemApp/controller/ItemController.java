@@ -45,27 +45,49 @@ public class ItemController {
 	}
 	@GetMapping("/count")
 	public ResponseEntity<String> getCount(@RequestParam(required=false, defaultValue="missing") String startDate,
-										   @RequestParam(required=false, defaultValue="missing") String endDate){
-		return new ResponseEntity(itemService.countAllItems(startDate, endDate), HttpStatus.OK);
+										   @RequestParam(required=false, defaultValue="missing") String endDate,
+										   @RequestParam(required=false, defaultValue="missing") String flag){
+		return new ResponseEntity(itemService.countAllItems(startDate, endDate, flag), HttpStatus.OK);
 	}
 	@PostMapping({"/count"})
 	public ResponseEntity<String> getSpecialCount(@RequestBody MyData body, @RequestParam String type,
 												  @RequestParam(required=false, defaultValue="missing") String startDate,
-												  @RequestParam(required=false, defaultValue="missing") String endDate){
-		System.out.print(false);
-		return new ResponseEntity(itemService.count(type, body.getValues(),startDate, endDate),HttpStatus.OK);
+												  @RequestParam(required=false, defaultValue="missing") String endDate,
+												  @RequestParam(required=false, defaultValue="missing") String flag){
+		return new ResponseEntity(itemService.count(type,
+													body.getValues(),
+													startDate,
+													endDate,
+													flag),
+								  HttpStatus.OK);
+	}
+	@GetMapping({"/item/table/top"})
+	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sku,
+										   @RequestParam(required=false, defaultValue="missing") String startDate, 
+										   @RequestParam(required=false, defaultValue="missing") String endDate){
+		return new ResponseEntity(itemService.getTableItem(sku, startDate, endDate), HttpStatus.OK);
+	}
+	@GetMapping({"/item/table/bottom"})
+	public ResponseEntity<String> getItemsVariants(@RequestParam(required=false, defaultValue="missing") String id,
+												   @RequestParam(required=false, defaultValue="missing") String sku,
+			   									   @RequestParam(required=false, defaultValue="missing") String startDate, 
+			   									   @RequestParam(required=false, defaultValue="missing") String endDate){
+		return new ResponseEntity(itemService.getTableItemVariants(id, sku, startDate, endDate), HttpStatus.OK);
 	}
 	@GetMapping({"/item"})
 	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sort,
 										   @RequestParam(required=false, defaultValue="-1") int pageNumber,
 										   @RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 										   @RequestParam(required=false, defaultValue="missing") String startDate,
-										   @RequestParam(required=false, defaultValue="missing") String endDate) {
+										   @RequestParam(required=false, defaultValue="missing") String endDate,
+										   @RequestParam(required=false, defaultValue="missing") String flag) {
+		System.out.println(flag);
 		List<RatedItem> items = itemService.findAll(page(pageNumber!=-1?pageNumber:0,
 														 itemsPerPage!=-1?itemsPerPage:pageSize,
 														 sort),
-												startDate,
-												endDate);
+													startDate,
+													endDate,
+													flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@GetMapping({"/item/graphData"})
@@ -78,12 +100,14 @@ public class ItemController {
 												  @RequestParam(required=false, defaultValue="-1") int pageNumber,
 			                                      @RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 												  @RequestParam(required=false, defaultValue="missing") String startDate,
-												  @RequestParam(required=false, defaultValue="missing") String endDate) { 
+												  @RequestParam(required=false, defaultValue="missing") String endDate,
+												  @RequestParam(required=false, defaultValue="missing") String flag) { 
 		List<RatedItem> items = itemService.findAllById(id.getValues(), page(pageNumber!=-1?pageNumber:0,
 															itemsPerPage!=-1?itemsPerPage:pageSize,
 															sort),
 														startDate,
-														endDate);
+														endDate,
+														flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/sku")
@@ -92,13 +116,15 @@ public class ItemController {
 												   @RequestParam(required=false, defaultValue="-1") int pageNumber,
 			                                       @RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 												   @RequestParam(required=false, defaultValue="missing") String startDate,
-												   @RequestParam(required=false, defaultValue="missing") String endDate) {
+												   @RequestParam(required=false, defaultValue="missing") String endDate, 
+												   @RequestParam(required=false, defaultValue="missing") String flag) {
 		List<RatedItem> items = itemService.findAllBySku(sku.getValues(),
 														 page(pageNumber!=-1?pageNumber:0,
 															  itemsPerPage!=-1?itemsPerPage:pageSize,
 															  sort),
 														 startDate,
-														 endDate);
+														 endDate,
+														 flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/date")
@@ -107,7 +133,8 @@ public class ItemController {
 													@RequestParam(required=false, defaultValue="-1") int pageNumber,
 													@RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 													@RequestParam(required=false, defaultValue="missing") String startDate,
-													@RequestParam(required=false, defaultValue="missing") String endDate) {
+													@RequestParam(required=false, defaultValue="missing") String endDate,
+													@RequestParam(required=false, defaultValue="missing") String flag) {
 		ArrayList<LocalDate> dates = new ArrayList<>();
 		for (String s: date.getValues()) {
 			dates.add(LocalDate.parse(s));
@@ -117,7 +144,8 @@ public class ItemController {
 														    itemsPerPage!=-1?itemsPerPage:pageSize,
 														    sort),
 													   startDate,
-													   endDate);
+													   endDate,
+													   flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/brand")
@@ -126,13 +154,15 @@ public class ItemController {
 													 @RequestParam(required=false, defaultValue="-1") int pageNumber,
 													 @RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 													 @RequestParam(required=false, defaultValue="missing") String startDate,
-													 @RequestParam(required=false, defaultValue="missing") String endDate) {
+													 @RequestParam(required=false, defaultValue="missing") String endDate,
+													 @RequestParam(required=false, defaultValue="missing") String flag) {
 		List<RatedItem> items = itemService.findByBrand(brand.getValues(),
 												   		page(pageNumber!=-1?pageNumber:0,
 														     itemsPerPage!=-1?itemsPerPage:pageSize,
 														     sort), 
 												   		startDate,
-												   		endDate);
+												   		endDate,
+												   		flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/dept")
@@ -141,13 +171,15 @@ public class ItemController {
 													@RequestParam(required=false, defaultValue="-1") int pageNumber,
 													@RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 													@RequestParam(required=false, defaultValue="missing") String startDate,
-													@RequestParam(required=false, defaultValue="missing") String endDate) {
+													@RequestParam(required=false, defaultValue="missing") String endDate,
+													@RequestParam(required=false, defaultValue="missing") String flag) {
 		List<RatedItem> items = itemService.findByDept(dept.getValues(),
 												  page(pageNumber!=-1?pageNumber:0,
 													   itemsPerPage!=-1?itemsPerPage:pageSize,
 													   sort),
 												  startDate,
-												  endDate);
+												  endDate,
+												  flag);
 		return new ResponseEntity(items, HttpStatus.OK);	
 	}
 	@PostMapping("/item/itemClass")
@@ -156,13 +188,15 @@ public class ItemController {
 														 @RequestParam(required=false, defaultValue="-1") int pageNumber,
 														 @RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 														 @RequestParam(required=false, defaultValue="missing") String startDate,
-														 @RequestParam(required=false, defaultValue="missing") String endDate) {
+														 @RequestParam(required=false, defaultValue="missing") String endDate,
+														 @RequestParam(required=false, defaultValue="missing") String flag) {
 		List<RatedItem> items = itemService.findByItemClass(itemClass.getValues(),
 															page(pageNumber!=-1?pageNumber:0,
 																 itemsPerPage!=-1?itemsPerPage:pageSize,
 																 sort),
 															startDate,
-															endDate);
+															endDate,
+															flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/originalPrice")
@@ -171,13 +205,15 @@ public class ItemController {
 															@RequestParam(required=false, defaultValue="-1") int pageNumber,
 															@RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 															@RequestParam(required=false, defaultValue="missing") String startDate,
-															@RequestParam(required=false, defaultValue="missing") String endDate) {
+															@RequestParam(required=false, defaultValue="missing") String endDate,
+															@RequestParam(required=false, defaultValue="missing") String flag) {
 		List<RatedItem> items = itemService.findByOriginalPrice(originalPrice.getValues(),
 																page(pageNumber!=-1?pageNumber:0,
 																	 itemsPerPage!=-1?itemsPerPage:pageSize,
 														   			 sort),
 																startDate,
-																endDate);
+																endDate,
+																flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/salePrice")
@@ -186,13 +222,15 @@ public class ItemController {
 															@RequestParam(required=false, defaultValue="-1") int pageNumber,
 															@RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 															@RequestParam(required=false, defaultValue="missing") String startDate,
-															@RequestParam(required=false, defaultValue="missing") String endDate) {
+															@RequestParam(required=false, defaultValue="missing") String endDate,
+															@RequestParam(required=false, defaultValue="missing") String flag) {
 		List<RatedItem> items = itemService.findbySalePrice(salePrice.getValues(), 
 															page(pageNumber!=-1?pageNumber:0,
 																 itemsPerPage!=-1?itemsPerPage:pageSize,
 																 sort),
 															startDate,
-															endDate);
+															endDate,
+															flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/activeFlag")
@@ -201,10 +239,15 @@ public class ItemController {
 															 @RequestParam(required=false, defaultValue="-1") int pageNumber,
 															 @RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 															 @RequestParam(required=false, defaultValue="missing") String startDate,
-															 @RequestParam(required=false, defaultValue="missing") String endDate) {
-		List<RatedItem> items = itemService.findByActiveFlag(activeFlag.getValues(), page(pageNumber!=-1?pageNumber:0,
-																		 itemsPerPage!=-1?itemsPerPage:pageSize,
-																		 sort),startDate,endDate);
+															 @RequestParam(required=false, defaultValue="missing") String endDate,
+															 @RequestParam(required=false, defaultValue="missing") String flag) {
+		List<RatedItem> items = itemService.findByActiveFlag(activeFlag.getValues(),
+															 page(pageNumber!=-1?pageNumber:0,
+																  itemsPerPage!=-1?itemsPerPage:pageSize,
+																  sort),
+															 startDate,
+															 endDate,
+															 flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/imageFile")
@@ -213,11 +256,16 @@ public class ItemController {
 															@RequestParam(required=false, defaultValue="-1") int pageNumber,
 															@RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 															@RequestParam(required=false, defaultValue="missing") String startDate,
-															@RequestParam(required=false, defaultValue="missing") String endDate) {
+															@RequestParam(required=false, defaultValue="missing") String endDate,
+															@RequestParam(required=false, defaultValue="missing") String flag) {
 
-		List<RatedItem> items = itemService.findByImageFile(imageFile.getValues(), page(pageNumber!=-1?pageNumber:0,
-																	   itemsPerPage!=-1?itemsPerPage:pageSize,
-																	   sort),startDate,endDate);
+		List<RatedItem> items = itemService.findByImageFile(imageFile.getValues(),
+															page(pageNumber!=-1?pageNumber:0,
+																 itemsPerPage!=-1?itemsPerPage:pageSize,
+																 sort),
+															startDate,
+															endDate,
+															flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item/variants")
@@ -226,10 +274,15 @@ public class ItemController {
 														   @RequestParam(required=false, defaultValue="-1") int pageNumber,
 														   @RequestParam(required=false, defaultValue="-1") int itemsPerPage,
 														   @RequestParam(required=false, defaultValue="missing") String startDate,
-														   @RequestParam(required=false, defaultValue="missing") String endDate) {
-		List<RatedItem> items = itemService.findByVariants(variants.getValues(), page(pageNumber!=-1?pageNumber:0,
-																	 itemsPerPage!=-1?itemsPerPage:pageSize,
-																	 sort),startDate, endDate);
+														   @RequestParam(required=false, defaultValue="missing") String endDate,
+														   @RequestParam(required=false, defaultValue="missing") String flag) {
+		List<RatedItem> items = itemService.findByVariants(variants.getValues(),
+														   page(pageNumber!=-1?pageNumber:0,
+															    itemsPerPage!=-1?itemsPerPage:pageSize,
+															    sort),
+														   startDate,
+														   endDate, 
+														   flag);
 		return new ResponseEntity(items, HttpStatus.OK);
 	}
 	@PostMapping("/item")
@@ -243,7 +296,9 @@ public class ItemController {
 		return "redirect:/item";
 	}
 	@PostMapping("/item/upload")
-	public String handleIncomingFile(@RequestParam("file") MultipartFile file, @RequestParam("date") String date, Model m) {
+	public String handleIncomingFile(@RequestParam("file") MultipartFile file,
+									 @RequestParam("date") String date,
+									 Model m) {
 		if(file.isEmpty()) {
 			return "redirect:/home";
 		}

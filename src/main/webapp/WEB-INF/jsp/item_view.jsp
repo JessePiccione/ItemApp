@@ -9,6 +9,10 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Jesse's First Spring Application</title>
+		<!-- Include Moment.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+		<!-- Include Moment-Timezone with data -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
 		<!-- Include Chart.js -->
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<!-- Include date-fns (non-minified version) -->
@@ -27,6 +31,10 @@
 			<div id="graphPopup" class="popup">
 				<span class="close" onclick="closeGraphPopup()">&times;</span>
 				<canvas id="myChart"></canvas>
+			</div>
+			<div id="tablePopup" class="popup">
+				<span class="close" onclick="closeTablePopup()">&times;</span>
+				<table id="myTable"></table>
 			</div>
 		<div class="formBar">
 			<div class="locationWrapper">
@@ -91,33 +99,6 @@
 									</option>
 									<option value="sku">
 										Sku
-									</option>
-									<option value="date">
-										Date
-									</option>
-									<option value="brand">
-										Brand
-									</option>
-									<option value="dept">
-										Department
-									</option>
-									<option value="itemClass">
-										Class
-									</option>
-									<option value="originalPrice">
-										Price
-									</option>
-									<option value="salePrice">
-										Sale Price
-									</option>
-									<option value="itemClass">
-										Active
-									</option>
-									<option value="imageFile">
-										Image
-									</option>
-									<option value="variants">
-										Variants
 									</option>
 								</select>
 								<label class="formLabel">Status</label>
@@ -262,7 +243,6 @@
 				</table>
 			</div>
 		</div>
-		
 		<script src = "/js/script.js"></script>
 	</body>
 </html>
