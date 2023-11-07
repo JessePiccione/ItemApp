@@ -12,8 +12,7 @@
 </head>
 <body>
   <div class="logo">
-  	<img src="/img/spencer.jpg"></img>
-	<img src="/img/spirit.jpg"></img>
+  	<img src="/img/betterlogo.png"></img>
   </div>
   <div class="container">
     <h2>Log in</h2>

@@ -24,8 +24,7 @@
 	</head>
 	<body>
 			<div class ='logoHeader'>
-				<img class="imgHeader" src="/img/spencer.jpg"></img>
-				<img class="imgHeader" src="/img/spirit.jpg"></img>
+				<img class="imgHeader" src="/img/betterlogo.png"></img>
 				<a class="logout" href="/logout">Log out</a>
 			</div>
 			<div id="graphPopup" class="popup">
@@ -35,6 +34,7 @@
 			<div id="tablePopup" class="popup">
 				<span class="close" onclick="closeTablePopup()">&times;</span>
 				<table id="myTable"></table>
+				
 			</div>
 		<div class="formBar">
 			<div class="locationWrapper">
@@ -131,7 +131,7 @@
 			<div class="colored-wrapper table-margin">
 				<table>
 					<tbody id ="itemBody">
-						<tr class="toprow">
+						<tr class="toprow header">
 							<th onclick="changeSort('id')">
 								Id&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 							</th>
@@ -206,7 +206,7 @@
 					</tbody>
 					<tfoot>
 					<input  id="url" type="hidden" name="contentURL" value="${ url }">
-						<tr>
+						<tr class="footer">
 							<th class="bottomrow" colspan=12>
 								<div class="paginationStuff">
 								<label>Showing page&nbsp;</label>

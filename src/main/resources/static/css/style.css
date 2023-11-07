@@ -1,353 +1,448 @@
-circle{
-	fill:none;
+circle {
+	fill: none;
 	stroke: url(#GradientColor);
-	stroke-width:4px;
-	stroke-dasharray:62;
-	stroke-dashoffset:1300000;
+	stroke-width: 4px;
+	stroke-dasharray: 62;
+	stroke-dashoffset: 1300000;
 	animation: anim 10000s linear forwards;
 }
-@keyframes anim{
-	100%{
-		stroke-dashoffset:0;
+
+@keyframes anim {
+	100% {
+		stroke-dashoffset: 0;
 	}
 }
-svg{
-	position:absolute;
-	top:0;
-	left:0;
-}
-.skill{
-	width:40px;
-	height:40px;
-	position:relative;
-	display: flex; 
-	align-items:center;
-	justify-content:center;
-	padding:0px;
-	margin-top: -35px;
-	margin-left:90%;
 
-	overflow-x:visible;
+svg {
+	position: absolute;
+	top: 0;
+	left: 0;
 }
-.outer{
-	height:20px;
-	width:20px;
-	box-shadow: 3px 3px 5px -0.5px rgba(0,0,0,0.15),-3px -3px 5px -0.5px rgba(255,255,255,0.7);
-	border-radius: 50%;
-	padding-top:3.5px;
-	padding-left:3.5px;
-}
-.inner{
-	height: 16px; 
-	width: 16px;
-	border-radius:50%;
-	display:flex;
+
+.skill {
+	width: 40px;
+	height: 40px;
+	position: relative;
+	display: flex;
 	align-items: center;
-	justify-content:center;
-	box-shadow: inset 2px 2px 3px -0.5px rgba(0,0,0,0.2),
-	inset -2px -2px 3px -0.5px rgba(255,255,255,0.7),
-	-0.25px -0.25px 0px rgba(255,255,255,1),
-	0.25px 0.25px 0px rgba(0,0,0,0.15),
-	0px 6px 5px -5px rgba(0,0,0,0.05);
+	justify-content: center;
+	padding: 0px;
+	margin-top: -35px;
+	margin-left: 90%;
+
+	overflow-x: visible;
 }
-.locationWrapper{
-	width:100%;
-	margin-right:1%;
+
+.outer {
+	height: 20px;
+	width: 20px;
+	box-shadow: 3px 3px 5px -0.5px rgba(0, 0, 0, 0.15), -3px -3px 5px -0.5px rgba(255, 255, 255, 0.7);
+	border-radius: 50%;
+	padding-top: 3.5px;
+	padding-left: 3.5px;
 }
-.locationWrapper:nth-child(2){
-	margin-right:0;
+
+.inner {
+	height: 16px;
+	width: 16px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: inset 2px 2px 3px -0.5px rgba(0, 0, 0, 0.2),
+		inset -2px -2px 3px -0.5px rgba(255, 255, 255, 0.7),
+		-0.25px -0.25px 0px rgba(255, 255, 255, 1),
+		0.25px 0.25px 0px rgba(0, 0, 0, 0.15),
+		0px 6px 5px -5px rgba(0, 0, 0, 0.05);
 }
-.logoHeader{
-	margin-left:7.5%;
-	margin-bottom:15px;
-	width:100%;
+
+.locationWrapper {
+	width: 100%;
+	margin-right: 1%;
 }
-.colored-wrapper{
-	background-color:rgb(245, 245, 245);
+
+.locationWrapper:nth-child(2) {
+	margin-right: 0;
+}
+
+.logoHeader {
+
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+.colored-wrapper {
+	background-color: rgb(245, 245, 245);
 	padding: 10px;
 	border: 1px solid #e9e9e9;
-	border-radius:5px;
-	margin-top:0%;
-	margin-right:1.5%;
-	margin-bottom:10px;
-	width:99%;
+	border-radius: 5px;
+	margin-top: 0%;
+	margin-right: 1.5%;
+	margin-bottom: 10px;
+	width: 99%;
 }
-.top-form{
-	 
+
+.top-form {}
+
+.second-form {
+	margin-right: 0%;
+	margin-left: 1%;
 }
-.second-form{
-	margin-right:0%;
-	margin-left:1%;
+
+.formBar {
+	display: flex;
+	margin-left: 7.5%;
+	width: 85%;
 }
-.formBar{
-	display:flex;
-	margin-left:7.5%;
-	width:85%;
+
+.table-margin {
+	margin-left: 7.5%;
+	margin-right: 7.5%;
+	width: 85%;
 }
-.table-margin{
-	margin-left:7.5%;
-	width:85%;
+
+label.formLabel {
+	color: black;
+	margin: 0px;
 }
-label.formLabel{
-	color:black;
-	margin:0px;
+
+label {
+	color: white;
 }
-label{
-	color:white;
+
+#myTable {
+	overflow-x: scoll;
 }
-#myTable{
-	width:400px;
-	overflow-x:scoll;
-}
+
 .popup {
-  display: none;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  border: 1px solid #ddd;
-  background-color: white;
-  z-index: 1000;
+	display: none;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+
+	background-color: #e9e9e9;
+	z-index: 1000;
 }
+
 .close {
-  font-size: 20px;
-  cursor: pointer;
+	font-size: 20px;
+	cursor: pointer;
+	margin-left:98.5%;
+	
 }
+
 canvas {
-  width: 400px;
-  height: 400px;
+	width: 400px;
+	height: 400px;
 }
-hr{
-	width:95%;
-	border:1px solid black;
+
+hr {
+	width: 95%;
+	border: 1px solid black;
 }
-h1.collapsedHeader{
-	border-radius:4px;
+
+h1.collapsedHeader {
+	border-radius: 4px;
 }
-h1.formHeader{
-	background-color:black;
-	color:white;
-	padding-top:10px;
-	padding-left:15px;
-	padding-bottom:10px;
-	margin-top:0px;
-	margin-left:0px;
-	margin-bottom:0px;
-	border-top-left-radius:4px;
-	border-top-right-radius:4px;
+
+h1.formHeader {
+	background-color: black;
+	color: white;
+	padding-top: 10px;
+	padding-left: 15px;
+	padding-bottom: 10px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 }
-.formContainer{
+
+.formContainer {
 	background-color: white;
-	padding-bottom:0px;
+	padding-bottom: 0px;
 	border-radius: 5px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	vertical-align: top;
 }
-textarea.bigbox{
-	width: 65%; /* Take up the full width of the table cell */
-    box-sizing: border-box; /* Ensures padding doesn't add to the width */
-    border: 0px solid #ccc;
-    border-radius: 5px;
-    margin-top:10px;
-    margin-bottom:10px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-    background-color:#e9e9e9; 
+
+textarea.bigbox {
+	width: 65%;
+	/* Take up the full width of the table cell */
+	box-sizing: border-box;
+	/* Ensures padding doesn't add to the width */
+	border: 0px solid #ccc;
+	border-radius: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 16px;
+	transition: border-color 0.3s;
+	background-color: #e9e9e9;
 }
-.logout{
-	border: 1px solid black; 
+
+.logout {
+	overflow: hidden;
+	white-space: nowrap;
+	border: 1px solid black;
 	padding: 5px 15px;
-	margin-left:63.5%;
-	margin-right:7.5%;
-	color:white;
-	font-style:bold;
+	margin-left: 89.0%;
+	margin-right: 7.5%;
+	color: white;
+	font-style: bold;
 	text-decoration: none;
 	background-color: black;
-	border-radius:5px;
+	border-radius: 5px;
 }
-.fa{
+
+.fa {
 	color: white;
 }
 
 /* Reset some default styles */
-.offset{
-	margin-left:7.5%;
+.offset {
+	margin-left: 7.5%;
 }
 
-.hide{
-	display:none;
+.hide {
+	display: none;
 }
+
 i {
-	margin-left:auto;
+	margin-left: auto;
 }
-form{
-	width:100%;
-	margin-right:15px;
-	margin-left:15px;
-	padding-bottom:10px;
+
+form {
+	width: 100%;
+	margin-right: 15px;
+	margin-left: 15px;
+	padding-bottom: 10px;
 
 }
-img.fixed-size{
+
+img.fixed-size {
 	width: 50px;
 	height: 50px;
 }
-input[type="button"]{
-	background-color:#e9e9e9;
+
+img.imgHeader {
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 10px;
 }
-input[type="file"]{
-	color: black;	
+
+input[type="button"] {
+	background-color: #e9e9e9;
+}
+
+input[type="file"] {
+	color: black;
 	margin-left: 0px;
-	margin-right:0px;
-	width:35%;
+	margin-right: 0px;
+	width: 35%;
 }
+
 input[type="number"] {
-    width: 100%; /* Take up the full width of the table cell */
-    box-sizing: border-box; /* Ensures padding doesn't add to the width */
-    margin-left: 0px;
-    border: 0px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s;
+	width: 100%;
+	/* Take up the full width of the table cell */
+	box-sizing: border-box;
+	/* Ensures padding doesn't add to the width */
+	margin-left: 0px;
+	border: 0px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	transition: border-color 0.3s;
 }
-input[type="number"]:focus{
-	outline:none;
+
+input[type="number"]:focus {
+	outline: none;
 }
+
 input[type="date"] {
-    /* Take up the full width of the table cell */
-    box-sizing: border-box; /* Ensures padding doesn't add to the width */
-    margin-left: 4px;
-    padding:4px 10px;
-    border: 0px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-    color: grey;
-    background-color:#e9e9e9;
+	/* Take up the full width of the table cell */
+	box-sizing: border-box;
+	/* Ensures padding doesn't add to the width */
+	margin-left: 4px;
+	padding: 4px 10px;
+	border: 0px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	transition: border-color 0.3s;
+	color: grey;
+	background-color: #e9e9e9;
 }
-input[type="date"].formDate{
-	margin-left:15px;
-	margin-right:10px;
+
+input[type="date"].formDate {
+	margin-left: 15px;
+	margin-right: 10px;
 }
-input[type="date"]:focus{
-	outline:none;}
+
+input[type="date"]:focus {
+	outline: none;
+}
+
 /* Style for the text input fields */
 input[type="text"] {
-    width: 100%; /* Take up the full width of the table cell */
-    box-sizing: border-box; /* Ensures padding doesn't add to the width */
-    margin-left: 4px;
-    border: 0px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s;
+	width: 100%;
+	/* Take up the full width of the table cell */
+	box-sizing: border-box;
+	/* Ensures padding doesn't add to the width */
+	margin-left: 4px;
+	border: 0px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	transition: border-color 0.3s;
 }
+
 input[type="text"]:focus {
-    border-color: #007BFF; /* Change border color when focused */
-    outline: none; /* Remove browser default focus styles */
+	border-color: #007BFF;
+	/* Change border color when focused */
+	outline: none;
+	/* Remove browser default focus styles */
 }
+
 input[type="text"]::placeholder {
-    color: #888; /* Color for placeholder text */
+	color: #888;
+	/* Color for placeholder text */
 }
+
 input[type="button"].filterer {
-	box-align:center;
+	box-align: center;
 }
-body, table {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-body {
-    background-color: #ffffff;
-    padding: 20px;
-}
+
+body,
 table {
-    margin-left:auto;
-    margin-right:auto;
-	padding:5px;
-	border-radius: 20px;
+	margin: 0px;
+	padding: 0px;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background-color: #ffffff;
+
+}
+
+#myTable {
+	margin: 1px; 
+	padding:0px;
+	border-radius: 2px;
+}	
+
+.popupTableEntry {
+	border: none;
+	text-align: center;
+}
+
+table {
+	background-color: black;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 4%;
 	border-collapse: collapse;
 	border: 1px solid #e9e9e9;
-    background-color: black;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
 }
+
 thead {
-    background-color: #e9e9e9;
+	background-color: #e9e9e9;
 }
- td {
-    text-align: left;
-    border-bottom: 1px solid #e9e9e9;
-    background-color:white;
+
+td {
+	text-align: left;
+	border-bottom: 1px solid #e9e9e9;
+	background-color: white;
 }
-td.dateField{
+
+td.dateField {
 	white-space: nowrap;
-	overflow:hidden;
+	overflow: hidden;
 }
-td.tablefooter{
-	color:white;
+
+td.tablefooter {
+	color: white;
 	background-color: black;
+	border-radius: 5px;
 }
+
 .buttonCell {
-	width:100%;
+	width: 100%;
 }
+
 td {
 	border-right: 1px solid #e9e9e9;
 	padding: 8px 8px;
 }
-td.img{
-	text-align:center;
-	padding:0px 0px;
+
+td.img {
+	text-align: center;
+	padding: 0px 0px;
 }
 
-th{
+th {
 	white-space: nowrap;
-	overflow:hidden;
-    color:#FFFFFF;
-    font-weight: bold;
-    padding: 15px 15px;
-    background-color:black;
-	border-radius:5px;
+	overflow: hidden;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 15px 15px;
+	background-color: black;
+	border-radius: 5px;
 }
+
 .CheckBoxInput {
-    margin-right: 5px;
+	margin-right: 5px;
 }
+
 /* Style for the buttons at the bottom of the form */
-button{
-	align-self:center;
-    padding: 5px 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: background-color 0.3s;
+button {
+	align-self: center;
+	padding: 5px 5px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 10px;
+	transition: background-color 0.3s;
 }
-::-webkit-file-upload-button,#supersearch, #sendUploadButton, #nextPage, #previousPage, #pageSize {
-	align-self:center;
-    padding: 5px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-right:5px;
-    transition: background-color 0.3s;
-    background-color:#e9e9e9;
+
+::-webkit-file-upload-button,
+#supersearch,
+#sendUploadButton,
+#nextPage,
+#previousPage,
+#pageSize {
+	align-self: center;
+	padding: 5px 15px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 5px;
+	margin-right: 5px;
+	transition: background-color 0.3s;
+	background-color: #e9e9e9;
 }
+
 #sendUploadButton {
-	margin-left:0px;
-	margin-right:15px;
+	margin-left: 0px;
+	margin-right: 15px;
 }
-#supersearch{
-	margin-left:0px;
-	margin-right:0px;
+
+#supersearch {
+	margin-left: 0px;
+	margin-right: 0px;
 }
-.searchFormSelect{
-    padding: 5px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-right:5px;
-    margin-bottom:10px;
-    margin-top:10px;
-    transition: background-color 0.3s;
-    background-color:#e9e9e9;
+
+.searchFormSelect {
+	padding: 5px 15px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	transition: background-color 0.3s;
+	background-color: #e9e9e9;
 }

@@ -255,9 +255,9 @@ async function showTablePopup(id,sku){
 		itemRequest.open("GET", "/item/table/top?sku="+
 								sku+
 								"&startDate="+
-								startDate+
+								formatDate(globals.startDate)+
 								"&endDate="+
-								endDate);
+								formatDate(globals.endDate));
 		itemRequest.onload = () => {
 			itemResponse = itemRequest.response;
 			resolve();
@@ -266,28 +266,58 @@ async function showTablePopup(id,sku){
 	}).then(()=>{
 		let p2 = new Promise((resolve)=>{
 			var variantsRequest = new XMLHttpRequest();
-			vairantsRequest.open("GET", "/item/table/bottom?id="+
+			variantsRequest.open("GET", "/item/table/bottom?id="+
 									id+
 									"&sku="+
 									sku+
 									"&startDate="+
-									startDate+
+									formatDate(globals.startDate)+
 									"&endDate="+
-									endDate);
+									formatDate(globals.endDate));
 			variantsRequest.onload = () =>{
 				variantsResponse = variantsRequest.response
+				resolve();
 			}
 			variantsRequest.send();
 			
 		}).then(()=>{
-			buildTable(itemResponse, variantsResponse);
+			buildTable(JSON.parse(itemResponse), JSON.parse(variantsResponse));
 			document.getElementById("tablePopup").style.display="block";
 		});
 	
 	});
 }
-function buildTable(item, variants){
-	console.log(item, variants);	
+function buildTable(items, variants){
+	//clear table out
+	let table = document.getElementById("myTable");
+	for(let x =table.children.length-1; x >= 0; x--){
+		table.children[x].remove();
+	}
+	//create new body and header
+	let tBody = document.createElement("tbody");
+	let headerRow = document.createElement("tr");
+	let infoRow = document.createElement("tr");
+	let td = document.createElement("td")
+	let th = document.createElement("th");
+	td.innerHTML = items[0].sku;
+	td.classList.add("popupTableEntry");
+	th.innerText = "Sku";
+	infoRow.appendChild(td);
+	headerRow.appendChild(th);
+	items.forEach((item)=>{
+		th = document.createElement("th");
+		th.innerText = item.date;
+		headerRow.appendChild(th);
+		td = document.createElement("td");
+		td.innerText = item.activeFlag;
+		td.style.backgroundColor = item.activeFlag == "Y"?"green":"red";
+		td.classList.add("popupTableEntry");
+		infoRow.appendChild(td);
+	});
+	tBody.appendChild(headerRow);
+	tBody.appendChild(infoRow);
+	table.appendChild(tBody);
+	console.log(variants);
 }
 function closeTablePopup(){
 	document.getElementById("tablePopup").style.display="none"
