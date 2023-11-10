@@ -158,9 +158,15 @@ label {
 }
 
 #myTable {
-	overflow-x: scoll;
+	max-width:0;
+	max-height:0;
+	overflow-x: scroll;
+	overflow-y: scroll;
 }
-
+.popupTBody{
+	max-height:1%;
+	overflow-y: scroll;
+}
 .popup {
 	display: none;
 	position: fixed;
@@ -205,7 +211,7 @@ h1.collapsedHeader {
 	border-radius: 4px;
 }
 
-h1.formHeader {
+h1.formHeader,h4.popupHeader {
 	background-color: black;
 	color: white;
 	padding-top: 10px;
@@ -217,7 +223,11 @@ h1.formHeader {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
-
+h4.popupHeader{
+	white-space:nowrap;
+	padding-bottom:0px;
+	padding-top: 5px;
+}
 .formContainer {
 	background-color: white;
 	padding-bottom: 0px;
@@ -450,6 +460,11 @@ th {
 	padding: 15px 15px;
 	background-color: black;
 	border-radius: 5px;
+}
+th.popupHeader{
+	text-overflow:normal;
+	overflow-x: none;
+	max-width:100%;
 }
 
 .CheckBoxInput {

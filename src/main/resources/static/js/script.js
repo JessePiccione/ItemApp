@@ -18,6 +18,7 @@ globals.startDate = new Date(globals.endDate.getTime() - 6 * 24 * 60 * 60 * 1000
 document.addEventListener("DOMContentLoaded",loadInnerDOMContent);
 document.getElementById("sendUploadForm").addEventListener("submit",function(event){
 	var loader = document.getElementById("loader");
+	freezeTable();
 	loader.classList.remove("hide");
 });
 document.getElementById("uploadFormHider").addEventListener("click", function(event){
@@ -254,7 +255,6 @@ async function showTablePopup(id,sku){
 	closeTablePopup();
 	closeGraphPopup();
 	let itemResponse;
-	let variantsResponse;
 	let p1 = new Promise((resolve)=>{
 		var itemRequest= new XMLHttpRequest();
 		itemRequest.open("GET", "/item/table/top?sku="+
@@ -282,27 +282,39 @@ function buildTable(items){
 	}
 	//create new body and header
 	let tBody = document.createElement("tbody");
-	let headerRow = document.createElement("tr");
-	let infoRow = document.createElement("tr");
-	let td = document.createElement("td")
-	let th = document.createElement("th");
-	td.innerHTML = items[0].sku;
-	td.classList.add("popupTableEntry");
-	th.innerText = "Sku";
-	infoRow.appendChild(td);
-	headerRow.appendChild(th);
+	tBody.classList.add("popupTBody");
+	//header row
+	let headRow = document.createElement("tr");
+	let headCol = document.createElement("th");
+	let header =  document.createElement("h4");
+	headCol.classList.add("popupHeader");
+	headCol.colSpan = 2;
+	header.classList.add("popupHeader");
+	header.innerText = `Activity of ${items[0].sku} \n${formatDate(globals.startDate)} to ${formatDate(globals.endDate)}`;
+	headCol.appendChild(header);
+	headRow.appendChild(headCol);
+	tBody.appendChild(headRow);
+	//header columns date and active  
+	headRow = document.createElement("tr");
+	headCol = document.createElement("th");
+	headCol.innerText = "Date";
+	headRow.appendChild(headCol);
+	headCol = document.createElement("th");
+	headCol.innerText = "Active";
+	headRow.appendChild(headCol);
+	tBody.appendChild(headRow);
+	let row,col;
 	items.forEach((item)=>{
-		th = document.createElement("th");
-		th.innerText = item.date;
-		headerRow.appendChild(th);
-		td = document.createElement("td");
-		td.innerText = item.activeFlag;
-		td.style.backgroundColor = item.activeFlag == "Y"?"green":"red";
-		td.classList.add("popupTableEntry");
-		infoRow.appendChild(td);
+		row = document.createElement("tr");
+		col = document.createElement("td");
+		col.innerText = item.date;
+		row.appendChild(col);
+		col = document.createElement("td");
+		col.innerText = item.activeFlag;
+		col.style.backgroundColor = item.activeFlag == "Y"?"green":"red";
+		row.appendChild(col);
+		tBody.appendChild(row);
 	});
-	tBody.appendChild(headerRow);
-	tBody.appendChild(infoRow);
 	table.appendChild(tBody);
 }
 function closeTablePopup(){
