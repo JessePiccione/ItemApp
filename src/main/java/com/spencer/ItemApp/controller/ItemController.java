@@ -325,7 +325,7 @@ public class ItemController {
 							date,
 							values[locations.get("brand")],
 							values[locations.get("category_breadcrumbs")].substring(0,
-								values[locations.get("category_breadcrumbs")].indexOf(">")!=-1?
+								values[locations.get("category_breadcrumbs")].contains(">")?
 									values[locations.get("category_breadcrumbs")].indexOf(">"):
 									values[locations.get("category_breadcrumbs")].length()),												
 							values[locations.get("size")],

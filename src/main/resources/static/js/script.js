@@ -18,7 +18,7 @@ globals.startDate = new Date(globals.endDate.getTime() - 6 * 24 * 60 * 60 * 1000
 document.addEventListener("DOMContentLoaded",loadInnerDOMContent);
 document.getElementById("sendUploadForm").addEventListener("submit",function(event){
 	var loader = document.getElementById("loader");
-	loader.classList.contains("hide")?loader.classList.remove("hide"):loader.classList.add("hide");
+	loader.classList.remove("hide");
 });
 document.getElementById("uploadFormHider").addEventListener("click", function(event){
 	changeCaret("upload");
@@ -119,8 +119,10 @@ document.getElementById("pageSize").addEventListener("change", function(event){
 
 //helper functions 
 function loadPage(){
+	freezeTable();
 	return new Promise((resolve)=>{
 		var request = new XMLHttpRequest();
+		
 		request.open(globals.method, globals.url+
 									"?pageNumber="+
 									globals.pageNumber+
@@ -137,8 +139,10 @@ function loadPage(){
 			request.setRequestHeader("Content-Type","application/json");
 		}
 		request.onload = () => {
+			document.getElementById("tableHeader").innerText = `Activity Status from ${formatDate(globals.startDate)} to ${formatDate(globals.endDate)}`;
 			globals.itemsList = JSON.parse(request.response);
 			loadItems(request.response, true);
+			unfreezeTable();
 			resolve();
 		}
 		globals.method=="POST"?request.send(JSON.stringify(globals.body)): request.send();
@@ -156,6 +160,7 @@ function loadInnerDOMContent(event){
 	loadPage().then(()=>{
 		var hidder = document.getElementById("hidder");
 		globals["itemsList"].length > 0 ? hidder.classList.remove("hide") : hidder.classList.add("hide");
+		
 	});
 	updatePageCount();
 }
@@ -264,30 +269,12 @@ async function showTablePopup(id,sku){
 		};
 		itemRequest.send();
 	}).then(()=>{
-		let p2 = new Promise((resolve)=>{
-			var variantsRequest = new XMLHttpRequest();
-			variantsRequest.open("GET", "/item/table/bottom?id="+
-									id+
-									"&sku="+
-									sku+
-									"&startDate="+
-									formatDate(globals.startDate)+
-									"&endDate="+
-									formatDate(globals.endDate));
-			variantsRequest.onload = () =>{
-				variantsResponse = variantsRequest.response
-				resolve();
-			}
-			variantsRequest.send();
-			
-		}).then(()=>{
-			buildTable(JSON.parse(itemResponse), JSON.parse(variantsResponse));
+			buildTable(JSON.parse(itemResponse));
 			document.getElementById("tablePopup").style.display="block";
-		});
-	
+			document.getElementById("pageShadow").style.display = "block";
 	});
 }
-function buildTable(items, variants){
+function buildTable(items){
 	//clear table out
 	let table = document.getElementById("myTable");
 	for(let x =table.children.length-1; x >= 0; x--){
@@ -317,10 +304,10 @@ function buildTable(items, variants){
 	tBody.appendChild(headerRow);
 	tBody.appendChild(infoRow);
 	table.appendChild(tBody);
-	console.log(variants);
 }
 function closeTablePopup(){
-	document.getElementById("tablePopup").style.display="none"
+	document.getElementById("tablePopup").style.display="none";
+	document.getElementById("pageShadow").style.display="none";
 }
 function showGraphPopup(sku, date){
 	closeGraphPopup();
@@ -404,4 +391,36 @@ function formatDate(date){
 	let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, add 1
 	let day = date.getDate().toString().padStart(2, '0');
 	return `${year}-${month}-${day}`;
+}
+function formatDateDisplay(date){
+	let year = date.getFullYear();
+	let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, add 1
+	let day = date.getDate().toString().padStart(2, '0');
+	return `${month}-${day}-${year}`;
+}
+function shadowMatchTable(){
+	let loader = document.getElementById("tableLoader");
+	let tableShadow  = document.getElementById("tableShadow");
+	let activityTable = document.getElementById("activityTable");
+	tableShadow.style.width = activityTable.offsetWidth +"px";
+	tableShadow.style.height = activityTable.offsetHeight+"px";
+	tableShadow.style.display = "block";
+	loader.classList.remove("hide");
+}
+function removeTableShadow(){
+	let tableShadow = document.getElementById("tableShadow");
+	let loader = document.getElementById("tableLoader");
+	tableShadow.style.display = "none";
+	loader.classList.add("hide");
+}
+function freezeTable(){
+	shadowMatchTable();
+	window.onresize = shadowMatchTable;
+	window.onload = shadowMatchTable;
+}
+
+function unfreezeTable(){
+	window.onresize = null;
+	window.onload = null;
+	removeTableShadow();
 }

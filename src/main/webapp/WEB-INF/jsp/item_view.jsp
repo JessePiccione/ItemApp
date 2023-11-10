@@ -23,19 +23,20 @@
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
-			<div class ='logoHeader'>
-				<img class="imgHeader" src="/img/betterlogo.png"></img>
-				<a class="logout" href="/logout">Log out</a>
-			</div>
-			<div id="graphPopup" class="popup">
-				<span class="close" onclick="closeGraphPopup()">&times;</span>
-				<canvas id="myChart"></canvas>
-			</div>
-			<div id="tablePopup" class="popup">
-				<span class="close" onclick="closeTablePopup()">&times;</span>
-				<table id="myTable"></table>
-				
-			</div>
+		<div  id="pageShadow" class="pageShadow">
+		</div>
+		<div class ='logoHeader'>
+			<img class="imgHeader" src="/img/betterlogo.png"></img>
+			<a class="logout" href="/logout">Log out</a>
+		</div>
+		<div id="graphPopup" class="popup">
+			<span class="close" onclick="closeGraphPopup()">&times;</span>
+			<canvas id="myChart"></canvas>
+		</div>
+		<div id="tablePopup" class="popup">
+			<span class="close" onclick="closeTablePopup()">&times;</span>
+			<table id="myTable"></table>				
+		</div>
 		<div class="formBar">
 			<div class="locationWrapper">
 				<div class="colored-wrapper top-form">
@@ -64,7 +65,7 @@
 												<stop offset="100%" stop-color="#9733EE" />
 											</linearGradient>
 										</defs>
-										<circle cx="20" cy="20" r="10" stroke-linecap="round" />
+										<circle class="formCircle"cx="20" cy="20" r="10" stroke-linecap="round" />
 									</svg>
 								</div>
 							</form>
@@ -129,7 +130,31 @@
 		</div>	
 		<div id="hidder" class="hide">
 			<div class="colored-wrapper table-margin">
-				<table>
+				<div  id="tableShadow" class="tableShadow">
+					<div id = "tableLoader" class="skill2 hide">
+						<div class="outer2">
+							<div class="inner2">
+							</div>
+						</div>
+						<svg xlmns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
+							<defs>
+								<linearGradient id="tableGradientColor">
+									<stop offset="0%" stop-color="#DA22FF" />
+									<stop offset="100%" stop-color="#9733EE" />
+								</linearGradient>
+							</defs>
+							<circle class="tableCircle" cx="20" cy="20" r="10" stroke-linecap="round" />
+						</svg>
+					</div>
+				</div>
+				<table id="activityTable">
+					<thead>
+						<tr>
+							<th id="headerRow" colspan=12>
+								<h1 id="tableHeader"></h1>
+							</th>
+						</tr>
+					</thead>
 					<tbody id ="itemBody">
 						<tr class="toprow header">
 							<th onclick="changeSort('id')">
@@ -239,7 +264,7 @@
 								</div>
 							</th>
 						</tr>
-					</tfoot>	
+					</tfoot>
 				</table>
 			</div>
 		</div>
