@@ -1,6 +1,6 @@
 document.getElementById("registerButton").addEventListener("click",function(event){
 	var request = new XMLHttpRequest();
-	request.open("POST","/login/register");
+	request.open("POST","/create/user");
 	request.setRequestHeader('Content-Type', 'application/json');
 	request.onload = () => {
 		if(request.status >= 400){
@@ -8,12 +8,13 @@ document.getElementById("registerButton").addEventListener("click",function(even
 		}
 		else {
 			alert("Success: " + JSON.parse(request.response).Success);
-			location.assign("/login");
+			location.assign("/home");
 		}
 	}
 	const body = {
 		username: document.getElementById("username").value,
-		password: document.getElementById("password").value
+		password: document.getElementById("password").value,
+		role: document.getElementById("role").value
 	}
 	request.send(JSON.stringify(body));
 });

@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spencer.ItemApp.models.Item;
 import com.spencer.ItemApp.models.MyData;
 import com.spencer.ItemApp.models.RatedItem;
+import com.spencer.ItemApp.models.User;
+import com.spencer.ItemApp.service.CustomUserDetailsService;
 import com.spencer.ItemApp.service.ItemService;
 
 @Controller
@@ -36,10 +40,15 @@ public class ItemController {
 	private static String sort = "id";
 	private static String direction = "asc";
 	private static final int pageSize = 12;
+	@Autowired
+	private CustomUserDetailsService userDetailsService;
 	@Autowired 
 	private ItemService itemService;
 	@GetMapping({"/","/home","/index"})
-	public String getHomePage(Model m){
+	public String getHomePage(@AuthenticationPrincipal UserDetails userDetails, Model m){
+		User user  = userDetailsService.getUser(userDetails.getUsername());
+		m.addAttribute("username",user.getEmail());
+		m.addAttribute("role", user.getRole());
 		m.addAttribute("url","/item");
 		return "item_view";
 	}

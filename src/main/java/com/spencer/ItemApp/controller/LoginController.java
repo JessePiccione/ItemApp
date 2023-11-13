@@ -34,22 +34,9 @@ public class LoginController {
 	private PasswordEncoder passwordEncoder;
 	@GetMapping("/login")
 	public String getLoginPage() {
+		//if its the first run uncomment this code and run the login page once to create the admin account 
+		//User user = new User("admin", passwordEncoder.encode("password"), "ADMIN");
+		//userDetailsService.save(user);
 		return "login";
-	}
-	@GetMapping("/login/register")
-	public String getRegisterPage() { 
-		return "register";
-	}
-	@PostMapping("/login/register")
-	public ResponseEntity<String> RegisterUser(@RequestBody RegisterDto registerDto, Model m) {
-		Map<String, String> body = new HashMap<>();
-		User user  = new User(registerDto.getUsername(), passwordEncoder.encode(registerDto.getPassword()));
-		if(userDetailsService.hasUsername(registerDto.getUsername())) {
-			body.put("Error", "User Already Exists");
-			return new ResponseEntity(body,HttpStatus.BAD_REQUEST);
-		}
-		userDetailsService.save(user);
-		body.put("Success", "User Sucessfully registered");
-		return  new ResponseEntity(body, HttpStatus.CREATED);
 	}
 }

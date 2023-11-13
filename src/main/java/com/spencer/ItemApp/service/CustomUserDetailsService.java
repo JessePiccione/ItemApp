@@ -28,5 +28,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public boolean hasUsername(String username) {
 		return userRepository.findByEmail(username).isPresent();
 	}
+	public User getUser(String username) {
+		return userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User not Found!!!"));
+	}
+
 
 }

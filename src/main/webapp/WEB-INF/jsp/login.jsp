@@ -30,12 +30,5 @@
       </div>
     </form>
   </div>
-  <div class="container2">
-  <form method='get' action="/login/register" >
-    <div class="form-group">
-      <button type="submit">New User</button>
-    </div>
-  </form>
-  </div>
 </body>
 </html>

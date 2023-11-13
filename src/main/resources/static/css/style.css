@@ -1,3 +1,12 @@
+h4.usernameHeader{
+	margin:5px;
+	width:100%;
+	text-align:left;
+}
+#tablePopup{
+	max-height:400px;
+	overflow:auto;
+}
 .pageShadow{
 	min-width:100%;
 	min-height:100%;
@@ -122,7 +131,7 @@ svg {
 	margin-bottom: 15px;
 	width: 100%;
 }
-.colored-wrapper {
+.colored-wrapper,.userWrapper {
 	background-color: rgb(245, 245, 245);
 	padding: 10px;
 	border: 1px solid #e9e9e9;
@@ -131,6 +140,14 @@ svg {
 	margin-right: 1.5%;
 	margin-bottom: 10px;
 	width: 99%;
+}
+.userWrapper{
+	width:fit-content;
+	height:fit-content;
+	margin-left:auto;
+	margin-right:6.3%;
+	text-align:right;
+	padding-bottom:15px;
 }
 .second-form {
 	margin-right: 0%;
@@ -251,14 +268,13 @@ textarea.bigbox {
 }
 
 .logout {
-	overflow: hidden;
-	white-space: nowrap;
 	border: 1px solid black;
 	padding: 5px 15px;
-	margin-left: 89.0%;
-	margin-right: 7.5%;
 	color: white;
-	font-style: bold;
+	font-size:12px;
+	font-style: none;
+	margin-left:auto;
+	margin-right:0%;
 	text-decoration: none;
 	background-color: black;
 	border-radius: 5px;
@@ -485,6 +501,7 @@ button {
 ::-webkit-file-upload-button,
 #supersearch,
 #sendUploadButton,
+#registerUserButton,
 #nextPage,
 #previousPage,
 #pageSize {
@@ -498,7 +515,12 @@ button {
 	transition: background-color 0.3s;
 	background-color: #e9e9e9;
 }
-
+#registerUserButton{
+	background-color:black;
+	color:white;
+	margin-right:15px;
+	margin-left:auto;
+}
 #sendUploadButton {
 	margin-left: 0px;
 	margin-right: 15px;

@@ -23,14 +23,21 @@
         <input type="password" id="password" name="password" value="" placeholder="Enter your password" required>
       </div>
       <div class="form-group">
+      	<label for="role">Role:</label>
+      	<select id="role">
+      		<option value="USER" selected>USER</option>
+      		<option value="ADMIN">ADMIN</option>
+      	</select>
+      </div>
+      <div class="form-group">
         <button id="registerButton" type="button" value="Register">Register User</button>
       </div>
     </form>
   </div>
   <div class="container2">
-  <form method='get' action="/login" >
+  <form method='get' action="/home" >
     <div class="form-group">
-      <button type="submit">Log In Page</button>
+      <button type="submit">Home Page</button>
     </div>
   </form>
   <script src="/js/registerScript.js"></script>

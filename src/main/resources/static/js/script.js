@@ -183,11 +183,8 @@ function loadItems(response, off){
 							<td><div onclick="showTablePopup(\''+items[x].id+'\',\''+items[x].sku+'\')">'+items[x].activeFlag+'</div></td>\
 							<td class="img"><img src="'+items[x].imageFile+'" class="fixed-size" alt="Description of image"></td>\
 							<td>'+items[x].variants+'</td>\
-							<td><div onclick=showGraphPopup("'+
-															items[x].sku+'","'+
-															items[x].date+'")>'+
-															items[x].rating+'/'+
-															Math.floor((((globals.endDate - globals.startDate)/(1000 * 60 * 60 * 24)) + 1))+
+							<td>'+items[x].rating+'/'+
+							Math.floor((((globals.endDate - globals.startDate)/(1000 * 60 * 60 * 24)) + 1))+
 							'</div></td>';
 							lastRow.appendChild(newRow);
 	}
@@ -253,7 +250,6 @@ function updatePageCountSpecialCase(){
 }
 async function showTablePopup(id,sku){
 	closeTablePopup();
-	closeGraphPopup();
 	let itemResponse;
 	let p1 = new Promise((resolve)=>{
 		var itemRequest= new XMLHttpRequest();
@@ -274,8 +270,21 @@ async function showTablePopup(id,sku){
 			document.getElementById("pageShadow").style.display = "block";
 	});
 }
+function showChanges(items){
+	if(items.length <= 0){
+		return items;
+	}
+	var newItems = [];
+	items.forEach((item,i)=>{
+		if( newItems.length <= 0 || items.length-1 == i || newItems[newItems.length-1].activeFlag !== item.activeFlag){
+			newItems.push(item);
+		}
+	});
+	return newItems;
+}
 function buildTable(items){
 	//clear table out
+	items = showChanges(items);
 	let table = document.getElementById("myTable");
 	for(let x =table.children.length-1; x >= 0; x--){
 		table.children[x].remove();
@@ -304,7 +313,7 @@ function buildTable(items){
 	headRow.appendChild(headCol);
 	tBody.appendChild(headRow);
 	let row,col;
-	items.forEach((item)=>{
+	items.forEach((item,index)=>{
 		row = document.createElement("tr");
 		col = document.createElement("td");
 		col.innerText = item.date;
@@ -312,6 +321,12 @@ function buildTable(items){
 		col = document.createElement("td");
 		col.innerText = item.activeFlag;
 		col.style.backgroundColor = item.activeFlag == "Y"?"green":"red";
+		col.style.backgroundColor = item.activeFlag == "Y" && (index == 0 || index==items.length-1)? 
+									"lightgreen":
+									col.style.backGroundColor;
+		col.style.backgroundColor = item.activeFlag == "N" && (index == 0 || index==items.length-1)? 
+									"#FFCCCB":
+									col.style.backgroundColor;
 		row.appendChild(col);
 		tBody.appendChild(row);
 	});
@@ -320,64 +335,6 @@ function buildTable(items){
 function closeTablePopup(){
 	document.getElementById("tablePopup").style.display="none";
 	document.getElementById("pageShadow").style.display="none";
-}
-function showGraphPopup(sku, date){
-	closeGraphPopup();
-	closeTablePopup();
-	const request = new XMLHttpRequest();
-	request.open("GET","/item/graphData?startDate="+globals.startDate+"&sku="+sku);
-	request.onload = () => {
-		document.getElementById('graphPopup').style.display = 'block';
-		drawGraph(request.response);
-	}
-	request.send();
-}
-function closeGraphPopup(){
-	if(globals.chart){
-		globals.chart.destroy();
-		globals.chart = null;
-	}
-	document.getElementById("graphPopup").style.display = 'none';
-}
-function drawGraph(response) {
-  const ctx = document.getElementById('myChart').getContext('2d');
-  const data = JSON.parse(response);
-  var dates = [];
-  var ratings = [];
-  for( var x = 0; x < data.length; x++ ){
-	  dates.push(data[x].date);
-	  ratings.push(data[x].rating);
-  }
-  globals.chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: dates,
-      datasets: [{
-        label: 'Rating',
-        data: ratings,
-        borderColor: 'blue',
-        fill: false,
-      }]
-    },
-    options: {
-      scales: {
-        x: {
-          type: 'category',
-          title: {
-            display: true,
-            text: 'Date'
-          }
-        },
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Rating'
-          }
-        }
-      }
-    }
-  });
 }
 function changeCaret(name){
 	var hiddenForm = document.getElementById(name+"FormHidden");
@@ -403,12 +360,6 @@ function formatDate(date){
 	let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, add 1
 	let day = date.getDate().toString().padStart(2, '0');
 	return `${year}-${month}-${day}`;
-}
-function formatDateDisplay(date){
-	let year = date.getFullYear();
-	let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, add 1
-	let day = date.getDate().toString().padStart(2, '0');
-	return `${month}-${day}-${year}`;
 }
 function shadowMatchTable(){
 	let loader = document.getElementById("tableLoader");

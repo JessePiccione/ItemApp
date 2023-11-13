@@ -31,28 +31,34 @@ public class User {
 	private String password;
 	private String role;
 	private List<String> privileges;
-	public User(String email, String password) {
+	public User(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
-		this.role = "User";
+		this.role = role;
 		this.privileges = new ArrayList<String>();
 	}
 	protected User() {
 		
 	}
+	public boolean isAdmin() {
+		return role.equals("ADMIN");
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getEmail() {
 
 		return this.email;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getPassword() {
 		return this.password;
 	}
