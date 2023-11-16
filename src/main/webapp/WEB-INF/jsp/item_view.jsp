@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Jesse's First Spring Application</title>
+		<title>Activity Feed</title>
 		<!-- Include Moment.js -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 		<!-- Include Moment-Timezone with data -->
@@ -48,9 +48,10 @@
 		<div id="navbar" class="navbar">
 			<ul class="navbar">
 				<li id="homeNav" class="navbar startNavbar"><a>Home</a></li>
-				<li id="activityNav" class="navbar selected"><a>Activity</a></li>
-				<li id="otherNav1"class="navbar"><a>Other1</a></li>
-				<li id="otherNav2"class="navbar endNavbar"><a>Other2</a></li>
+				<c:if test='${role.equals("ADMIN")}'>
+					<li id="adminNav" class="navbar"><a>Admin</a></li>
+				</c:if>
+				<li id="activityNav" class="navbar selected endNavbar"><a>Activity</a></li>
 			</ul>
 		</div>
 		<div id = "activeView" class="viewWrapper">
@@ -288,5 +289,8 @@
 		</div>
 		<script src = "/js/script.js"></script>
 		<script src = "/js/itemscript.js"></script>
+		<c:if test='${role.equals("ADMIN")}'>
+			<script src ="/js/adminscript.js"></script>
+		</c:if>
 	</body>
 </html>

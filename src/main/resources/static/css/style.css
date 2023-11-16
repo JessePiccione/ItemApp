@@ -1,3 +1,4 @@
+
 div.top-form{
 	width:100%;
 }
@@ -44,11 +45,17 @@ ul.navbar{
 	list-style-type:none;
 	width:max-content;
 	padding:0%;
-	height:38px;
-	border-top-left-radius:10px;
-	border-top-right-radius:10px;
+	height:37px;
+	border-top-left-radius:14px;
+	border-top-right-radius:14px;
 	margin:0px;
 	background-color:black;
+	border-bottom: 2px solid rgb(245,245,245);
+}
+a.navbar{
+	text-decoration: none;
+	font-style:normal;
+	color:white;
 }
 a{
 	width:auto;
@@ -322,6 +329,7 @@ textarea.bigbox {
 }
 
 .logout {
+	min-width:100%;
 	border: 1px solid black;
 	padding: 5px 15px;
 	color: white;
@@ -454,7 +462,7 @@ body,
 table {
 	margin: 0px;
 	padding: 0px;
-	font-family: Arial, sans-serif;
+	font-family: sans-serif;
 }
 
 body {

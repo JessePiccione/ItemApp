@@ -28,6 +28,17 @@ public class AdminController {
 	CustomUserDetailsService userDetailsService;
 	@Autowired 
 	PasswordEncoder	passwordEncoder;
+	@GetMapping({})
+	public ResponseEntity<String> getUser(@AuthenticationPrincipal UserDetails userDetails){
+		return new ResponseEntity(null, HttpStatus.OK);
+	}
+	@GetMapping({"/adminview"})
+	public String getAdminViewPage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
+		User u =  userDetailsService.getUser(userDetails.getUsername());
+		m.addAttribute("username",u.getEmail());
+		m.addAttribute("role", u.getRole());
+		return "admin_view";
+	}
 	@GetMapping({"/create/user"})
 	public String getRegistrationPage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
 		User user = userDetailsService.getUser(userDetails.getUsername());

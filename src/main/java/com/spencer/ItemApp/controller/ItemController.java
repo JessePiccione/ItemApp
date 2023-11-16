@@ -44,7 +44,7 @@ public class ItemController {
 	private CustomUserDetailsService userDetailsService;
 	@Autowired 
 	private ItemService itemService;
-	@GetMapping({"/","/home","/index"})
+	@GetMapping({"/itemView","/itemview"})
 	public String getHomePage(@AuthenticationPrincipal UserDetails userDetails, Model m){
 		User user  = userDetailsService.getUser(userDetails.getUsername());
 		m.addAttribute("username",user.getEmail());
