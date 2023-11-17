@@ -19,6 +19,11 @@
 		<script src="https://cdn.jsdelivr.net/npm/date-fns@2.16.1"></script>
 		<!-- Include chartjs-adapter-date-fns -->
 		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0"></script>
+		<script src = "/js/script.js" defer></script>
+		<c:if test='${role.equals("ADMIN")}'>
+			<script src="/js/adminscript.js" defer></script>
+			<script src="/js/adminviewscript.js" defer></script>
+		</c:if>
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
 	</head>
@@ -55,129 +60,126 @@
 			</ul>
 		</div>
 		<div id = "activeView" class="viewWrapper">
-			<table id="activityTable">
-						<thead>
-							<tr>
-								<th id="headerRow" colspan=12>
-									<h1 id="tableHeader"></h1>
-								</th>
-							</tr>
-						</thead>
-						<tbody id ="itemBody">
-							<tr class="toprow header">
-								<th onclick="changeSort('id')">
-									Id&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('sku')">
-									Sku&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('date')">
-									Date&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('brand')">
-									Brand&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('dept')">
-									Department&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('itemClass')">
-									Class&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('originalPrice')">
-									Price&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('salePrice')">
-									Sale Price&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('activeFlag')">
-									Active&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('imageFile')">
-									Image&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('variants')">
-									Variants&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-								<th onclick="changeSort('rating')">
-									Rating&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-								</th>
-							</tr>
-							<tr id ="searchRow">
-								<td>
-									<input id="idSearch" name ="idSearch" type="text" placeholder="Search..." value="${ id }" >
-								</td>
-								<td>
-									<input id="skuSearch" name="idSearch" type="text" placeholder="Search..." value="${ sku }">
-								</td>
-								<td>
-									<input id="dateSearch" name = "dateSearch" type="text" placeholder="Search..." value="${ date }">
-								</td>
-								<td>
-									<input id="brandSearch" name = "brandSearch" type="text" placeholder="Search..." value="${ brand }">
-								</td>
-								<td>
-									<input id="deptSearch" name = "deptSearch" type="text" placeholder="Search..." value="${ dept }">
-								</td>
-								<td>
-									<input id="itemClassSearch" name = "itemClassSearch" type="text" placeholder="Search..." value="${ itemClass }">
-								</td>
-								<td>
-								</td>
-								<td>
-								</td>
-								<td>
-									<input id="activeFlagSearch" name ="activeFlagSearch" type="text" placeholder="Search..." value="${ activeFlag }">
-								</td>
-								<td>
-									<input id="imageFileSearch" name="imageFileSearch" type="text" placeholder="Search..." value="${ imageFile }">
-								</td>
-								<td>
-								</td>
-								<td>
-								</td>
-							</tr>
-						</tbody>
-						<tfoot>
-						<input  id="url" type="hidden" name="contentURL" value="${ url }">
-							<tr class="footer">
-								<th class="bottomrow" colspan=12>
-									<div class="paginationStuff">
-									<label>Showing page&nbsp;</label>
-									<label id="currentPage"></label>
-									<label>&nbsp;of&nbsp;</label>
-									<label id="maximumPage"></label>
-									<input id="previousPage" type="button" value = "Previous Page"/>
-									<input id="nextPage" type="button" value = "Next Page"/>
-									<label>Page Size: </label>						
-									<select id="pageSize" name="pageSize">
-										<option value=12>
-											12
-										</option>
-										<option value=24>
-											24
-										</option>
-										<option value=36>
-											36
-										</option>
-										<option value=48>
-											48
-										</option>
-										<option value=72>
-											72	
-										</option>
-										<option value=96>
-											96
+			<div class="formBar">
+				<div class="locationWrapper">
+					<div class="colored-wrapper top-form ">
+						<div class="formContainer">
+							<div id="uploadFormHider">
+								<h1 id="editUserHeader" class="formHeader collapsedHeader">
+									Edit User <i id="uploadCaret" class="fa fa-caret-down" aria-hidden="true"></i>
+								</h1>
+							</div>
+							<div id="editUserFormHidden">
+								<hr />
+								<form id="editUserForm">
+									<label class="formLabel" for="userSelect">
+										Select User 
+									</label>
+									<select name="userSelect" id="userSelect">
+										<option>If you see this option that is a bad sign.</option>
+									</select>
+									<label class="formLabel" for="roleSelect">
+										Select Role
+									</label>
+									<select name="roleSelect">
+										<option value="ADMIN">Admin</option>
+										<option value="USER">User</option>
+									</select>
+									<label class="formLabel" for>Privileges</label>
+									<select name="privileges">
+										<option>
+											No privileges to grant yet
 										</option>
 									</select>
+									<input type="submit" value="submit">
+									<div id = "loader" class="skill hide">
+										<div class="outer">
+											<div class="inner"></div>
+										</div>
+										<svg xlmns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
+											<defs>
+												<linearGradient id="GradientColor">
+													<stop offset="0%" stop-color="#DA22FF" />
+													<stop offset="100%" stop-color="#9733EE" />
+												</linearGradient>
+											</defs>
+											<circle class="formCircle"cx="20" cy="20" r="10" stroke-linecap="round" />
+										</svg>
 									</div>
-								</th>
-							</tr>
-						</tfoot>
-					</table>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+			<div class="colored-wrapper">
+				<table id="activityTable">
+					<thead>
+						<tr>
+							<th id="headerRow" colspan=3>
+								<h1 id="tableHeader">Users</h1>
+							</th>
+						</tr>
+					</thead>
+					<tbody id ="itemBody">
+						<tr class="toprow header">
+							<th>
+								Role&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+							</th>
+							<th>
+								Username&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+							</th>
+							<th>
+								Privileges&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+							</th>
+						</tr>
+						<tr id ="searchRow">
+							<td>									
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+					<input  id="url" type="hidden" name="contentURL" value="${ url }">
+						<tr class="footer">
+							<th class="bottomrow" colspan=3>
+								<div class="paginationStuff">
+								<label>Showing page&nbsp;</label>
+								<label id="currentPage"></label>
+								<label>&nbsp;of&nbsp;</label>
+								<label id="maximumPage"></label>
+								<input id="previousPage" type="button" value = "Previous Page"/>
+								<input id="nextPage" type="button" value = "Next Page"/>
+								<label>Page Size: </label>						
+								<select id="pageSize" name="pageSize">
+									<option value=12>
+										12
+									</option>
+									<option value=24>
+										24
+									</option>
+									<option value=36>
+										36
+									</option>
+									<option value=48>
+										48
+									</option>
+									<option value=72>
+										72	
+									</option>
+									<option value=96>
+										96
+									</option>
+								</select>
+								</div>
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 		</div>
-		<script src = "/js/script.js"></script>
-		<c:if test='${role.equals("ADMIN")}'>
-			<script src="/js/adminscript.js"></script>
-		</c:if>
 	</body>
 </html>

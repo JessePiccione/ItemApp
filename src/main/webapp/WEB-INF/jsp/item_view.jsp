@@ -19,6 +19,15 @@
 		<script src="https://cdn.jsdelivr.net/npm/date-fns@2.16.1"></script>
 		<!-- Include chartjs-adapter-date-fns -->
 		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0"></script>
+		<script src = "/js/itemscript.js" defer></script>
+		<c:choose>
+			<c:when test='${role.equals("ADMIN")}'>
+				<script src ="/js/adminscript.js" defer></script>
+			</c:when>
+			<c:otherwise>
+				<script src = "/js/script.js" defer></script>
+			</c:otherwise>
+		</c:choose>
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
 	</head>
@@ -287,10 +296,5 @@
 				</div>
 			</div>
 		</div>
-		<script src = "/js/script.js"></script>
-		<script src = "/js/itemscript.js"></script>
-		<c:if test='${role.equals("ADMIN")}'>
-			<script src ="/js/adminscript.js"></script>
-		</c:if>
 	</body>
 </html>
