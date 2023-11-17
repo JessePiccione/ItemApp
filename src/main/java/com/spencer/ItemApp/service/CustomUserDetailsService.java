@@ -1,6 +1,7 @@
 package com.spencer.ItemApp.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public User getUser(String username) {
 		return userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User not Found!!!"));
 	}
-
-
+	public List<User> getAllUsers(){
+		return userRepository.findAll();
+	}
 }

@@ -1,6 +1,7 @@
 package com.spencer.ItemApp.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.spencer.ItemApp.models.RegisterDto;
+import com.spencer.ItemApp.models.SendableUser;
 import com.spencer.ItemApp.models.User;
 import com.spencer.ItemApp.service.CustomUserDetailsService;
 
@@ -28,9 +30,14 @@ public class AdminController {
 	CustomUserDetailsService userDetailsService;
 	@Autowired 
 	PasswordEncoder	passwordEncoder;
-	@GetMapping({})
+	@GetMapping({"/user"})
 	public ResponseEntity<String> getUser(@AuthenticationPrincipal UserDetails userDetails){
-		return new ResponseEntity(null, HttpStatus.OK);
+		User u = userDetailsService.getUser(userDetails.getUsername());
+		if (!u.isAdmin()) {
+			return new ResponseEntity("{\"Error\":\"User does not have access to this feature\"}", HttpStatus.UNAUTHORIZED);
+		}
+		List<SendableUser> users = SendableUser.createSendableUserList(userDetailsService.getAllUsers());
+		return new ResponseEntity(users, HttpStatus.OK);
 	}
 	@GetMapping({"/adminview"})
 	public String getAdminViewPage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
@@ -62,6 +69,7 @@ public class AdminController {
 		body.put("Success", "User Sucessfully registered");
 		return  new ResponseEntity(body, HttpStatus.CREATED);
 	}
+	
 	
 	
 }

@@ -7,6 +7,14 @@ import lombok.Data;
 
 @Data
 public class SendableUser {
+	//class level 
+	public static List<SendableUser> createSendableUserList(List<User> users){
+		List<SendableUser> sendableUserList = new ArrayList<SendableUser>(); 
+		for (User u: users) {
+			sendableUserList.add(new SendableUser(u));
+		}
+		return sendableUserList;
+	}
 	private String email;
 	private String role;
 	private List<String> privileges;
@@ -43,4 +51,14 @@ public class SendableUser {
 	public void setPrivileges(List<String> privileges) {
 		this.privileges = privileges; 
 	}
+	public boolean hasPrivilege(String privilege) {
+		return this.privileges.contains(privilege);
+	}
+	public boolean isAdmin() {
+		return this.role.equals("ADMIN");
+	}
+	public boolean hasUsername(String username) {
+		return this.email.equals(username);
+	}
+	
 }
