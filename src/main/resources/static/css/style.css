@@ -562,13 +562,11 @@ button {
 	margin-left: 10px;
 	transition: background-color 0.3s;
 }
-
+#searchUser,
 ::-webkit-file-upload-button,
 #supersearch,
 #sendUploadButton,
 #registerUserButton,
-#nextPage,
-#previousPage,
 #pageSize {
 	align-self: center;
 	padding: 5px 15px;

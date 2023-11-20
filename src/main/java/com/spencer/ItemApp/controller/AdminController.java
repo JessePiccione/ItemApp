@@ -42,6 +42,7 @@ public class AdminController {
 	@GetMapping({"/adminview"})
 	public String getAdminViewPage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
 		User u =  userDetailsService.getUser(userDetails.getUsername());
+		System.out.println("I am not the issue");
 		m.addAttribute("username",u.getEmail());
 		m.addAttribute("role", u.getRole());
 		return "admin_view";

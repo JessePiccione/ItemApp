@@ -1,3 +1,13 @@
+function updateUserForm(users){
+	//get select element and clear out the users
+	let userSelect =  document.getElementById("userSelect");
+	userSelect.innerHTML = "";
+	users.forEach((user)=>{
+		let option = document.createElement("option");
+		option.innerText = option.value = user.email;
+		userSelect.appendChild(option);
+	});
+}
 function createPrivilegeString(privileges){
 	let privilegeString = "";
 	privileges.forEach((privilege,index)=>{ 
@@ -22,6 +32,7 @@ function loadUsers(event){
 		}).then(data => {
 			adminglobals.users = data;
 			clearTable();
+			updateUserForm(data);
 			data.forEach((user)=>{
 				let tBody = document.getElementById("itemBody");
 				let tRow = document.createElement("tr");

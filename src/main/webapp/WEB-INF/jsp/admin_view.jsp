@@ -37,7 +37,7 @@
 			<h4 class="usernameHeader">${role}: ${ username }</h4>
 			<c:if test = '${role.equals("ADMIN")}'>
 				<form method="GET" action="/create/user">
-					<input id="registerUserButton" type="submit" name="submit" value="Register User">
+					<input id="registerUserButton" type="submit" name="Register User" value="Register User">
 				</form>
 			</c:if>
 			<a class="logout" href="/logout">Log out</a>
@@ -72,26 +72,36 @@
 							<div id="editUserFormHidden">
 								<hr />
 								<form id="editUserForm">
-									<label class="formLabel" for="userSelect">
-										Select User 
-									</label>
-									<select name="userSelect" id="userSelect">
-										<option>If you see this option that is a bad sign.</option>
-									</select>
-									<label class="formLabel" for="roleSelect">
-										Select Role
-									</label>
-									<select name="roleSelect">
-										<option value="ADMIN">Admin</option>
-										<option value="USER">User</option>
-									</select>
-									<label class="formLabel" for>Privileges</label>
-									<select name="privileges">
-										<option>
-											No privileges to grant yet
-										</option>
-									</select>
-									<input type="submit" value="submit">
+									<div class="formRow">
+										<label class="formLabel" for="userSelect">
+											Select User 
+										</label>
+										<select name="userSelect" id="userSelect">
+										</select>
+									</div>
+									<br />
+									<div class ="formRow">
+										<label class="formLabel" for="roleSelect">
+											Select Role
+										</label>
+										<select name="roleSelect">
+											<option value="ADMIN">Admin</option>
+											<option value="USER">User</option>
+										</select>
+									</div>
+									<br />
+									<div class="formRow">
+										<label class="formLabel" for>Privileges</label>
+										<select name="privileges">
+											<option>
+												No privileges to grant yet
+											</option>
+										</select>
+									</div>
+									<br />
+									<div class="formRow">
+										<input  id="searchUser" type="submit" name="submitChanges" value="Submit Changes">
+									</div>
 									<div id = "loader" class="skill hide">
 										<div class="outer">
 											<div class="inner"></div>
@@ -133,51 +143,7 @@
 								Privileges&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
 							</th>
 						</tr>
-						<tr id ="searchRow">
-							<td>									
-							</td>
-							<td>
-							</td>
-							<td>
-							</td>
-						</tr>
 					</tbody>
-					<tfoot>
-					<input  id="url" type="hidden" name="contentURL" value="${ url }">
-						<tr class="footer">
-							<th class="bottomrow" colspan=3>
-								<div class="paginationStuff">
-								<label>Showing page&nbsp;</label>
-								<label id="currentPage"></label>
-								<label>&nbsp;of&nbsp;</label>
-								<label id="maximumPage"></label>
-								<input id="previousPage" type="button" value = "Previous Page"/>
-								<input id="nextPage" type="button" value = "Next Page"/>
-								<label>Page Size: </label>						
-								<select id="pageSize" name="pageSize">
-									<option value=12>
-										12
-									</option>
-									<option value=24>
-										24
-									</option>
-									<option value=36>
-										36
-									</option>
-									<option value=48>
-										48
-									</option>
-									<option value=72>
-										72	
-									</option>
-									<option value=96>
-										96
-									</option>
-								</select>
-								</div>
-							</th>
-						</tr>
-					</tfoot>
 				</table>
 			</div>
 		</div>

@@ -29,7 +29,7 @@
 			</c:otherwise>
 		</c:choose>
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/1a10ff1a82.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<div  id="pageShadow" class="pageShadow">
@@ -259,36 +259,7 @@
 						<tfoot>
 						<input  id="url" type="hidden" name="contentURL" value="${ url }">
 							<tr class="footer">
-								<th class="bottomrow" colspan=12>
-									<div class="paginationStuff">
-									<label>Showing page&nbsp;</label>
-									<label id="currentPage"></label>
-									<label>&nbsp;of&nbsp;</label>
-									<label id="maximumPage"></label>
-									<input id="previousPage" type="button" value = "Previous Page"/>
-									<input id="nextPage" type="button" value = "Next Page"/>
-									<label>Page Size: </label>						
-									<select id="pageSize" name="pageSize">
-										<option value=12>
-											12
-										</option>
-										<option value=24>
-											24
-										</option>
-										<option value=36>
-											36
-										</option>
-										<option value=48>
-											48
-										</option>
-										<option value=72>
-											72	
-										</option>
-										<option value=96>
-											96
-										</option>
-									</select>
-									</div>
+								<th id="bottomrow" class="bottomrow" colspan=12>
 								</th>
 							</tr>
 						</tfoot>

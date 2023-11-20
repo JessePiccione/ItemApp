@@ -92,7 +92,7 @@ document.getElementById("imageFileSearch").addEventListener("input", function(ev
 	typingTimer = setTimeout(function () {sendSearchRequest('imageFile');}, 100);
 });
 //pagination stuff 
-document.getElementById("previousPage").addEventListener("click", function(event){
+function previousPage(event){
 	if(globals.pageNumber <= 0){
 		alert("Cannot go back Because this is the Start Page");
 		return;
@@ -100,8 +100,8 @@ document.getElementById("previousPage").addEventListener("click", function(event
 	globals.pageNumber--;
 	globals.method == "POST"?updatePageCountSpecialCase():updatePageCount();
 	loadPage();
-});
-document.getElementById("nextPage").addEventListener("click", function(event){
+}
+function nextPage(event){
 	if(globals.pageNumber > Number(document.getElementById("maximumPage").innerHTML)-1){
 		alert("Sorry, this is the last page cannot go to next page.");
 		return;
@@ -109,13 +109,13 @@ document.getElementById("nextPage").addEventListener("click", function(event){
 	globals.pageNumber++;
 	globals.method == "POST"?updatePageCountSpecialCase():updatePageCount();
 	loadPage();
-});
-document.getElementById("pageSize").addEventListener("change", function(event){
+}
+function pageSize(event){
 	globals.pageSize = document.getElementById("pageSize").value;
 	globals.pageNumber=0;
 	globals.method == "POST"?updatePageCountSpecialCase():updatePageCount();
 	loadPage();
-});
+}
 //handler functions 
 
 //helper functions 
@@ -217,6 +217,75 @@ function changeSort(s){
 	globals.oldSorter = s;
 	loadItems(JSON.stringify(globals.itemsList));
 }
+
+function buildPagingTools(count){
+	//page count
+	let pageCount = Math.ceil(count/globals.pageSize);
+	console.log(pageCount);
+	//get tool bar and clear elements
+	let toolBar = document.getElementById("bottomrow");
+	toolBar.innerHTML = "";
+	//chevron left
+	let leftChevron = document.createElement("i");
+	leftChevron.id = "previousPage"
+	leftChevron.classList.add("fa-solid");
+	leftChevron.classList.add("fa-chevron-left");
+	leftChevron.addEventListener("click", previousPage)
+	toolBar.appendChild(leftChevron);
+	//generate inner page values 
+	let ellipse = document.createElement("label");
+	ellipse.innerText ="...";
+	toolBar.appendChild(ellipse);
+	console.log("I do not know why nothing is added after this")
+	let index = 0;
+	while(index < 5 && index < pageCount){
+		console.log(index);
+		let label = document.createElement("label");
+		label.innerText = globals.pageNumber+index+1;
+		toolBar.appendChild(label);
+		index++;
+	}
+	if (index < pageCount){
+		ellipse = document.createElement("label");
+		ellipse.innerText ="...";
+		toolBar.appendChild(ellipse);
+		let label = document.createElement("label");
+		label.innerText = pageCount;
+		toolBar.appendChild(label);
+	}
+	//chevron right 
+	let rightChevron = document.createElement("i");
+	rightChevron.classList.add("fa-solid");
+	rightChevron.classList.add("fa-chevron-right");
+	rightChevron.id = "nextPage";
+	rightChevron.addEventListener("click", nextPage);
+	toolBar.appendChild(rightChevron);
+	//pagesize selector 
+	let div = document.createElement('div');
+	div.innerHTML = "<label>Page Size: </label>	\
+									<select id='pageSize' name='pageSize'>\
+										<option value=12>\
+											12\
+										</option>\
+										<option value=24>\
+											24\
+										</option>\
+										<option value=36>\
+											36\
+										</option>\
+										<option value=48>\
+											48\
+										</option>\
+										<option value=72>\
+											72	\
+										</option>\
+										<option value=96>\
+											96\
+										</option>\
+									</select>"
+	div.classList.add("pageSize");
+	toolBar.appendChild(div);
+}
 function updatePageCount(){
 	const request = new XMLHttpRequest();
 	request.open("GET", "/count?startDate="+
@@ -226,8 +295,7 @@ function updatePageCount(){
 						"&flag="+
 						globals.status);
 	request.onload = () =>{
-		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
-		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize); 
+		buildPagingTools(JSON.parse(request.response));
 	} 
 	request.send();
 }
@@ -243,8 +311,7 @@ function updatePageCountSpecialCase(){
 								 globals.status);
 	request.setRequestHeader("Content-Type","application/json");
 	request.onload = () => {
-		document.getElementById("currentPage").innerHTML = globals.pageNumber+1;
-		document.getElementById("maximumPage").innerHTML = Math.ceil(request.response/globals.pageSize);
+		buildPagingTools(JSON.parse(request.response));
 	}
 	request.send(JSON.stringify(globals.body));
 }
