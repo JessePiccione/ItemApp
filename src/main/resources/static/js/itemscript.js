@@ -2,7 +2,7 @@ let typingTimer;
 let globals = {
 	"url": document.getElementById("url").value,
 	"method":"GET",
-	"pageSize": document.getElementById("pageSize").value,
+	"pageSize": 12,
 	"pageNumber":0,
 	"direction": true,
 	"oldSorter":"id",
@@ -217,11 +217,14 @@ function changeSort(s){
 	globals.oldSorter = s;
 	loadItems(JSON.stringify(globals.itemsList));
 }
-
+function setPageNumber(pageNumber){
+	globals.pageNumber = pageNumber;
+	globals.method == "POST"?updatePageCountSpecialCase():updatePageCount();
+	loadPage();
+}
 function buildPagingTools(count){
 	//page count
-	let pageCount = Math.ceil(count/globals.pageSize);
-	console.log(pageCount);
+	let pageCount = Math.floor(count/globals.pageSize);
 	//get tool bar and clear elements
 	let toolBar = document.getElementById("bottomrow");
 	toolBar.innerHTML = "";
@@ -230,61 +233,73 @@ function buildPagingTools(count){
 	leftChevron.id = "previousPage"
 	leftChevron.classList.add("fa-solid");
 	leftChevron.classList.add("fa-chevron-left");
-	leftChevron.addEventListener("click", previousPage)
+	leftChevron.style.marginRight = "30px";
 	toolBar.appendChild(leftChevron);
+	leftChevron.addEventListener("click", previousPage)
 	//generate inner page values 
-	let ellipse = document.createElement("label");
-	ellipse.innerText ="...";
-	toolBar.appendChild(ellipse);
-	console.log("I do not know why nothing is added after this")
-	let index = 0;
-	while(index < 5 && index < pageCount){
-		console.log(index);
-		let label = document.createElement("label");
-		label.innerText = globals.pageNumber+index+1;
-		toolBar.appendChild(label);
-		index++;
-	}
-	if (index < pageCount){
-		ellipse = document.createElement("label");
+	if(globals.pageNumber != 0){
+		let ellipse = document.createElement("label");
+		ellipse.style.marginRight = "30px";
 		ellipse.innerText ="...";
 		toolBar.appendChild(ellipse);
-		let label = document.createElement("label");
-		label.innerText = pageCount;
-		toolBar.appendChild(label);
 	}
+	let i = 0;
+	for(let index = 0; index < 5 && globals.pageNumber+index < pageCount; index++){
+		let label = document.createElement("label");
+		label.style.marginRight = "30px";
+		label.addEventListener("click",function(){setPageNumber(globals.pageNumber+index)});
+		label.innerText = globals.pageNumber+index+1;
+		toolBar.appendChild(label);
+		i = index;
+	}
+	
+	if (globals.pageNumber + i < pageCount){
+		ellipse = document.createElement("label");
+		ellipse.style.marginRight = "30px";
+		ellipse.innerText ="...";
+		toolBar.appendChild(ellipse);
+		
+	}
+	let label = document.createElement("label");
+		label.style.marginRight = "15px";
+		label.id = "maximumPage";
+		label.addEventListener("click", function(){setPageNumber(pageCount)});
+		label.innerText = pageCount+1;
+		toolBar.appendChild(label);
 	//chevron right 
 	let rightChevron = document.createElement("i");
 	rightChevron.classList.add("fa-solid");
 	rightChevron.classList.add("fa-chevron-right");
+	rightChevron.style.marginRight = "30px";
 	rightChevron.id = "nextPage";
 	rightChevron.addEventListener("click", nextPage);
 	toolBar.appendChild(rightChevron);
 	//pagesize selector 
-	let div = document.createElement('div');
-	div.innerHTML = "<label>Page Size: </label>	\
+	let main = document.createElement("div");
+	main.className = "pageSizeDiv";
+	main.innerHTML = "<label>Page Size: </label>	\
 									<select id='pageSize' name='pageSize'>\
-										<option value=12>\
+										<option value=12"+(globals.pageSize==12?" selected":"")+">\
 											12\
 										</option>\
-										<option value=24>\
+										<option value=24"+(globals.pageSize==24?" selected":"")+">\
 											24\
 										</option>\
-										<option value=36>\
+										<option value=36"+(globals.pageSize==36?" selected":"")+">\
 											36\
 										</option>\
-										<option value=48>\
+										<option value=48"+(globals.pageSize==48?" selected":"")+">\
 											48\
 										</option>\
-										<option value=72>\
+										<option value=72"+(globals.pageSize==72?" selected":"")+">\
 											72	\
 										</option>\
-										<option value=96>\
+										<option value=96"+(globals.pageSize==96?" selected":"")+">\
 											96\
 										</option>\
 									</select>"
-	div.classList.add("pageSize");
-	toolBar.appendChild(div);
+	toolBar.appendChild(main); 
+	document.getElementById("pageSize").addEventListener("change", pageSize);
 }
 function updatePageCount(){
 	const request = new XMLHttpRequest();
