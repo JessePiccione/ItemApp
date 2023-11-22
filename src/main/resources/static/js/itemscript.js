@@ -223,6 +223,8 @@ function setPageNumber(pageNumber){
 	loadPage();
 }
 function buildPagingTools(count){
+	//margin 
+	let margin = "30px";
 	//page count
 	let pageCount = Math.floor(count/globals.pageSize);
 	//get tool bar and clear elements
@@ -233,20 +235,25 @@ function buildPagingTools(count){
 	leftChevron.id = "previousPage"
 	leftChevron.classList.add("fa-solid");
 	leftChevron.classList.add("fa-chevron-left");
-	leftChevron.style.marginRight = "30px";
+	leftChevron.style.marginRight = margin;
 	toolBar.appendChild(leftChevron);
 	leftChevron.addEventListener("click", previousPage)
 	//generate inner page values 
 	if(globals.pageNumber != 0){
+		let label = document.createElement("label");
+		label.innerText = "1";
+		label.style.marginRight = margin;
+		label.addEventListener("click", function(event){setPageNumber(0)});
+		toolBar.appendChild(label);
 		let ellipse = document.createElement("label");
-		ellipse.style.marginRight = "30px";
+		ellipse.style.marginRight = margin;
 		ellipse.innerText ="...";
 		toolBar.appendChild(ellipse);
 	}
 	let i = 0;
 	for(let index = 0; index < 5 && globals.pageNumber+index < pageCount; index++){
 		let label = document.createElement("label");
-		label.style.marginRight = "30px";
+		label.style.marginRight = margin;
 		label.addEventListener("click",function(){setPageNumber(globals.pageNumber+index)});
 		label.innerText = globals.pageNumber+index+1;
 		toolBar.appendChild(label);
@@ -255,13 +262,13 @@ function buildPagingTools(count){
 	
 	if (globals.pageNumber + i < pageCount){
 		ellipse = document.createElement("label");
-		ellipse.style.marginRight = "30px";
+		ellipse.style.marginRight = margin;
 		ellipse.innerText ="...";
 		toolBar.appendChild(ellipse);
 		
 	}
 	let label = document.createElement("label");
-		label.style.marginRight = "15px";
+		label.style.marginRight = margin;
 		label.id = "maximumPage";
 		label.addEventListener("click", function(){setPageNumber(pageCount)});
 		label.innerText = pageCount+1;
@@ -270,7 +277,7 @@ function buildPagingTools(count){
 	let rightChevron = document.createElement("i");
 	rightChevron.classList.add("fa-solid");
 	rightChevron.classList.add("fa-chevron-right");
-	rightChevron.style.marginRight = "30px";
+	rightChevron.style.marginRight = margin;
 	rightChevron.id = "nextPage";
 	rightChevron.addEventListener("click", nextPage);
 	toolBar.appendChild(rightChevron);

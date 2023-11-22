@@ -1,4 +1,8 @@
-
+.pageSizeDiv{
+	width:fit-content;
+	margin:0px;
+	display: inline;
+}
 div.top-form{
 	width:100%;
 }

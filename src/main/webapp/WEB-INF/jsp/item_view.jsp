@@ -13,12 +13,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 		<!-- Include Moment-Timezone with data -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
-		<!-- Include Chart.js -->
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<!-- Include date-fns (non-minified version) -->
 		<script src="https://cdn.jsdelivr.net/npm/date-fns@2.16.1"></script>
-		<!-- Include chartjs-adapter-date-fns -->
-		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0"></script>
 		<script src = "/js/itemscript.js" defer></script>
 		<c:choose>
 			<c:when test='${role.equals("ADMIN")}'>

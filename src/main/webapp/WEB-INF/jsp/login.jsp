@@ -8,7 +8,7 @@
 <head>
   <title>Login Page</title>
   <link rel="stylesheet" type="text/css" href="/css/loginstyle.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/1a10ff1a82.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="logo">

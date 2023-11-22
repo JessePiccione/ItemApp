@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.spencer.ItemApp.models.SendableUser;
 import com.spencer.ItemApp.models.User;
 import com.spencer.ItemApp.repository.UserRepository;
 
@@ -34,5 +35,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 	public List<User> getAllUsers(){
 		return userRepository.findAll();
+	}
+	public User updateUser(Long id, SendableUser newUserData){
+		User u = userRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("User Not Found!!"));
+		if(u.getId() == (newUserData.getId())) {
+			if(!u.getEmail().equals(newUserData.getEmail()) && newUserData.getEmail().length() > 0) {
+				u.setEmail(newUserData.getEmail());
+			}
+			if(!u.getRole().equals(newUserData.getRole()) && newUserData.getRole().length() > 0) {
+				u.setRole(newUserData.getRole());
+			}
+		}
+		return userRepository.save(u);
+		
 	}
 }

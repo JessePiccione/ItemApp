@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spencer.ItemApp.models.RegisterDto;
 import com.spencer.ItemApp.models.SendableUser;
@@ -42,7 +45,6 @@ public class AdminController {
 	@GetMapping({"/adminview"})
 	public String getAdminViewPage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
 		User u =  userDetailsService.getUser(userDetails.getUsername());
-		System.out.println("I am not the issue");
 		m.addAttribute("username",u.getEmail());
 		m.addAttribute("role", u.getRole());
 		return "admin_view";
@@ -54,7 +56,9 @@ public class AdminController {
 		return "redirect:/home";
 	}
 	@PostMapping({"/create/user"})
-	public ResponseEntity<String> RegisterUser(@AuthenticationPrincipal UserDetails userDetails, @RequestBody RegisterDto registerDto, Model m) {
+	public ResponseEntity<String> RegisterUser(@AuthenticationPrincipal UserDetails userDetails,
+											   @RequestBody RegisterDto registerDto,
+											   Model m) {
 		Map<String, String> body = new HashMap<>();
 		User user = userDetailsService.getUser(userDetails.getUsername());
 		if(!user.isAdmin()) {
@@ -70,7 +74,19 @@ public class AdminController {
 		body.put("Success", "User Sucessfully registered");
 		return  new ResponseEntity(body, HttpStatus.CREATED);
 	}
-	
-	
-	
+	@PostMapping({"/update/user"})
+	public ResponseEntity<String> updateUser(@AuthenticationPrincipal UserDetails userDetails, 
+											@RequestParam long id,
+											@RequestBody SendableUser userData){
+		System.out.println("I start");
+		User u = userDetailsService.getUser(userDetails.getUsername());
+		HashMap<String, String> body = new HashMap<>();
+		if(!u.isAdmin()) {
+			System.out.println("I trigger");
+			body.put("Error", "User does not have access to this resource");
+			return new ResponseEntity(body, HttpStatus.UNAUTHORIZED);
+		}
+		System.out.println(userData.getRole());
+		return new ResponseEntity(userDetailsService.updateUser(id, userData), HttpStatus.OK);
+	}
 }

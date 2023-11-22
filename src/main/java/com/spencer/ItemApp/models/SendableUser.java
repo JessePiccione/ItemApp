@@ -15,20 +15,24 @@ public class SendableUser {
 		}
 		return sendableUserList;
 	}
+	private long id;
 	private String email;
 	private String role;
 	private List<String> privileges;
 	public SendableUser() {
+		this.id = 0;
 		this.email = "";
-		this.role = "USER";
+		this.role = "User";
 		this.privileges = new ArrayList<String>();
 	}
 	public SendableUser(User u) {
+		this.id = u.getId();
 		this.email = u.getEmail();
 		this.role = u.getRole();
 		this.privileges = u.getPrivileges();
 	}
-	public SendableUser(String email, String role, List<String> privileges) {
+	public SendableUser(Long id, String email, String role, List<String> privileges) {
+		this.id = id;
 		this.email = email;
 		this.role = role;
 		this.privileges = privileges;
@@ -60,5 +64,10 @@ public class SendableUser {
 	public boolean hasUsername(String username) {
 		return this.email.equals(username);
 	}
-	
+	public long getId() {
+		return this.id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
