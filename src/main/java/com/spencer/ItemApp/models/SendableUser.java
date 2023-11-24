@@ -18,12 +18,12 @@ public class SendableUser {
 	private long id;
 	private String email;
 	private String role;
-	private List<String> privileges;
+	private String privileges;
 	public SendableUser() {
 		this.id = 0;
 		this.email = "";
 		this.role = "User";
-		this.privileges = new ArrayList<String>();
+		this.privileges = "";
 	}
 	public SendableUser(User u) {
 		this.id = u.getId();
@@ -31,7 +31,7 @@ public class SendableUser {
 		this.role = u.getRole();
 		this.privileges = u.getPrivileges();
 	}
-	public SendableUser(Long id, String email, String role, List<String> privileges) {
+	public SendableUser(Long id, String email, String role, String privileges) {
 		this.id = id;
 		this.email = email;
 		this.role = role;
@@ -43,7 +43,7 @@ public class SendableUser {
 	public String getRole() {
 		return this.role;
 	}
-	public List<String> getPrivileges(){
+	public String getPrivileges(){
 		return this.privileges;
 	}
 	public void setEmail(String email) {
@@ -52,7 +52,7 @@ public class SendableUser {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public void setPrivileges(List<String> privileges) {
+	public void setPrivileges(String privileges) {
 		this.privileges = privileges; 
 	}
 	public boolean hasPrivilege(String privilege) {

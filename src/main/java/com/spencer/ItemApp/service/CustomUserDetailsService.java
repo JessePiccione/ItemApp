@@ -47,6 +47,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 			}
 		}
 		return userRepository.save(u);
-		
 	}
 }

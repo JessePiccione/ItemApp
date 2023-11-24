@@ -35,11 +35,6 @@
 		</div>
 		<div class="userWrapper">
 			<h4 class="usernameHeader">${role}: ${ username }</h4>
-			<c:if test = '${role.equals("ADMIN")}'>
-				<form method="GET" action="/create/user">
-					<input id="registerUserButton" type="submit" name="submit" value="Register User">
-				</form>
-			</c:if>
 			<a class="logout" href="/logout">Log out</a>
 		</div>
 		<div id="graphPopup" class="popup">
@@ -100,11 +95,11 @@
 					<div class="colored-wrapper top-form second-form">
 						<div class="formContainer">
 							<div id="searchFormHider">
-								<h1 id="searchFormHeader"class="formHeader collapsedHeader">Search By <i id="searchCaret" class="fa fa-caret-down" aria-hidden="true"></i></h1>
+								<h1 id="searchFormHeader" class="formHeader collapsedHeader">Search By <i id="searchCaret" class="fa fa-caret-down" aria-hidden="true"></i></h1>
 							</div>
-							<div id="searchFormHidden" class="hide">
+							<div id="searchFormHidden" class="hide" >
 								<hr />
-								<form id="superSearch">
+								<form>
 									<label class="formLabel">
 										Start Date 
 									</label>

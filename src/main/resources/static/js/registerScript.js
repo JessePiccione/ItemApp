@@ -8,7 +8,6 @@ document.getElementById("registerButton").addEventListener("click",function(even
 		}
 		else {
 			alert("Success: " + JSON.parse(request.response).Success);
-			location.assign("/home");
 		}
 	}
 	const body = {

@@ -6,6 +6,7 @@ import lombok.Data;
 public class RegisterDto {
 	public String username;
 	public String password;
+	public String passwordChecker;
 	public String role;
 	public String getUsername() {
 		return this.username;

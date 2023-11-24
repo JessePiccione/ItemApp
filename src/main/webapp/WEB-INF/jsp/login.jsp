@@ -17,6 +17,7 @@
   <div class="container">
     <h2>Log in</h2>
     <form method="POST" action="login">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" value="" placeholder="Enter your username" required>

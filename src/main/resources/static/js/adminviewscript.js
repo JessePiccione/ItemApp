@@ -1,4 +1,30 @@
-function submitUserForm(event){
+function submitNewUserForm(event) {
+	event.preventDefault();
+	let body = getNewUserFormBody();
+	return fetch("/create/user", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(body)
+	}).then((response) => {
+		if (!response.ok) {
+			throw new Error(response.json());
+		}
+		return response.json();
+	}).then((body) => {
+		location.reload();
+	});
+}
+function getNewUserFormBody(){
+	return {
+		"username":document.getElementById("newUsername").value,
+		"password":document.getElementById("password").value,
+		"passwordChecker":document.getElementById("passwordChecker").value,
+		"role":document.getElementById("role").value
+	};
+}
+function submitEditUserForm(event){
 	let id = Number.parseInt(document.getElementById("userSelect").value);
 	let user = adminglobals.users[0];
 	for(let x = 1; x < adminglobals.users.length; x++){
@@ -34,7 +60,7 @@ function submitUserForm(event){
 		});
 	})
 }
-function updateUserForm(users){
+function updateUserForm(users)	{
 	//get select element and clear out the users
 	let userSelect =  document.getElementById("userSelect");
 	userSelect.innerHTML = "";
@@ -44,14 +70,6 @@ function updateUserForm(users){
 		option.value = user.id;
 		userSelect.appendChild(option);
 	});
-}
-function createPrivilegeString(privileges){
-	let privilegeString = "";
-	privileges.forEach((privilege,index)=>{ 
-		privilegeString += index!=0?", " + privilege:privilege;
-	});
-	return privilegeString;
-
 }
 function clearTable(){
 	let entries = document.querySelectorAll(".dynamicRowEntry");	
@@ -79,7 +97,7 @@ function loadUsers(event){
 				let tPrivileges = document.createElement("td");
 				tRole.innerText = user.role;
 				tUsername.innerText = user.email;
-				tPrivileges.innerText = createPrivilegeString(user.privileges);
+				tPrivileges.innerText = user.privileges;
 				tRow.appendChild(tRole);
 				tRow.appendChild(tUsername);
 				tRow.appendChild(tPrivileges)
@@ -90,8 +108,47 @@ function loadUsers(event){
 		
 	});
 }
+function toggleElementClass(id, primaryClass, secondaryClass){
+	let caret = document.getElementById(id);
+	if (caret.classList.contains(primaryClass)){
+		caret.classList.remove(primaryClass);
+		caret.classList.add(secondaryClass)
+	}else {
+		caret.classList.remove(secondaryClass);
+		caret.classList.add(primaryClass);
+	}
+}
+function toggleRegisterUserFormHider(event){
+	event.preventDefault();
+	toggleElementClass()
+}
+function toggleNewUserFormHider(event){
+	event.preventDefault();
+	toggleElementClass("newUserCaret","fa-caret-down","fa-caret-up");
+	toggleElementClass("editUserHeader","collapsedHeader","uncollapsedHeader");
+	toggleElementClass("newUserFormHidden","hide", "unhide");
+}
+function toggleEditUserFormHider(event){
+	event.preventDefault();	
+	toggleElementClass("editUserCaret", "fa-caret-down", "fa-caret-up");
+	toggleElementClass("editUserHeader", "collapsedHeader", "uncollapsedHeader");
+	toggleElementClass("editUserFormHidden", "hide", "unhide");
+}
+function loadRegisterUserForm(){
+	document.getElementById("newUserForm").addEventListener("submit", submitNewUserForm);
+	document.getElementById("newUserHider").addEventListener("click", toggleNewUserFormHider);
+}
+function loadEditUserForm(){
+	document.getElementById("editUserForm").addEventListener("submit", submitEditUserForm);
+	document.getElementById("editUserHider").addEventListener("click", toggleEditUserFormHider)
+}
+function loadUserForms(){
+	loadEditUserForm();
+	loadRegisterUserForm();
+}
 function loadAdminViewerDOMContent(){
 	loadUsers();
-	document.getElementById("editUserForm").addEventListener("submit", submitUserForm);
+	loadUserForms();
 }
+
 document.addEventListener("DOMContentLoaded", loadAdminViewerDOMContent);

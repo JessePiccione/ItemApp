@@ -26,11 +26,6 @@
 		</div>
 		<div class="userWrapper">
 			<h4 class="usernameHeader">${role}: ${ username }</h4>
-			<c:if test = '${role.equals("ADMIN")}'>
-				<form method="GET" action="/create/user">
-					<input id="registerUserButton" type="submit" name="submit" value="Register User">
-				</form>
-			</c:if>
 			<a class="logout" href="/logout">Log out</a>
 		</div>
 		<div id="graphPopup" class="popup">

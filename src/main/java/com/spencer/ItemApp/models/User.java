@@ -18,24 +18,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
 @Entity(name = "users")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
 	private Long id;
 	private String email;
 	private String password;
 	private String role;
-	private List<String> privileges;
+	private String privileges;
 	public User(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
-		this.privileges = new ArrayList<String>();
+		this.privileges = "";
 	}
 	protected User() {
 		
@@ -43,28 +41,18 @@ public class User {
 	public boolean isAdmin() {
 		return role.equals("ADMIN");
 	}
-	public String getRole() {
-		return role;
-	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getEmail() {
 
-		return this.email;
-	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getPassword() {
-		return this.password;
-	}
-	public List<String> getPrivileges(){
-		return this.privileges;
-	}
+
 	public boolean hasPrivilege(String privilege) {
 		return privileges.contains(privilege);
 	}
@@ -72,16 +60,14 @@ public class User {
 		if(hasPrivilege(privilege)) {
 			return false;
 		}
-		privileges.add(privilege);
+		this.privileges+=privilege;
 		return true;
 	}
-	public void assignRole(String role, List<String> privileges) {
+	public void assignRole(String role, String privileges) {
 		this.role = role;
 		this.privileges = privileges;
 	}
-	public Long getId() {
-		return this.id;
-	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}

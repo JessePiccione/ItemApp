@@ -52,8 +52,7 @@ public class AdminController {
 	@GetMapping({"/create/user"})
 	public String getRegistrationPage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
 		User user = userDetailsService.getUser(userDetails.getUsername());
-		if(user.isAdmin()) return "register";
-		return "redirect:/home";
+		return "redirect:/adminview";
 	}
 	@PostMapping({"/create/user"})
 	public ResponseEntity<String> RegisterUser(@AuthenticationPrincipal UserDetails userDetails,

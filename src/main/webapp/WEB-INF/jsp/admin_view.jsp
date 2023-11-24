@@ -32,11 +32,6 @@
 		</div>
 		<div class="userWrapper">
 			<h4 class="usernameHeader">${role}: ${ username }</h4>
-			<c:if test = '${role.equals("ADMIN")}'>
-				<form method="GET" action="/create/user">
-					<input id="registerUserButton" type="submit" name="Register User" value="Register User">
-				</form>
-			</c:if>
 			<a class="logout" href="/logout">Log out</a>
 		</div>
 		<div id="graphPopup" class="popup">
@@ -61,19 +56,19 @@
 				<div class="locationWrapper">
 					<div class="colored-wrapper top-form ">
 						<div class="formContainer">
-							<div id="uploadFormHider">
+							<div id="editUserHider">
 								<h1 id="editUserHeader" class="formHeader collapsedHeader">
-									Edit User <i id="uploadCaret" class="fa fa-caret-down" aria-hidden="true"></i>
+									Edit User <i id="editUserCaret" class="fa fa-caret-down" aria-hidden="true"></i>
 								</h1>
 							</div>
-							<div id="editUserFormHidden">
+							<div id="editUserFormHidden" class="hide">
 								<hr />
 								<form id="editUserForm">
 									<div class="formRow">
 										<label class="formLabel" for="userSelect">
 											Select User 
 										</label>
-										<select name="userSelect" id="userSelect">
+										<select class="formSelector" name="userSelect" id="userSelect">
 										</select>
 									</div>
 									<br />
@@ -81,7 +76,7 @@
 										<label class="formLabel" for="roleSelect">
 											Select Role
 										</label>
-										<select name="roleSelect" id="roleSelect">
+										<select class="formSelector" name="roleSelect" id="roleSelect">
 											<option value="ADMIN">Admin</option>
 											<option value="USER">User</option>
 										</select>
@@ -89,7 +84,7 @@
 									<br />
 									<div class="formRow">
 										<label class="formLabel" for>Privileges</label>
-										<select name="privileges">
+										<select class="formSelector" name="privileges">
 											<option>
 												No privileges to grant yet
 											</option>
@@ -111,6 +106,74 @@
 												</linearGradient>
 											</defs>
 											<circle class="formCircle"cx="20" cy="20" r="10" stroke-linecap="round" />
+										</svg>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="locationWrapper">
+					<div class="colored-wrapper top-form second-form">
+						<div class="formContainer">
+							<div id="newUserHider">
+								<h1 id="newUserHeader" class="formHeader collapsedHeader">
+									Register New User <i id="newUserCaret" class="fa fa-caret-down" aria-hidden="true"></i>
+								</h1>
+							</div>
+							<div id="newUserFormHidden" class="hide">
+								<hr />
+								<form id="newUserForm">
+									<div class="formRow">
+										<label class="formLabel" for="newUsername">
+											Username 
+										</label>
+										<input type="text" id="newUsername" name="username" class="userName" required>
+									</div>
+									<br />
+									<div class="formRow" >
+										<label class="formLabel" for="password">
+											Password 
+										</label>
+										<input type="password" id="password" name="password" required>
+									</div>
+									<br />
+									<div class="formRow">
+										<label class="formLabel" for="passwordChecker">
+											Re-enter Password
+										</label>
+										<input type="password" id ="passwordChecker" name="passwordCheck" required>
+									</div>
+									<br />
+									<div class="formRow">
+										<label class="formLabel" for="roleSelect">
+											Select Role
+										</label>
+										<select id ="role" class="formSelector">
+											<option value="USER">
+												USER
+											</option>
+											<option value="ADMIN">
+												ADMIN
+											</option>
+										</select>
+									</div>
+									<br />
+									<div class="formRow">
+										<input type=submit name="Create User" value="Create User">
+									</div>
+									<div id = "loader2" class="skill hide">
+										<div class="outer">
+											<div class="inner"></div>
+										</div>
+										<svg xlmns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
+											<defs>
+												<linearGradient id="GradientColor">
+													<stop offset="0%" stop-color="#DA22FF" />
+													<stop offset="100%" stop-color="#9733EE" />
+												</linearGradient>
+											</defs>
+											<circle class="formCircle" cx="20" cy="20" r="10" stroke-linecap="round" />
 										</svg>
 									</div>
 								</form>

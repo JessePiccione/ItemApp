@@ -1,5 +1,6 @@
 package com.spencer.ItemApp.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,7 @@ public class HomeController {
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 	@GetMapping({"/", "/home"})
-	public String getHomePage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
+	public String getHomePage(@AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model m) {
 		User u = userDetailsService.getUser(userDetails.getUsername());
 		m.addAttribute("username", u.getEmail());
 		m.addAttribute("role", u.getRole());

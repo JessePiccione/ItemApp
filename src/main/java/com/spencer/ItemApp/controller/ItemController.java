@@ -309,7 +309,7 @@ public class ItemController {
 									 @RequestParam("date") String date,
 									 Model m) {
 		if(file.isEmpty()) {
-			return "redirect:/home";
+			return "redirect:/itemview";
 		}
 		try(InputStream inputStream = file.getInputStream();
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))){
@@ -353,7 +353,7 @@ public class ItemController {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/home";
+		return "redirect:/itemview";
 	}
 	public static Pageable page(int pageNumber, int itemsPerPage, String sort) {
 		return PageRequest.of(pageNumber, itemsPerPage, sort(sort));
