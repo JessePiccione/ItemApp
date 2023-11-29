@@ -52,7 +52,7 @@
 					<div class="colored-wrapper">
 						<div id="totalFeedsHider">
 							<h1 id="totalFeedsHeader" class="formHeader collapsedHeader">
-								Total Feeds Ingested : 79
+								Total Feeds : ${totalFile}
 							</h1>
 
 						</div>
@@ -62,7 +62,7 @@
 					<div class="colored-wrapper second-form">
 						<div id="lastFeedHider">
 							<h1 id="lastFeedHeader" class="formHeader collapsedHeader">
-								Last Feed Ingested : exampleingestedfilename.txt
+								Last Feed : ${lastFile}
 							</h1>
 						</div>
 					</div>
@@ -73,7 +73,7 @@
 					<div class="colored-wrapper">
 						<div id="totalUsersHider">
 							<h1 id="totalUsersHeader" class="formHeader collapsedHeader">
-								Total Users : 79
+								Total Users : ${totalUsers}
 							</h1>
 						</div>
 					</div>
@@ -82,7 +82,7 @@
 					<div class="colored-wrapper second-form">
 						<div id="lastUserHider">
 							<h1 id="lastUserHeader" class="formHeader collapsedHeader">
-								Last User Added : Some random user information
+								Last User : ${lastUser}
 							</h1>
 						</div>
 					</div>

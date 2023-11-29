@@ -349,7 +349,7 @@ public class ItemController {
 				i.setVariants(variant.substring(1,variant.length()-1));
 			}
 			itemService.saveAll(items);
-			fileUploadService.save(new FileUpload(file.getName(),date));
+			fileUploadService.save(new FileUpload(file.getOriginalFilename(),date));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
