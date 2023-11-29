@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.spencer.ItemApp.models.Item;
-
 public interface ItemRepository extends CrudRepository<Item, Long>{
 	Item findByUniqueId(long UniqueId);
 	@Query(value= "SELECT * FROM item WHERE item.id IN :id AND item.date >= :startDate AND item.date <= :endDate AND item.active_flag IN :flags", nativeQuery = true)

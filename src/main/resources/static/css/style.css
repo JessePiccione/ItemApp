@@ -197,7 +197,7 @@ svg {
 	width: 50%;
 	margin-right: 10px;
 }
-.locationWrapper:nth-child(2) {
+.locationWrapper:nth-child(even) {
 	margin-left:10px;
 	margin-right:0;
 }

@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.spencer.ItemApp.models.*;
+import com.spencer.ItemApp.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spencer.ItemApp.models.Item;
-import com.spencer.ItemApp.models.MyData;
-import com.spencer.ItemApp.models.RatedItem;
-import com.spencer.ItemApp.models.User;
 import com.spencer.ItemApp.service.CustomUserDetailsService;
 import com.spencer.ItemApp.service.ItemService;
 
@@ -40,6 +38,8 @@ public class ItemController {
 	private static String sort = "id";
 	private static String direction = "asc";
 	private static final int pageSize = 12;
+	@Autowired
+	private FileUploadService fileUploadService;
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 	@Autowired 
@@ -349,6 +349,7 @@ public class ItemController {
 				i.setVariants(variant.substring(1,variant.length()-1));
 			}
 			itemService.saveAll(items);
+			fileUploadService.save(new FileUpload(file.getName(),date));
 		}
 		catch(Exception e) {
 			e.printStackTrace();

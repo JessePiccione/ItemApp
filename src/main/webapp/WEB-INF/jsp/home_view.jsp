@@ -19,7 +19,7 @@
 		<script src="https://kit.fontawesome.com/1a10ff1a82.js" crossorigin="anonymous"></script>
 		<input type="hidden" id="_csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 	</head>
-	<body>
+	<div>
 		<div  id="pageShadow" class="pageShadow">
 		</div>
 		<div class ='logoHeader'>
@@ -47,8 +47,49 @@
 			</ul>
 		</div>
 		<div id = "activeView" class="viewWrapper">
-			<h2> This is the home page. Nothing is really going on here right now!</h2>
+			<div class="formBar">
+				<div class="locationWrapper">
+					<div class="colored-wrapper">
+						<div id="totalFeedsHider">
+							<h1 id="totalFeedsHeader" class="formHeader collapsedHeader">
+								Total Feeds Ingested : 79
+							</h1>
+
+						</div>
+					</div>
+				</div>
+				<div class="locationWrapper">
+					<div class="colored-wrapper second-form">
+						<div id="lastFeedHider">
+							<h1 id="lastFeedHeader" class="formHeader collapsedHeader">
+								Last Feed Ingested : exampleingestedfilename.txt
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="formBar">
+				<div class="locationWrapper">
+					<div class="colored-wrapper">
+						<div id="totalUsersHider">
+							<h1 id="totalUsersHeader" class="formHeader collapsedHeader">
+								Total Users : 79
+							</h1>
+						</div>
+					</div>
+				</div>
+				<div class="locationWrapper">
+					<div class="colored-wrapper second-form">
+						<div id="lastUserHider">
+							<h1 id="lastUserHeader" class="formHeader collapsedHeader">
+								Last User Added : Some random user information
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<script src="/js/homescript.js">
 		<script src = "/js/script.js"></script>
 		<c:if test='${role.equals("ADMIN")}'>
 			<script src="/js/adminscript.js"></script>
