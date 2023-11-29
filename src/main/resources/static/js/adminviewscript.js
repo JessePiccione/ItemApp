@@ -1,10 +1,13 @@
 function submitNewUserForm(event) {
 	event.preventDefault();
 	let body = getNewUserFormBody();
+	if(body.password != body.passwordChecker){return alert("Passwords do not match, please try again.");}
+
 	return fetch("/create/user", {
 		method: "POST",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+			"X-CSRF-TOKEN": document.getElementById("_csrfToken").value
 		},
 		body: JSON.stringify(body)
 	}).then((response) => {
@@ -39,7 +42,8 @@ function submitEditUserForm(event){
 		fetch(`/update/user?id=${id}`, {
 			method:"POST",
 			headers:{
-				"Content-Type":"application/json"
+				"Content-Type":"application/json",
+				"X-CSRF-TOKEN":document.getElementById("_csrfToken").value
 			},
 			body:JSON.stringify({
 				'id':user.id,
@@ -95,12 +99,15 @@ function loadUsers(event){
 				let tRole = document.createElement("td");
 				let tUsername = document.createElement("td");
 				let tPrivileges = document.createElement("td");
+				let tCheck = document.createElement("td");
 				tRole.innerText = user.role;
 				tUsername.innerText = user.email;
 				tPrivileges.innerText = user.privileges;
+				tCheck.innerHTML = `<input class="checkBoxInput" type='checkbox' value=${user.id}>`;
 				tRow.appendChild(tRole);
 				tRow.appendChild(tUsername);
-				tRow.appendChild(tPrivileges)
+				tRow.appendChild(tPrivileges);
+				tRow.appendChild(tCheck);
 				tBody.appendChild(tRow);
 			});
 			resolve();
@@ -125,7 +132,7 @@ function toggleRegisterUserFormHider(event){
 function toggleNewUserFormHider(event){
 	event.preventDefault();
 	toggleElementClass("newUserCaret","fa-caret-down","fa-caret-up");
-	toggleElementClass("editUserHeader","collapsedHeader","uncollapsedHeader");
+	toggleElementClass("newUserHeader","collapsedHeader","uncollapsedHeader");
 	toggleElementClass("newUserFormHidden","hide", "unhide");
 }
 function toggleEditUserFormHider(event){

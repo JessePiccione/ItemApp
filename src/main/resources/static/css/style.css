@@ -1,3 +1,4 @@
+
 .uncollapsedHeader{
 	
 }
@@ -68,7 +69,7 @@ a.navbar{
 	color:white;
 }
 a{
-	width:auto;
+	text-align: center;
 	margin:0;
 }
 h4.usernameHeader{
@@ -237,7 +238,7 @@ svg {
 
 label.formLabel {
 	color: black;
-	margin: 0px;
+	margin: 0;
 }
 
 label {
@@ -283,6 +284,10 @@ hr {
 	width: 95%;
 	border: 1px solid black;
 }
+hr.inverted{
+	width:99%;
+	border: 1px solid white;
+ }
 #headerRow{
 	padding-top:0px; 
 	padding-bottom:0px;
@@ -432,7 +437,7 @@ input[type="date"] {
 
 input[type="date"].formDate {
 	margin-left: 15px;
-	margin-right: 10px;
+	margin-right: 15px;
 }
 
 input[type="date"]:focus {
@@ -578,7 +583,6 @@ input[type="submit"],
 .formSelector,
 #searchUser,
 ::-webkit-file-upload-button,
-#supersearch,
 #sendUploadButton,
 #registerUserButton,
 #pageSize {
@@ -587,8 +591,8 @@ input[type="submit"],
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
 	transition: background-color 0.3s;
 	background-color: #e9e9e9;
 }
@@ -614,10 +618,10 @@ input[type="text"].userName{
 .searchFormSelect {
 	padding: 5px 15px;
 	border: none;
-	border-radius: 10px;
+	border-radius: 5px;
 	cursor: pointer;
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	transition: background-color 0.3s;

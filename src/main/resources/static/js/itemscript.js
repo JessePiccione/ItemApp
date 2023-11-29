@@ -138,6 +138,7 @@ function loadPage(){
 		
 		if(globals.method == "POST"){
 			request.setRequestHeader("Content-Type","application/json");
+			request.setRequestHeader("X-CSRF-FORM", document.getElementById("_csrfToken").value)
 		}
 		request.onload = () => {
 			document.getElementById("tableHeader").innerText = `Activity Status from ${formatDate(globals.startDate)} to ${formatDate(globals.endDate)}`;

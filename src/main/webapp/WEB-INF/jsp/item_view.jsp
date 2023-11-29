@@ -68,6 +68,7 @@
 								<hr />
 								<form id="sendUploadForm" method="POST" action = "item/upload" enctype="multipart/form-data">
 									<label class="formLabel">Select Date</label>
+									<input id="_csrfToken" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 									<input id="fileDate" class="formDate" type="date" name="date" required>
 									<input id="uploadButton"  type = "file" name = "file" required>
 									<input id="sendUploadButton" type = "submit" name = "submit" value = "upload">
@@ -99,9 +100,9 @@
 							</div>
 							<div id="searchFormHidden" class="hide" >
 								<hr />
-								<form>
+								<form id="superSearch">
 									<label class="formLabel">
-										Start Date 
+										Start Date
 									</label>
 									<input type="date" id="startDate" class="formDate">
 									<label class="formLabel">
@@ -139,7 +140,7 @@
 									<br />
 									<textarea id="bigBox" class="bigbox"  name="values" palceholder="Seperate each value by semi colon, white space is negligable"></textarea>
 									<br />
-									<input id="supersearch" type="submit" value="Search" name="Search">
+									<input type="submit" value="Search" name="Search">
 								</form>
 							</div>
 						</div>
@@ -170,6 +171,7 @@
 							<tr>
 								<th id="headerRow" colspan=12>
 									<h1 id="tableHeader"></h1>
+									<hr class="inverted"/>
 								</th>
 							</tr>
 						</thead>

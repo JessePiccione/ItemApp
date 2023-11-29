@@ -17,6 +17,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/date-fns@2.16.1"></script>
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 		<script src="https://kit.fontawesome.com/1a10ff1a82.js" crossorigin="anonymous"></script>
+		<input type="hidden" id="_csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 	</head>
 	<body>
 		<div  id="pageShadow" class="pageShadow">

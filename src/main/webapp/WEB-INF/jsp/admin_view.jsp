@@ -23,6 +23,7 @@
 		</c:if>
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 		<script src="https://kit.fontawesome.com/1a10ff1a82.js" crossorigin="anonymous"></script>
+		<input type="hidden" id="_csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 	</head>
 	<body>
 		<div  id="pageShadow" class="pageShadow">
@@ -66,7 +67,7 @@
 								<form id="editUserForm">
 									<div class="formRow">
 										<label class="formLabel" for="userSelect">
-											Select User 
+											Select User
 										</label>
 										<select class="formSelector" name="userSelect" id="userSelect">
 										</select>
@@ -186,8 +187,9 @@
 				<table id="activityTable">
 					<thead>
 						<tr>
-							<th id="headerRow" colspan=3>
+							<th id="headerRow" colspan=4>
 								<h1 id="tableHeader">Users</h1>
+								<hr class="inverted"/>
 							</th>
 						</tr>
 					</thead>
@@ -201,6 +203,9 @@
 							</th>
 							<th>
 								Privileges&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+							</th>
+							<th>
+
 							</th>
 						</tr>
 					</tbody>
