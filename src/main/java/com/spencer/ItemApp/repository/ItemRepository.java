@@ -36,7 +36,7 @@ public interface ItemRepository extends CrudRepository<Item, Long>{
 	@Query(value= "SELECT * FROM item WHERE item.variants IN :variants AND item.date >= :startDate AND item.date <= :endDate AND item.active_flag IN :flags", nativeQuery = true)
 	List<Item> findByVariantsIn(List<String> variants, Pageable page, LocalDate startDate, LocalDate endDate, List<String> flags);
 	@Query(value= "SELECT * FROM item WHERE item.sku = :sku AND item.date >= :startDate AND item.date <= :endDate", nativeQuery=true)
-	List<Item> findItemBySkuDate(String sku, LocalDate startDate, LocalDate endDate);
+	List<Item> findItemBySkuDate(String sku, LocalDate startDate, LocalDate endDate, Pageable page);
 	@Query(value="SELECT * FROM item WHERE item.id = :id AND item.sku!=:sku AND item.date >= :startDate AND item.date <= :endDate", nativeQuery=true)
 	List<Item> findItemByIdSkuDate(String id, String sku, LocalDate startDate, LocalDate endDate);
 	@Query(value="SELECT COUNT(*) FROM item WHERE item.date >= :startDate AND item.date <= :endDate AND item.active_flag IN :flags", nativeQuery = true)

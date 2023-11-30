@@ -74,7 +74,7 @@ public class ItemController {
 	public ResponseEntity<String> getItems(@RequestParam(required=false, defaultValue="missing") String sku,
 										   @RequestParam(required=false, defaultValue="missing") String startDate, 
 										   @RequestParam(required=false, defaultValue="missing") String endDate){
-		return new ResponseEntity(itemService.getTableItem(sku, startDate, endDate), HttpStatus.OK);
+		return new ResponseEntity(itemService.getTableItem(sku, startDate, endDate, pageTable(0, Integer.MAX_VALUE, "")), HttpStatus.OK);
 	}
 	@GetMapping({"/item/table/bottom"})
 	public ResponseEntity<String> getItemsVariants(@RequestParam(required=false, defaultValue="missing") String id,
@@ -359,7 +359,13 @@ public class ItemController {
 	public static Pageable page(int pageNumber, int itemsPerPage, String sort) {
 		return PageRequest.of(pageNumber, itemsPerPage, sort(sort));
 	}
+	public static Pageable pageTable(int pageNumber, int itemsPerPage, String sort){
+		return PageRequest.of(pageNumber, itemsPerPage, sortTable());
+	}
 	public static Sort sort(String sort) {
 		return Sort.by(Sort.Order.desc("date"), Sort.Order.asc("id"));
+	}
+	public static Sort sortTable(){
+		return Sort.by(Sort.Order.asc("date"), Sort.Order.asc("id"));
 	}
 }

@@ -299,10 +299,11 @@ public class ItemService {
 	public Item findByUniqueId(long uniqueId) {
 		return itemRepository.findByUniqueId(uniqueId);
 	}
-	public List<RatedItem> getTableItem(String sku, String startDate, String endDate){
+	public List<RatedItem> getTableItem(String sku, String startDate, String endDate, Pageable page){
 		return rateItemsOverPeriod(itemRepository.findItemBySkuDate(sku,
 								   LocalDate.parse(startDate),
-								   LocalDate.parse(endDate)),
+								   LocalDate.parse(endDate),
+						           page),
 								   startDate,
 								   endDate,
 								   "B");
