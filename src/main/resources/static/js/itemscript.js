@@ -27,14 +27,12 @@ document.getElementById("uploadFormHider").addEventListener("click", function (e
 document.getElementById("searchFormHider").addEventListener("click", function (event) {
     changeCaret("search");
 });
-
 //superSearch
 function setRequestValues(body, url, method) {
     globals.body = body;
     globals.url = url;
     globals.method = method;
 }
-
 document.getElementById("superSearch").addEventListener("submit", function (event) {
     event.preventDefault();
     var startDate = document.getElementById("startDate").value;
@@ -109,7 +107,6 @@ document.getElementById("imageFileSearch").addEventListener("input", function (e
         sendSearchRequest('imageFile');
     }, 100);
 });
-
 //pagination stuff
 function previousPage(event) {
     if (globals.pageNumber <= 0) {
@@ -120,7 +117,6 @@ function previousPage(event) {
     globals.method == "POST" ? updatePageCountSpecialCase() : updatePageCount();
     loadPage();
 }
-
 function nextPage(event) {
     if (globals.pageNumber > Number(document.getElementById("maximumPage").innerHTML) - 1) {
         alert("Sorry, this is the last page cannot go to next page.");
@@ -130,22 +126,18 @@ function nextPage(event) {
     globals.method == "POST" ? updatePageCountSpecialCase() : updatePageCount();
     loadPage();
 }
-
 function pageSize(event) {
     globals.pageSize = document.getElementById("pageSize").value;
     globals.pageNumber = 0;
     globals.method == "POST" ? updatePageCountSpecialCase() : updatePageCount();
     loadPage();
 }
-
 //handler functions
-
 //helper functions 
 function loadPage() {
     freezeTable();
     return new Promise((resolve) => {
         var request = new XMLHttpRequest();
-
         request.open(globals.method, globals.url +
             "?pageNumber=" +
             globals.pageNumber +
@@ -157,7 +149,6 @@ function loadPage() {
             formatDate(globals.endDate) +
             "&flag=" +
             globals.status);
-
         if (globals.method == "POST") {
             request.setRequestHeader("Content-Type", "application/json");
             request.setRequestHeader("X-CSRF-FORM", document.getElementById("_csrfToken").value)
@@ -172,26 +163,21 @@ function loadPage() {
         globals.method == "POST" ? request.send(JSON.stringify(globals.body)) : request.send();
     })
 }
-
 function loadSearchItems(items, type, data) {
     var filtered = items.filter(e => e[type].includes(data));
     loadItems(JSON.stringify(filtered), true);
 }
-
 function sendSearchRequest(type) {
     const data = document.getElementById(type + "Search").value;
     loadSearchItems(globals.itemsList, type, data);
 }
-
 function loadInnerDOMContent(event) {
     loadPage().then(() => {
         var hidder = document.getElementById("hidder");
         globals["itemsList"].length > 0 ? hidder.classList.remove("hide") : hidder.classList.add("hide");
-
     });
     updatePageCount();
 }
-
 function loadItems(response, off) {
     var items = JSON.parse(response);
     document.querySelectorAll(".dynamicRowEntry").forEach(e => {
@@ -218,7 +204,6 @@ function loadItems(response, off) {
         lastRow.appendChild(newRow);
     }
 }
-
 //sorting implentaion
 function changeSort(s) {
     if (globals.oldSorter == s) {
@@ -247,13 +232,11 @@ function changeSort(s) {
     globals.oldSorter = s;
     loadItems(JSON.stringify(globals.itemsList));
 }
-
 function setPageNumber(pageNumber) {
     globals.pageNumber = pageNumber;
     globals.method == "POST" ? updatePageCountSpecialCase() : updatePageCount();
     loadPage();
 }
-
 function buildPagingTools(count) {
     //margin
     let margin = "30px";
@@ -295,13 +278,11 @@ function buildPagingTools(count) {
         toolBar.appendChild(label);
         i = index;
     }
-
     if (globals.pageNumber + i < pageCount) {
         ellipse = document.createElement("label");
         ellipse.style.marginRight = margin;
         ellipse.innerText = "...";
         toolBar.appendChild(ellipse);
-
     }
     let label = document.createElement("label");
     label.style.marginRight = margin;
@@ -346,7 +327,6 @@ function buildPagingTools(count) {
     toolBar.appendChild(main);
     document.getElementById("pageSize").addEventListener("change", pageSize);
 }
-
 function updatePageCount() {
     const request = new XMLHttpRequest();
     request.open("GET", "/count?startDate=" +
@@ -360,7 +340,6 @@ function updatePageCount() {
     }
     request.send();
 }
-
 function updatePageCountSpecialCase() {
     const request = new XMLHttpRequest();
     request.open(globals.method, "/count?type=" +
@@ -377,7 +356,6 @@ function updatePageCountSpecialCase() {
     }
     request.send(JSON.stringify(globals.body));
 }
-
 async function showTablePopup(id, sku) {
     closeTablePopup();
     let itemResponse;
@@ -400,7 +378,6 @@ async function showTablePopup(id, sku) {
         document.getElementById("pageShadow").style.display = "block";
     });
 }
-
 function showChanges(items) {
     if (items.length <= 0) {
         return items;
@@ -413,7 +390,6 @@ function showChanges(items) {
     });
     return newItems;
 }
-
 function buildTable(items) {
     //clear table out
     items = showChanges(items);
@@ -464,12 +440,10 @@ function buildTable(items) {
     });
     table.appendChild(tBody);
 }
-
 function closeTablePopup() {
     document.getElementById("tablePopup").style.display = "none";
     document.getElementById("pageShadow").style.display = "none";
 }
-
 function changeCaret(name) {
     var hiddenForm = document.getElementById(name + "FormHidden");
     var uploadHeader = document.getElementById(name + "FormHeader");
@@ -488,14 +462,12 @@ function changeCaret(name) {
     }
     hiddenForm.className = hiddenForm.className == "hide" ? "" : "hide";
 }
-
 function formatDate(date) {
     let year = date.getFullYear();
     let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, add 1
     let day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
-
 function shadowMatchTable() {
     let loader = document.getElementById("tableLoader");
     let tableShadow = document.getElementById("tableShadow");
@@ -505,20 +477,17 @@ function shadowMatchTable() {
     tableShadow.style.display = "block";
     loader.classList.remove("hide");
 }
-
 function removeTableShadow() {
     let tableShadow = document.getElementById("tableShadow");
     let loader = document.getElementById("tableLoader");
     tableShadow.style.display = "none";
     loader.classList.add("hide");
 }
-
 function freezeTable() {
     shadowMatchTable();
     window.onresize = shadowMatchTable;
     window.onload = shadowMatchTable;
 }
-
 function unfreezeTable() {
     window.onresize = null;
     window.onload = null;
