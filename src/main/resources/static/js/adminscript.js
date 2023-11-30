@@ -1,5 +1,4 @@
 let adminglobals = {};
-
 function loadNavbar(event) {
     document.getElementById("adminNav").addEventListener("click", (event) => {
         location.assign("/adminview");
@@ -11,10 +10,7 @@ function loadNavbar(event) {
         location.assign("/itemview");
     });
 }
-
 function loadMainPageContent(event) {
     loadNavbar();
 }
-
 document.addEventListener("DOMContentLoaded", loadMainPageContent);
-
