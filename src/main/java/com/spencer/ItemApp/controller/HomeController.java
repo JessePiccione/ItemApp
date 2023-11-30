@@ -18,25 +18,25 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-	@Autowired
-	private CustomUserDetailsService userDetailsService;
-	@Autowired
-	private FileUploadService fileUploadService;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@GetMapping({"/", "/home"})
-	public String getHomePage(@AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model m) {
-		User u = userDetailsService.getUser(userDetails.getUsername());
-		List<FileUpload> fileEntries = fileUploadService.findAll();
-		if(fileEntries.isEmpty()) fileEntries.add(new FileUpload("dummyfilename.txt", "2023-11-29"));
-		List<User> users = userDetailsService.getAllUsers();
-		if(users.isEmpty()) users.add(new User("DummyUser",passwordEncoder.encode("password"),"USER"));
-		m.addAttribute("username", u.getEmail());
-		m.addAttribute("role", u.getRole());
-		m.addAttribute("totalFile", fileEntries.size());
-		m.addAttribute("lastFile", fileEntries.get(fileEntries.size()-1).getFileName());
-		m.addAttribute("totalUsers", users.size());
-		m.addAttribute("lastUser", users.get(users.size()-1).getEmail());
-		return "home_view";
-	}
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+    @Autowired
+    private FileUploadService fileUploadService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @GetMapping({"/", "/home"})
+    public String getHomePage(@AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model m) {
+        User u = userDetailsService.getUser(userDetails.getUsername());
+        List<FileUpload> fileEntries = fileUploadService.findAll();
+        if (fileEntries.isEmpty()) fileEntries.add(new FileUpload("dummyfilename.txt", "2023-11-29"));
+        List<User> users = userDetailsService.getAllUsers();
+        if (users.isEmpty()) users.add(new User("DummyUser", passwordEncoder.encode("password"), "USER"));
+        m.addAttribute("username", u.getEmail());
+        m.addAttribute("role", u.getRole());
+        m.addAttribute("totalFile", fileEntries.size());
+        m.addAttribute("lastFile", fileEntries.get(fileEntries.size() - 1).getFileName());
+        m.addAttribute("totalUsers", users.size());
+        m.addAttribute("lastUser", users.get(users.size() - 1).getEmail());
+        return "home_view";
+    }
 }

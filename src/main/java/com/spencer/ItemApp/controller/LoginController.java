@@ -30,15 +30,15 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class LoginController {
-	@Autowired
-	private CustomUserDetailsService userDetailsService;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@GetMapping("/login")
-	public String getLoginPage(HttpServletRequest request, Model model) {
-		//if its the first run uncomment this code and run the login page once to create the admin account 
-		//User user = new User("admin", passwordEncoder.encode("password"), "ADMIN");
-		//userDetailsService.save(user);
-		return "login";
-	}
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @GetMapping("/login")
+    public String getLoginPage(HttpServletRequest request, Model model) {
+        //if its the first run uncomment this code and run the login page once to create the admin account
+        //User user = new User("admin", passwordEncoder.encode("password"), "ADMIN");
+        //userDetailsService.save(user);
+        return "login";
+    }
 }

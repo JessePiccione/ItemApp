@@ -9,24 +9,24 @@ import java.time.LocalDate;
 @Entity
 public class FileUpload {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Getter
-    @Column(length=255)
+    @Column(length = 255)
     private String fileName;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate uploadDate;
 
-    protected FileUpload(){
+    protected FileUpload() {
     }
-    public FileUpload(String fileName, String uploadDate){
+    public FileUpload(String fileName, String uploadDate) {
         this.fileName = fileName;
         this.uploadDate = LocalDate.parse(uploadDate);
     }
-    public String getUploadDate(){
+    public String getUploadDate() {
         return this.uploadDate.toString();
     }
-    public String toString(){
-        return "FileName: "+this.fileName+" UploadDate: "+this.uploadDate;
+    public String toString() {
+        return "FileName: " + this.fileName + " UploadDate: " + this.uploadDate;
     }
 }

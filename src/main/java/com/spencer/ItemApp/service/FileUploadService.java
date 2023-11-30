@@ -11,13 +11,13 @@ import java.util.List;
 public class FileUploadService {
     @Autowired
     private FileUploadRepository fileUploadRepository;
-    public List<FileUpload> findAll(){
+    public List<FileUpload> findAll() {
         return fileUploadRepository.findAll();
     }
-    public FileUpload save(FileUpload fileUpload){
+    public FileUpload save(FileUpload fileUpload) {
         return fileUploadRepository.save(fileUpload);
     }
-    public long count(){
+    public long count() {
         return fileUploadRepository.count();
     }
 }
