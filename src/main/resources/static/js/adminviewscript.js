@@ -4,6 +4,7 @@ function submitNewUserForm(event) {
     if (body.password != body.passwordChecker) {
         return alert("Passwords do not match, please try again.");
     }
+
     return fetch("/create/user", {
         method: "POST",
         headers: {
@@ -20,6 +21,7 @@ function submitNewUserForm(event) {
         location.reload();
     });
 }
+
 function getNewUserFormBody() {
     return {
         "username": document.getElementById("newUsername").value,
@@ -28,6 +30,7 @@ function getNewUserFormBody() {
         "role": document.getElementById("role").value
     };
 }
+
 function submitEditUserForm(event) {
     let id = Number.parseInt(document.getElementById("userSelect").value);
     let user = adminglobals.users[0];
@@ -65,6 +68,7 @@ function submitEditUserForm(event) {
         });
     })
 }
+
 function updateUserForm(users) {
     //get select element and clear out the users
     let userSelect = document.getElementById("userSelect");
@@ -76,12 +80,14 @@ function updateUserForm(users) {
         userSelect.appendChild(option);
     });
 }
+
 function clearTable() {
     let entries = document.querySelectorAll(".dynamicRowEntry");
     entries.forEach((entry) => {
         entry.remove();
     });
 }
+
 function loadUsers(event) {
     return new Promise((resolve) => {
         fetch("/user", {method: "GET"}).then((response) => {
@@ -113,8 +119,10 @@ function loadUsers(event) {
             });
             resolve();
         });
+
     });
 }
+
 function toggleElementClass(id, primaryClass, secondaryClass) {
     let caret = document.getElementById(id);
     if (caret.classList.contains(primaryClass)) {
@@ -125,36 +133,44 @@ function toggleElementClass(id, primaryClass, secondaryClass) {
         caret.classList.add(primaryClass);
     }
 }
+
 function toggleRegisterUserFormHider(event) {
     event.preventDefault();
     toggleElementClass()
 }
+
 function toggleNewUserFormHider(event) {
     event.preventDefault();
     toggleElementClass("newUserCaret", "fa-caret-down", "fa-caret-up");
     toggleElementClass("newUserHeader", "collapsedHeader", "uncollapsedHeader");
     toggleElementClass("newUserFormHidden", "hide", "unhide");
 }
+
 function toggleEditUserFormHider(event) {
     event.preventDefault();
     toggleElementClass("editUserCaret", "fa-caret-down", "fa-caret-up");
     toggleElementClass("editUserHeader", "collapsedHeader", "uncollapsedHeader");
     toggleElementClass("editUserFormHidden", "hide", "unhide");
 }
+
 function loadRegisterUserForm() {
     document.getElementById("newUserForm").addEventListener("submit", submitNewUserForm);
     document.getElementById("newUserHider").addEventListener("click", toggleNewUserFormHider);
 }
+
 function loadEditUserForm() {
     document.getElementById("editUserForm").addEventListener("submit", submitEditUserForm);
     document.getElementById("editUserHider").addEventListener("click", toggleEditUserFormHider)
 }
+
 function loadUserForms() {
     loadEditUserForm();
     loadRegisterUserForm();
 }
+
 function loadAdminViewerDOMContent() {
     loadUsers();
     loadUserForms();
 }
+
 document.addEventListener("DOMContentLoaded", loadAdminViewerDOMContent);
