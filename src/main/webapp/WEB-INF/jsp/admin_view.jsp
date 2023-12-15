@@ -185,7 +185,7 @@
         <table id="activityTable">
             <thead>
             <tr>
-                <th id="headerRow" colspan=4>
+                <th id="headerRow" colspan=3>
                     <h1 id="tableHeader">Users</h1>
                     <hr class="inverted"/>
                 </th>
@@ -201,8 +201,6 @@
                 </th>
                 <th>
                     Privileges&nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
-                </th>
-                <th>
                 </th>
             </tr>
             </tbody>

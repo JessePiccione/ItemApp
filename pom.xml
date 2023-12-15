@@ -58,6 +58,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.visrec</groupId>
+            <artifactId>visrec-api</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.visrec</groupId>
+            <artifactId>visrec-ri</artifactId>
+            <version>1.0.3</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -78,6 +88,7 @@
                         <artifactId>springloaded</artifactId>
                         <version>1.2.0.RELEASE</version>
                     </dependency>
+
                 </dependencies>
             </plugin>
         </plugins>
