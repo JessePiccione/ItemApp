@@ -100,12 +100,15 @@ function loadUsers(event) {
                 let tRole = document.createElement("td");
                 let tUsername = document.createElement("td");
                 let tPrivileges = document.createElement("td");
+                let tCheck = document.createElement("td");
                 tRole.innerText = user.role;
                 tUsername.innerText = user.email;
                 tPrivileges.innerText = user.privileges;
+                tCheck.innerHTML = `<input class="checkBoxInput" type='checkbox' value=${user.id}>`;
                 tRow.appendChild(tRole);
                 tRow.appendChild(tUsername);
                 tRow.appendChild(tPrivileges);
+                tRow.appendChild(tCheck);
                 tBody.appendChild(tRow);
             });
             resolve();
@@ -132,13 +135,13 @@ function toggleNewUserFormHider(event) {
     toggleElementClass("newUserHeader", "collapsedHeader", "uncollapsedHeader");
     toggleElementClass("newUserFormHidden", "hide", "unhide");
 }
-function toggleEditUserFormHider(event){
+function toggleEditUserFormHider(event) {
     event.preventDefault();
     toggleElementClass("editUserCaret", "fa-caret-down", "fa-caret-up");
     toggleElementClass("editUserHeader", "collapsedHeader", "uncollapsedHeader");
     toggleElementClass("editUserFormHidden", "hide", "unhide");
 }
-function loadRegisterUserForm(){
+function loadRegisterUserForm() {
     document.getElementById("newUserForm").addEventListener("submit", submitNewUserForm);
     document.getElementById("newUserHider").addEventListener("click", toggleNewUserFormHider);
 }
