@@ -1,5 +1,0 @@
-1. add in displaying period based on a to and from date format specified in the application. - COMPLETED
-2. add a upload progress bar to show the progress of a file upload. - COMPLETED
-3. create a view to show when the product is active versus not over the given period. - COMPLETED
-4. look into data cleaning implementations/script depending that delete out old entries.?
-5. remove crud buttons that are no longer needed - COMPLETED 
