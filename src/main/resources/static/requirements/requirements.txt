@@ -1,4 +1,0 @@
-update pagination tools to better match the spencers style. - completed
-The navbar should navigate to the respective slot that is selected - completed
-add in user view for admins to edit and control users into navbar for admins - completed
-

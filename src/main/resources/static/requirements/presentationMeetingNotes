@@ -1,4 +1,0 @@
-1. add in loader screen for when the page is loading to show there is something processing incase of bad response times - COMPLETED
-2. fix table popup to handle large periods up to n days
-3. add in user roles admin and user to start 
-4. refine ui and prepare page to be able to handle more feeds
