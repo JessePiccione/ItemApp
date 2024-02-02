@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>20</java.version>
-  <versions.java-security-toolkit>1.1.1</versions.java-security-toolkit>
+  <versions.java-security-toolkit>1.1.2</versions.java-security-toolkit>
  </properties>
     <dependencies>
         <dependency>

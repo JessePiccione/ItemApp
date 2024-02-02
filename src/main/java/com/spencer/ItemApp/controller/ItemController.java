@@ -1,6 +1,7 @@
 package com.spencer.ItemApp.controller;
 
 import io.github.pixee.security.BoundedLineReader;
+import io.github.pixee.security.Filenames;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -348,7 +349,7 @@ public class ItemController {
                 i.setVariants(variant.substring(1, variant.length() - 1));
             }
             itemService.saveAll(items);
-            fileUploadService.save(new FileUpload(file.getOriginalFilename(), date));
+            fileUploadService.save(new FileUpload(Filenames.toSimpleFileName(file.getOriginalFilename()), date));
         } catch (Exception e) {
             e.printStackTrace();
         }
