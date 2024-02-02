@@ -52,7 +52,7 @@ public class SendableUser {
         return this.privileges.contains(privilege);
     }
     public boolean isAdmin() {
-        return this.role.equals("ADMIN");
+        return "ADMIN".equals(this.role);
     }
     public boolean hasUsername(String username) {
         return this.email.equals(username);
