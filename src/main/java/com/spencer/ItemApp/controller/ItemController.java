@@ -1,5 +1,6 @@
 package com.spencer.ItemApp.controller;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -311,7 +312,7 @@ public class ItemController {
         }
         try (InputStream inputStream = file.getInputStream();
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String[] header = bufferedReader.readLine().split("\t");
+            String[] header = BoundedLineReader.readLine(bufferedReader, 5_000_000).split("\t");
             Map<String, Integer> locations = new HashMap<>();
             Map<String, ArrayList<String>> variants = new HashMap<>();
             for (int i = 0; i < header.length; i++) {
@@ -320,7 +321,7 @@ public class ItemController {
             String temp;
             String[] values;
             ArrayList<Item> items = new ArrayList<>();
-            while ((temp = bufferedReader.readLine()) != null) {
+            while ((temp = BoundedLineReader.readLine(bufferedReader, 5_000_000)) != null) {
                 values = temp.replace("\"", "").split("\t");
                 if (!variants.containsKey(values[locations.get("product_id")])) {
                     variants.put(values[locations.get("product_id")], new ArrayList<>());
