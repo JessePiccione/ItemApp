@@ -39,7 +39,7 @@ public class User {
 
     }
     public boolean isAdmin() {
-        return role.equals("ADMIN");
+        return "ADMIN".equals(role);
     }
     public void setRole(String role) {
         this.role = role;

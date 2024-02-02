@@ -329,13 +329,13 @@ public class ItemService {
                 LocalDate.parse(endDate),
                 getFlag("B"));
         for (Item i : itemRatingData) {
-            if (i.getActiveFlag().equals("Y")) ratedItems.get(indexOf.get(i.getSku())).incrementRate();
+            if ("Y".equals(i.getActiveFlag())) ratedItems.get(indexOf.get(i.getSku())).incrementRate();
         }
         return ratedItems;
     }
     public List<String> getFlag(String flag) {
         List<String> flags = new ArrayList<String>();
-        if (flag.equals("Y") || flag.equals("N")) {
+        if ("Y".equals(flag) || "N".equals(flag)) {
             flags.add(flag);
         } else {
             flags.add("Y");
