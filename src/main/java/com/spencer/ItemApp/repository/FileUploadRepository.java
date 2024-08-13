@@ -2,7 +2,6 @@ package com.spencer.ItemApp.repository;
 
 import com.spencer.ItemApp.models.FileUpload;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;

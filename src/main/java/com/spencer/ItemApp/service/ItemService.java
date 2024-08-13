@@ -6,7 +6,6 @@ import java.util.List;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -163,7 +162,7 @@ public class ItemService {
     public Item save(Item i) {
         return itemRepository.save(i);
     }
-    public Iterable saveAll(List<Item> list) {
+    public Iterable<Item> saveAll(List<Item> list) {
         return itemRepository.saveAll(list);
     }
     public List<RatedItem> findByDate(List<LocalDate> date,

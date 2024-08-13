@@ -1,0 +1,22 @@
+This project requires Java 17 or higher to run the application
+Github Codespaces by default is currently using java 11 
+To edit this project on github codespaces still you will need to update to Java 17 minimum 
+
+Run the following commands in the shell to update to java 17: 
+    
+    sudo apt update
+    sudo apt install openjdk-17-jdk
+    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    export PATH=$JAVA_HOME/bin:$PATH
+
+
+Great Java 17 is installed! Now you can run the project.
+
+If you reload Codespaces the Bash terminal will revert back to Java 11 
+run the following command in order to set the utilized java version to 17
+
+    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    export PATH=$JAVA_HOME/bin:$PATH
+
+This should allow the proccess without attempting to reinstall java 17
+
