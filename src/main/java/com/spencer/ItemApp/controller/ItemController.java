@@ -1,6 +1,5 @@
 package com.spencer.ItemApp.controller;
 
-import io.github.pixee.security.BoundedLineReader;
 import io.github.pixee.security.Filenames;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -57,7 +56,8 @@ public class ItemController {
     public ResponseEntity<String> getCount(@RequestParam(required = false, defaultValue = "missing") String startDate,
                                            @RequestParam(required = false, defaultValue = "missing") String endDate,
                                            @RequestParam(required = false, defaultValue = "missing") String flag) {
-        return new ResponseEntity(itemService.countAllItems(startDate, endDate, flag), HttpStatus.OK);
+        
+        return new ResponseEntity(itemService.countAllItems(startDate, endDate, flag) ,HttpStatus.OK);
     }
     @PostMapping({"/count"})
     public ResponseEntity<String> getSpecialCount(@RequestBody MyData body, @RequestParam String type,
@@ -310,9 +310,10 @@ public class ItemController {
         if (file.isEmpty()) {
             return "redirect:/itemview";
         }
-        try (InputStream inputStream = file.getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String[] header = BoundedLineReader.readLine(bufferedReader, 5_000_000).split("\t");
+        try (
+        InputStream inputStream = file.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+        String[] header = bufferedReader.readLine().split("\t");
             Map<String, Integer> locations = new HashMap<>();
             Map<String, ArrayList<String>> variants = new HashMap<>();
             for (int i = 0; i < header.length; i++) {
@@ -321,7 +322,7 @@ public class ItemController {
             String temp;
             String[] values;
             ArrayList<Item> items = new ArrayList<>();
-            while ((temp = BoundedLineReader.readLine(bufferedReader, 5_000_000)) != null) {
+            while ((temp = bufferedReader.readLine()) != null && !temp.equals("")) {
                 values = temp.replace("\"", "").split("\t");
                 if (!variants.containsKey(values[locations.get("product_id")])) {
                     variants.put(values[locations.get("product_id")], new ArrayList<>());

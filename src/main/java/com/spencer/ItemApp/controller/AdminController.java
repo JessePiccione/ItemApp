@@ -49,7 +49,6 @@ public class AdminController {
     }
     @GetMapping({"/create/user"})
     public String getRegistrationPage(@AuthenticationPrincipal UserDetails userDetails, Model m) {
-        User user = userDetailsService.getUser(userDetails.getUsername());
         return "redirect:/adminview";
     }
     @PostMapping({"/create/user"})
@@ -75,15 +74,12 @@ public class AdminController {
     public ResponseEntity<String> updateUser(@AuthenticationPrincipal UserDetails userDetails,
                                              @RequestParam long id,
                                              @RequestBody SendableUser userData) {
-        System.out.println("I start");
         User u = userDetailsService.getUser(userDetails.getUsername());
         HashMap<String, String> body = new HashMap<>();
         if (!u.isAdmin()) {
-            System.out.println("I trigger");
             body.put("Error", "User does not have access to this resource");
             return new ResponseEntity(body, HttpStatus.UNAUTHORIZED);
         }
-        System.out.println(userData.getRole());
         return new ResponseEntity(userDetailsService.updateUser(id, userData), HttpStatus.OK);
     }
 }

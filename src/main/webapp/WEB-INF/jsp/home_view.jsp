@@ -19,7 +19,7 @@
     <script src="https://kit.fontawesome.com/1a10ff1a82.js" crossorigin="anonymous"></script>
     <input type="hidden" id="_csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 </head>
-<div>
+<body>
     <div id="pageShadow" class="pageShadow">
     </div>
     <div class='logoHeader'>
@@ -89,10 +89,10 @@
             </div>
         </div>
     </div>
-    <script src="/js/homescript.js">
-        <script src="/js/script.js"></script>
+    <script src="/js/homescript.js"></script>
+    <script src="/js/script.js"></script>
     <c:if test='${role.equals("ADMIN")}'>
-    <script src="/js/adminscript.js"></script>
+        <script src="/js/adminscript.js"></script>
     </c:if>
     </body>
 </html>
